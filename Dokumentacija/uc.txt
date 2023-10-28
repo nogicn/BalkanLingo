@@ -78,4 +78,10 @@ Cilj: Uredivanje rijecnika
 Sudionici: Baza podataka, Server, Administrator
 Preduvjet: Prijava s administratorskim privilegijama i postoji rijecnik
 Opis osnovnog tijeka:
-	1. Stisnuti 
+	1. Kod rijecnika se stisne gumb za uredivanje
+	2. Otvori se forma za pretrazivanje rijeci tog jezika
+	3. Nakon pronalaska trazene rijeci stisni dugme + pored nje
+Opis mogucih odstupanja:
+	2.a Problem s API-jem za dohvacanje rijeci iz udaljenog rijecnika
+	3.a Rijec vec u rijecniku, opcija za micanje iz rijecnika
+	
