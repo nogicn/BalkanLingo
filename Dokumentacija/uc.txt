@@ -1,0 +1,81 @@
+UC1 Pristup stranici
+Glavni sudionik: Korisnik
+Cilj: Dohvacanje pocetne stranice
+Sudionici: Server 
+Preduvjet: -
+Opis osnovnog tijeka:
+	1. Korisnik upisuje URL
+	2. Server dohvaca pocetnu stranicu
+Opis mogucih odstupanja
+	2.a Server nije u funkciji
+
+
+UC2 Prijava u sustav
+Glavni sudionik: Korisnik
+Cilj: Prijava u korisnicki racun
+Sudionici: Baza podataka, Korisnik
+Preduvjet: Postoji korisnicki racun u bazi
+Opis osnovnog tijeka:
+	1. Odabrana login opcija
+	2. Upis email adrese
+	3. Unos ispravne lozinke
+	4. Pritisnuti Login dugme
+	5. Server dohvaca podatke o korisniku
+Opis mogucih odstupanja:
+	2.a Neispravna ili nepostojeca email adresa
+	3.a Neispravna lozinka
+	5.a Nesto sa serverom ili bazom????
+
+
+UC3 Registracija u sustav
+Glavni sudionik: Korisnik
+Cilj: Registracija novog korisnickog racuna
+Sudionici: Baza podataka, Korisnik
+Preduvjet: Korisnik nema racun
+Opis osnovnog tijeka:
+	1. Odabrana opcija za registraciju
+	2. Unos imena i prezimena *
+	3. Unos email adrese
+	5. Pritisnuto dugme za Registraciju
+Opis mogucih odstupanja:
+	3.a Vec postoji racun s unesenim emailom
+	5.a Nije uspjelo generiranje jednokratne sifre?
+
+
+UC4 Prikaz pocetne stranice s rjecnicima (Dashboard)
+Glavni sudionik: Korisnik
+Cilj: Prikaz i odabir dostupnih rijecnika
+Sudionici: Baza podataka, Server, Korisnik
+Preduvjet: Korisnik je prijavljen
+Opis osnovnog tijeka:
+	1. Pritisnuto dugme + (Opcija za odabir rijecnika)
+	2. Prikaz i odabir dostupnih rijecnika
+Opis mogucih odstupanja:
+	2.a Nema dostupnih rijecnika
+	2.b Sve rijeci su naucene ################## nije gotovo ##################
+	2.c Pokusaj dodavanja vec dodanog rijecnika
+
+
+UC5.a Administrator dodaje rijecnik
+Glavni sudionik: Administrator
+Cilj: Dodavanje rijecnika u sustav
+Sudionici: Baza podataka, Server, Administrator
+Preduvjet: Prijava s administratorskim privilegijama
+Opis osnovnog tijeka:
+	1. Pritisnuto dugme +
+	2. Otvaranje forme za dodavanje rijecnika
+	3. Unos imena rijecnika
+	4. Unos jezika rijecnika
+	5. Pritisnuto dugme Dodaj rijecnik
+Opis mogucih odstupanja:
+	5.a Dodavanje vec postojeceg rijecnika
+	5.b Neuspjelo dodavanje rijecnika u bazu podataka
+	
+	
+UC5.b Dodavanje rijeci
+Glavni sudionik: Administrator
+Cilj: Uredivanje rijecnika
+Sudionici: Baza podataka, Server, Administrator
+Preduvjet: Prijava s administratorskim privilegijama i postoji rijecnik
+Opis osnovnog tijeka:
+	1. Stisnuti 
