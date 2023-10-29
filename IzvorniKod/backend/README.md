@@ -2,6 +2,6 @@
 
 npm install
 
-node start
+npm start
 
 po defaultu je trenutno aktivan na portu 3000
