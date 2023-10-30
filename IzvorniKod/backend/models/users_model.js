@@ -1,4 +1,3 @@
-// create sql for  user model with id, name surname, email, password, role
 const db = require('../database/database');
 
 const createUserTable = `
