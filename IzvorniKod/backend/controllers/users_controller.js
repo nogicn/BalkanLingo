@@ -8,7 +8,7 @@ function createUser(req, res) {
     db.run(users.createUser, [name, surname, email, password, role], function(err) {
         if (err) {
             console.log(err);
-            res.send("User not created "+ err).status(404);
+            res.status(404).send("User not created "+ err);
         }
         console.log(this.lastID);
         res.json(this.lastID);
@@ -21,7 +21,7 @@ function loginUser(req, res) {
     db.get(users.loginEmailPassword, [email, password], function(err, row) {
         if (row == undefined || err) {
             console.log(err);
-            res.send("User not found "+ err).status(404);
+            res.status(404).send("User not found "+ err);
         }
         console.log(row);
         result = JSON.stringify(row);
@@ -34,7 +34,7 @@ function getAllUsers(req, res) {
     db.all(users.getAllUsers, function(err, rows) {
         if (err) {
             console.log(err);
-            res.send("Users not found "+ err).status(404);
+            res.status(404).send("Users not found "+ err);
         }
         console.log(rows);
         result = JSON.stringify(rows);
