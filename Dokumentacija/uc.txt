@@ -1,87 +1,143 @@
 UC1 Pristup stranici
-Glavni sudionik: Korisnik
-Cilj: Dohvacanje pocetne stranice
-Sudionici: Server 
-Preduvjet: -
-Opis osnovnog tijeka:
-	1. Korisnik upisuje URL
-	2. Server dohvaca pocetnu stranicu
-Opis mogucih odstupanja
-	2.a Server nije u funkciji
+	Glavni sudionik: Korisnik
+	Cilj: Dohvacanje pocetne stranice
+	Sudionici: Server 
+	Preduvjet: -
+	Opis osnovnog tijeka:
+		1. Korisnik upisuje URL
+		2. Server dohvaca pocetnu stranicu
+	Opis mogucih odstupanja
+		2.a Server nije u funkciji
 
 
 UC2 Prijava u sustav
-Glavni sudionik: Korisnik
-Cilj: Prijava u korisnicki racun
-Sudionici: Baza podataka, Korisnik
-Preduvjet: Postoji korisnicki racun u bazi
-Opis osnovnog tijeka:
-	1. Odabrana login opcija
-	2. Upis email adrese
-	3. Unos ispravne lozinke
-	4. Pritisnuti Login dugme
-	5. Server dohvaca podatke o korisniku
-Opis mogucih odstupanja:
-	2.a Neispravna ili nepostojeca email adresa
-	3.a Neispravna lozinka
-	5.a Nesto sa serverom ili bazom????
+	Glavni sudionik: Korisnik
+	Cilj: Prijava u korisnicki racun
+	Sudionici: Baza podataka, Korisnik
+	Preduvjet: Postoji korisnicki racun u bazi
+	Opis osnovnog tijeka:
+		1. Odabrana login opcija
+		2. Upis email adrese
+		3. Unos ispravne lozinke
+		4. Pritisnuti Login dugme
+		5. Server dohvaca podatke o korisniku
+	Opis mogucih odstupanja:
+		2.a Neispravna ili nepostojeca email adresa
+		3.a Neispravna lozinka
+		5.a Nesto sa serverom ili bazom????
 
 
 UC3 Registracija u sustav
-Glavni sudionik: Korisnik
-Cilj: Registracija novog korisnickog racuna
-Sudionici: Baza podataka, Korisnik
-Preduvjet: Korisnik nema racun
-Opis osnovnog tijeka:
-	1. Odabrana opcija za registraciju
-	2. Unos imena i prezimena *
-	3. Unos email adrese
-	5. Pritisnuto dugme za Registraciju
-Opis mogucih odstupanja:
-	3.a Vec postoji racun s unesenim emailom
-	5.a Nije uspjelo generiranje jednokratne sifre?
+	Glavni sudionik: Korisnik
+	Cilj: Registracija novog korisnickog racuna
+	Sudionici: Baza podataka, Korisnik
+	Preduvjet: Korisnik nema racun
+	Opis osnovnog tijeka:
+		1. Odabrana opcija za registraciju
+		2. Unos imena i prezimena *
+		3. Unos email adrese
+		5. Pritisnuto dugme za Registraciju
+	Opis mogucih odstupanja:
+		3.a Vec postoji racun s unesenim emailom
+		5.a Nije uspjelo generiranje jednokratne sifre?
 
 
-UC4 Prikaz pocetne stranice s rjecnicima (Dashboard)
-Glavni sudionik: Korisnik
-Cilj: Prikaz i odabir dostupnih rijecnika
-Sudionici: Baza podataka, Server, Korisnik
-Preduvjet: Korisnik je prijavljen
-Opis osnovnog tijeka:
-	1. Pritisnuto dugme + (Opcija za odabir rijecnika)
-	2. Prikaz i odabir dostupnih rijecnika
-Opis mogucih odstupanja:
-	2.a Nema dostupnih rijecnika
-	2.b Sve rijeci su naucene ################## nije gotovo ##################
-	2.c Pokusaj dodavanja vec dodanog rijecnika
+UC4.a Korisnik dodaje rijecnik za ucenje (Dashboard)
+	Glavni sudionik: Korisnik
+	Cilj: Prikaz i odabir dostupnih rijecnika
+	Sudionici: Baza podataka, Server, Korisnik
+	Preduvjet: Korisnik je prijavljen
+	Opis osnovnog tijeka:
+		1. Pritisnuto dugme + (Opcija za odabir rijecnika)
+		2. Prikaz i odabir dostupnih rijecnika
+	Opis mogucih odstupanja:
+		2.a Nema dostupnih rijecnika
+		2.b Pokusaj dodavanja vec dodanog rijecnika
 
 
+UC4.b Korisnik brise/odustaje od ucenja jezika
+	#####
+	
+	
 UC5.a Administrator dodaje rijecnik
-Glavni sudionik: Administrator
-Cilj: Dodavanje rijecnika u sustav
-Sudionici: Baza podataka, Server, Administrator
-Preduvjet: Prijava s administratorskim privilegijama
-Opis osnovnog tijeka:
-	1. Pritisnuto dugme +
-	2. Otvaranje forme za dodavanje rijecnika
-	3. Unos imena rijecnika
-	4. Unos jezika rijecnika
-	5. Pritisnuto dugme Dodaj rijecnik
-Opis mogucih odstupanja:
-	5.a Dodavanje vec postojeceg rijecnika
-	5.b Neuspjelo dodavanje rijecnika u bazu podataka
+	Glavni sudionik: Administrator
+	Cilj: Dodavanje rijecnika u sustav
+	Sudionici: Baza podataka, Server, Administrator
+	Preduvjet: Prijava s administratorskim privilegijama
+	Opis osnovnog tijeka:
+		1. Pritisnuto dugme +
+		2. Otvaranje forme za dodavanje rijecnika
+		3. Unos imena rijecnika
+		4. Unos jezika rijecnika
+		5. Pritisnuto dugme Dodaj rijecnik
+	Opis mogucih odstupanja:
+		5.a Dodavanje vec postojeceg rijecnika
+		5.b Neuspjelo dodavanje rijecnika u bazu podataka
 	
 	
-UC5.b Dodavanje rijeci
-Glavni sudionik: Administrator
-Cilj: Uredivanje rijecnika
-Sudionici: Baza podataka, Server, Administrator
-Preduvjet: Prijava s administratorskim privilegijama i postoji rijecnik
-Opis osnovnog tijeka:
-	1. Kod rijecnika se stisne gumb za uredivanje
-	2. Otvori se forma za pretrazivanje rijeci tog jezika
-	3. Nakon pronalaska trazene rijeci stisni dugme + pored nje
-Opis mogucih odstupanja:
-	2.a Problem s API-jem za dohvacanje rijeci iz udaljenog rijecnika
-	3.a Rijec vec u rijecniku, opcija za micanje iz rijecnika
+UC5.b Administrator brise rijecnik
+	#####
+
+
+UC5.c Dodavanje rijeci
+	Glavni sudionik: Administrator
+	Cilj: Uredivanje rijecnika
+	Sudionici: Baza podataka, Server, Administrator
+	Preduvjet: Prijava s administratorskim privilegijama i postoji rijecnik
+	Opis osnovnog tijeka:
+		1. Kod rijecnika se stisne gumb za uredivanje
+		2. Otvori se forma za pretrazivanje rijeci tog jezika
+		3. Nakon pronalaska trazene rijeci stisni dugme + pored nje
+	Opis mogucih odstupanja:
+		1. 	Nema napravljenog rijecnika
+		2.	Problem s API-jem za dohvacanje rijeci iz udaljenog rijecnika
+		3	Rijec vec u rijecniku, opcija za micanje iz rijecnika
+	
+	
+UC5.d Brisanje rijeci
+	######
+
+
+UC6.a Admin daje korisniku administratorske privilegije
+	#####
+	
+	
+UC6.b Admin daje korisniku administratorske privilegije
+	#####
+	
+	
+UC7 Admin brise korisnicki racun
+	#####
+	
+	
+UC8.a Korisnik mijenja svoj email
+	#####
+	
+	
+UC8.b Korisnik mijenja svoj password
+	#####
+	
+	
+UC9 Korisnik se odjavulje sa svog racuna
+	#####
+
+
+UC10 Korisnik bira ucenje odabranim modom //nepotrebno odvajati na 4 UC-a razlika samo u izboru moda, tek pri ucenje odvojiti
+	#####
+	
+	
+UC11.a Korisnik uci rijeci modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
+	#####
+	
+	
+UC11.b Korisnik uci rijeci modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
+	#####
+	
+	
+UC11.c Korisnik uci rijeci modom upit izgovorom (engleske) rijeci uz pisanje rijeci na (engleskom)
+	#####
+	
+	
+UC11.d Korisnik uci rijeci modom upit tekstualnim oblikom (engleske) rijeci uz snimanje izgovora
+	#####
 	
