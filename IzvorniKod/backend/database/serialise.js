@@ -10,11 +10,7 @@ function migration(){
         console.log("Migration complete")
     }
     );
-    db.all("SELECT * FROM user", function(err, rows) {
-        rows.forEach(function (row) {
-            console.log(row);
-        })
-    });
+    
 }
 
 exports.migration = migration;
