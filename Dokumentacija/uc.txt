@@ -99,23 +99,88 @@ UC5.d Brisanje rijeci
 
 
 UC6.a Admin daje korisniku administratorske privilegije
-	#####
+	Glavni sudionik: Administrator
+	Cilj: Dodjeljivanje administratorskih privilegija korisniku
+	Sudionici: Baza podataka
+	Preduvijet: Ima administratorske privilegije
+	Opis osnovnog tijeka:
+		1. Otvara admin dashboard
+		2. Upisuje email korisnika
+		3. Pronaden korisnik
+		4. Pritisce opciju za dodavanje admin privilegija
+		5. Korisniku se dodaju administratorske privilegije
+	Opis mogucih odstupanja:
+		3.a Korisnik ne postoji
+		5.a Neuspjelo dodjeljivanje administratorskih privilegija
 	
-	
-UC6.b Admin daje korisniku administratorske privilegije
-	#####
-	
-	
+UC6.b Admin oduzima korisniku administratorske privilegije
+	Glavni sudionik: Administrator
+	Cilj: Oduzimanje administratorskih privilegija korisniku
+	Sudionici: Baza podataka
+	Preduvijet: Ima administratorske privilegije
+	Opis osnovnog tijeka:
+		1. Otvara admin dashboard
+		2. Upisuje email korisnika
+		3. Pronaden korisnik
+		4. Pritisce opciju za micanje admin privilegija
+		5. Korisniku se oduzimaju administratorske privilegije
+	Opis mogucih odstupanja:
+		3.a Korisnik ne postoji
+		5.a Neuspjelo oduzimanje administratorskih privilegija
+
 UC7 Admin brise korisnicki racun
-	#####
+	Glavni sudionik: Administrator
+	Cilj: Birsanje korisnika iz baze podataka
+	Sudionici: Baza podataka
+	Preduvijet: Ima administratorske privilegije
+	Opis osnovnog tijeka:
+		1. Otvara admin dashboard
+		2. Upisuje email korisnika
+		3. Pronaden korisnik
+		4. Pritisce opciju obrisi korisnika
+		5. Korisnik se mice iz baze podataka
+	Opis mogucih odstupanja:
+		3.a Korisnik ne postoji u bazi podataka
+		5.a Neuspjelo micanje korisnika iz baze podataka
 	
 	
 UC8.a Korisnik mijenja svoj email
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Izmjena email adrese
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je vec prijavljen u sustav
+	Opis osnovnog tijeka:
+		1. Korisnik odabire opciju promjene email adrese
+		2. Korisnik unosi lozinku prvi put
+		3. Korisnik unosi novu mail adresu
+		4. Korisnik unosi lozinku drugi put
+		5. Korisnikova email adresa postaje novonavedena adresa
+		6. Poruka o uspjesnoj promjeni email adrese
+	Opis mogucih odstupanja:
+		1.a Korisnik nije prijavljen u sustav
+		1.a Preusmjeravanje na stranicu za prijavu
+		2.a Korisnik je krivo unio svoju lozinku prvi put
+		2.b Ponovni unos lozinke
+		3.a Korisnik je unio neispravnu (nevazecu) email adresu
+		4.a Korisnik je krivo unio svoju lozinku drugi put
+		5.a Nova email adresa se nije unijela u bazu podataka
+		5.b Poruka o neuspjeloj promjeni email adrese
 	
 	
 UC8.b Korisnik mijenja svoj password
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Izmjena korisnicke lozinke
+	Sudionici: Baza podataka
+	Preduvijet: Korisnik ima korisnicki racun
+	Opis osnovnog tijeka:
+		1. Korisnik odabire opciju promjene lozinke
+		2. Korisnik unosi trenutnu lozinku
+		3. Korisnik unosi novu lozinku
+		4. Korisnik ponavlja unos nove lozinke
+		5. Slanje na server za proveru
+	Opis mogucih odstupanja:
+		5.a Nepodudaranje bilo koje lozinke
+		5.b Nesto ne valja sa serverom
 	
 	
 UC9 Korisnik se odjavulje sa svog racuna
@@ -137,7 +202,18 @@ UC11.b Korisnik uci rijeci modom upit (hrvatske) rijeci uz odabir (engleskog) pr
 UC11.c Korisnik uci rijeci modom upit izgovorom (engleske) rijeci uz pisanje rijeci na (engleskom)
 	#####
 	
-	
 UC11.d Korisnik uci rijeci modom upit tekstualnim oblikom (engleske) rijeci uz snimanje izgovora
-	#####
+	Glavni sudionik: Korisnik
+    Cilj: Ucenje rijeci modom upit (engleske) rijeci uz snimanje izgovora
+    Sudionici: Baza podataka
+    Preduvjet: Korisnik je odabrao riječnik za učenje engleskog jezika
+    Opis osnovnog tijeka:       
+	1. Korisnik dobiva rijec za ucenje modom upit tekstualnim oblikom (engleske) rijeci uz snimanje izgovora
+	2. Korisnik salje glasovni zapis svog izgovora
+	3. Ovisno o točosti odabira, dobiva povratnu informaciju
+    4. Izlaz iz trenutnog moda ucenja 
+    Opis mogucih odstupanja:
+        1.a Nesto sa serverom ili bazom????
+        3.a Ne dobije povratnu informaciju
+        4.a Aplikacija ne izade
 	
