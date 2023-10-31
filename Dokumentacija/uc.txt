@@ -62,7 +62,7 @@ UC4.b Korisnik brise/odustaje od ucenja jezika
 UC5.a Administrator dodaje rijecnik
 	Glavni sudionik: Administrator
 	Cilj: Dodavanje rijecnika u sustav
-	Sudionici: Baza podataka, Server, Administrator
+	Sudionici: Baza podataka, Server, Korinik
 	Preduvjet: Prijava s administratorskim privilegijama
 	Opis osnovnog tijeka:
 		1. Pritisnuto dugme +
@@ -102,7 +102,7 @@ UC6.a Admin daje korisniku administratorske privilegije
 	#####
 	
 	
-UC6.b Admin daje korisniku administratorske privilegije
+UC6.b Admin oduzima korisniku administratorske privilegije
 	#####
 	
 	
@@ -119,19 +119,59 @@ UC8.b Korisnik mijenja svoj password
 	
 	
 UC9 Korisnik se odjavulje sa svog racuna
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Odjava sa web-aplikacije
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je trenutno ulogiran u aplikaciji
+	Opis osnovnog tijeka:
+		1. Na vrhu stranice pritisne gumb za odjavu iz aplikacije
+		2. Server odjavljuje korisnika
+	Opis mogucih odstupanja:
+		2.a Nesto sa serverom ili bazom????
+		2.b Racun je obrisan dok session traje
 
 
-UC10 Korisnik bira ucenje odabranim modom //nepotrebno odvajati na 4 UC-a razlika samo u izboru moda, tek pri ucenje odvojiti
-	#####
-	
+UC10 Korisnik bira ucenje odabranog riječnika
+	Glavni sudionik: Korisnik
+	Cilj: Odabir učenja odabranog riječnika
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je trenutno ulogiran u aplikaciji i ima dodan riječnik za svoj način učenja
+	Opis osnovnog tijeka:
+		1. Korisnik na glavoj stranici odabire riječnik koji želi učiti
+	Opis mogucih odstupanja:
+		1.a Nesto sa serverom ili bazom????
+
 	
 UC11.a Korisnik uci rijeci modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Ucenje rijeci modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je odabrao riječnik za ucenje englekog jezika
+	Opis osnovnog tijeka:
+		1. Korisnik dobiva rijec za ucenje modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
+		2. Korisnik odabere neku hrvatsku riječ
+		3. Ovisno o točosti odabira, dobiva povratnu informaciju
+¸		4. Izlaz iz trenutnog moda učenja 
+	Opis mogucih odstupanja:
+		1.a Nesto sa serverom ili bazom????
+		3.a Ne dobije povratnu informaciju
+		4.a Aplikacija ne izade
 	
 	
 UC11.b Korisnik uci rijeci modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Ucenje rijeci modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je odabrao riječnik za ucenje hrvatskog jezika
+	Opis osnovnog tijeka:
+		1. Korisnik dobiva rijec za ucenje modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
+		2. Korisnik odabere neku hrvatsku riječ
+		3. Ovisno o točosti odabira, dobiva povratnu informaciju
+¸		4. Izlaz iz trenutnog moda učenja 
+	Opis mogucih odstupanja:
+		1.a Nesto sa serverom ili bazom????
+		3.a Ne dobije povratnu informaciju
+		4.a Aplikacija ne izade
 	
 	
 UC11.c Korisnik uci rijeci modom upit izgovorom (engleske) rijeci uz pisanje rijeci na (engleskom)
@@ -140,4 +180,6 @@ UC11.c Korisnik uci rijeci modom upit izgovorom (engleske) rijeci uz pisanje rij
 	
 UC11.d Korisnik uci rijeci modom upit tekstualnim oblikom (engleske) rijeci uz snimanje izgovora
 	#####
+
+
 	
