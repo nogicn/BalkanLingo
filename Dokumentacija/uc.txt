@@ -13,7 +13,7 @@ UC1 Pristup stranici
 UC2 Prijava u sustav
 	Glavni sudionik: Korisnik
 	Cilj: Prijava u korisnicki racun
-	Sudionici: Baza podataka, Korisnik
+	Sudionici: Baza podataka
 	Preduvjet: Postoji korisnicki racun u bazi
 	Opis osnovnog tijeka:
 		1. Odabrana login opcija
@@ -30,7 +30,7 @@ UC2 Prijava u sustav
 UC3 Registracija u sustav
 	Glavni sudionik: Korisnik
 	Cilj: Registracija novog korisnickog racuna
-	Sudionici: Baza podataka, Korisnik
+	Sudionici: Baza podataka
 	Preduvjet: Korisnik nema racun
 	Opis osnovnog tijeka:
 		1. Odabrana opcija za registraciju
@@ -45,7 +45,7 @@ UC3 Registracija u sustav
 UC4.a Korisnik dodaje rijecnik za ucenje (Dashboard)
 	Glavni sudionik: Korisnik
 	Cilj: Prikaz i odabir dostupnih rijecnika
-	Sudionici: Baza podataka, Server, Korisnik
+	Sudionici: Baza podataka
 	Preduvjet: Korisnik je prijavljen
 	Opis osnovnog tijeka:
 		1. Pritisnuto dugme + (Opcija za odabir rijecnika)
@@ -55,14 +55,21 @@ UC4.a Korisnik dodaje rijecnik za ucenje (Dashboard)
 		2.b Pokusaj dodavanja vec dodanog rijecnika
 
 
-UC4.b Korisnik brise/odustaje od ucenja jezika
-	#####
+UC4.b Korisnik brise/odustaje od ucenja jezika 		#####treba potvrditi s strane UI designa
+	Glavni sudionik: Korisnik
+	Cilj: Brisanje rijecnika s korisnickog racuna
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je prijavljen, korisnik ima barem jedam rijecnik dodan
+	Opis osnovnog tijeka:
+		1. Korisnik odabere rijecnik
+		2. Korisnik pritisne dugme za brisanje
+	Opis mogucih odstupanja:
 	
 	
 UC5.a Administrator dodaje rijecnik
 	Glavni sudionik: Administrator
 	Cilj: Dodavanje rijecnika u sustav
-	Sudionici: Baza podataka, Server, Administrator
+	Sudionici: Baza podataka
 	Preduvjet: Prijava s administratorskim privilegijama
 	Opis osnovnog tijeka:
 		1. Pritisnuto dugme +
@@ -76,14 +83,22 @@ UC5.a Administrator dodaje rijecnik
 	
 	
 UC5.b Administrator brise rijecnik
-	#####
+	Glavni sudionik: Administrator
+	Cilj: brisanje rijecnika iz sustav
+	Sudionici: Baza podataka
+	Preduvjet: Prijava s administratorskim privilegijama, postoji rijecnik u sustavu
+	Opis osnovnog tijeka:
+		1. Administrator hovera preko rijecnika
+		2. Administrator pritisne iconu kosarice koja se pojavila na rijecniku
+	Opis mogucih odstupanja:
+		1. nema rijecnika rijecnika u sustavu
 
 
-UC5.c Dodavanje rijeci
+UC5.c Administrator dodaje rijeci
 	Glavni sudionik: Administrator
 	Cilj: Uredivanje rijecnika
-	Sudionici: Baza podataka, Server, Administrator
-	Preduvjet: Prijava s administratorskim privilegijama i postoji rijecnik
+	Sudionici: Baza podataka
+	Preduvjet: Prijava s administratorskim privilegijama, postoji rijecnik
 	Opis osnovnog tijeka:
 		1. Kod rijecnika se stisne gumb za uredivanje
 		2. Otvori se forma za pretrazivanje rijeci tog jezika
@@ -94,8 +109,19 @@ UC5.c Dodavanje rijeci
 		3	Rijec vec u rijecniku, opcija za micanje iz rijecnika
 	
 	
-UC5.d Brisanje rijeci
-	######
+UC5.d Administrator brise rijeci
+	Glavni sudionik: Administrator
+	Cilj: Uredivanje rijecnika
+	Sudionici: Baza podataka
+	Preduvjet: Prijava s administratorskim privilegijama, postoji rijecnik
+		Opis osnovnog tijeka:
+		1. Kod rijecnika se stisne gumb za uredivanje
+		2. Otvori se forma za pretrazivanje rijeci tog jezika
+		3. Nakon pronalaska trazene rijeci stisni dugme - pored nje
+	Opis mogucih odstupanja:
+		1. 	Nema napravljenog rijecnika
+		2.	Problem s API-jem za dohvacanje rijeci iz udaljenog rijecnika
+		3	Rijec nije u rijecniku, opcija za dodavanje iz rijecnika 
 
 
 UC6.a Admin daje korisniku administratorske privilegije
@@ -184,23 +210,77 @@ UC8.b Korisnik mijenja svoj password
 	
 	
 UC9 Korisnik se odjavulje sa svog racuna
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Odjava sa web-aplikacije
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je trenutno ulogiran u aplikaciji
+	Opis osnovnog tijeka:
+		1. Na vrhu stranice pritisne gumb za odjavu iz aplikacije
+		2. Server odjavljuje korisnika
+	Opis mogucih odstupanja:
+		2.a Nesto sa serverom ili bazom????
+		2.b Racun je obrisan dok session traje
 
 
-UC10 Korisnik bira ucenje odabranim modom //nepotrebno odvajati na 4 UC-a razlika samo u izboru moda, tek pri ucenje odvojiti
-	#####
-	
+UC10 Korisnik bira ucenje odabranog riječnika
+	Glavni sudionik: Korisnik
+	Cilj: Odabir učenja odabranog riječnika
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je trenutno ulogiran u aplikaciji i ima dodan riječnik za svoj način učenja
+	Opis osnovnog tijeka:
+		1. Korisnik na glavoj stranici odabire riječnik koji želi učiti
+	Opis mogucih odstupanja:
+		1.a Nesto sa serverom ili bazom????
+
 	
 UC11.a Korisnik uci rijeci modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Ucenje rijeci modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je odabrao riječnik za ucenje englekog jezika
+	Opis osnovnog tijeka:
+		1. Korisnik dobiva rijec za ucenje modom upit (engleske) rijeci uz odabir (hrvatskog) prijevoda
+		2. Korisnik odabere neku hrvatsku riječ
+		3. Ovisno o točosti odabira, dobiva povratnu informaciju
+¸		4. Izlaz iz trenutnog moda učenja 
+	Opis mogucih odstupanja:
+		1.a Nesto sa serverom ili bazom????
+		3.a Ne dobije povratnu informaciju
+		4.a Aplikacija ne izade
 	
 	
 UC11.b Korisnik uci rijeci modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
-	#####
+	Glavni sudionik: Korisnik
+	Cilj: Ucenje rijeci modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je odabrao riječnik za ucenje hrvatskog jezika
+	Opis osnovnog tijeka:
+		1. Korisnik dobiva rijec za ucenje modom upit (hrvatske) rijeci uz odabir (engleskog) prijevoda
+		2. Korisnik odabere neku hrvatsku riječ
+		3. Ovisno o točosti odabira, dobiva povratnu informaciju
+¸		4. Izlaz iz trenutnog moda učenja 
+	Opis mogucih odstupanja:
+		1.a Nesto sa serverom ili bazom????
+		3.a Ne dobije povratnu informaciju
+		4.a Aplikacija ne izade
 	
 	
 UC11.c Korisnik uci rijeci modom upit izgovorom (engleske) rijeci uz pisanje rijeci na (engleskom)
-	#####
+	Glavni sudionik: Korisnik
+    Cilj: Učenje rijeci modom upit izgovorom (engleske) rijeci uz pisanje rijeci na (engleskom)
+    Sudionici: Baza podataka
+    Preduvjet: Korisnik je odabrao riječnik za učenje engleskog jezika
+    Opis osnovnog tijeka:     
+		1. Korisnik dobiva zvucni zapis koji moze slusati
+		2. Korisnik upisuje rijec u textualnu kutiju
+		3. Korisnik stisne gumb za slanje rijeci
+		4. Ovisno o točosti upisa, dobiva povratnu informaciju
+		5. Izlaz iz trenutnog moda učenja 
+    Opis mogucih odstupanja:
+        1.a Nesto sa serverom ili bazom????
+		1.b zvucni zapis ne moze se pustiti
+        3.a ne radi gumb za slanje
+        4.a Aplikacija ne izade iz moda
 	
 UC11.d Korisnik uci rijeci modom upit tekstualnim oblikom (engleske) rijeci uz snimanje izgovora
 	Glavni sudionik: Korisnik
@@ -217,3 +297,13 @@ UC11.d Korisnik uci rijeci modom upit tekstualnim oblikom (engleske) rijeci uz s
         3.a Ne dobije povratnu informaciju
         4.a Aplikacija ne izade
 	
+
+
+
+UC12 dolazak na postavke korisnickog racuna
+	Glavni sudionik: Korisnik
+	Cilj: Korisnik dolazi na stranicu za postavke korisnickog racuna
+	Sudionici: Baza podataka
+	Preduvjet: Korisnik je prijavljen na racun
+	Opis osnovnog tijeka:
+		1. Korisnik stisne na ikonu svoga profila
