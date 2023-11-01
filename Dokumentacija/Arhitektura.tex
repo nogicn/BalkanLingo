@@ -2,12 +2,57 @@
 		
 		\textbf{\textit{dio 1. revizije}}\\
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+\noindent Arhitektura je podijeljena na 2 dijela:
+\begin{itemize}
+  \item Web poslužitelj
+  \item Baza podataka
+\end{itemize}
+
+\underline{Web preglednik} je program koji služi za prikaz web stranica. Svaki preglednik interpretira HTML dokumente i prikazuje ih korisniku. On je zapravo posrednik između korisnika i podataka kojima želi pristupiti.\hfill \break
+
+\underline{Web poslužitelj} je program koji šalje HTML dokumente pregledniku. 
+Odabrali smo Express jer su svi već upoznati s njim sa predmeta web1. 
+U našem projektu on je također zadužen za komunikaciju s bazom podataka i obradu zahtjeva koje dobiva od preglednika. Obrada zahtjeva rezultira slanjem HTML-a pregledniku umjesto da šalje JSON podatke. Razlog toga je da želimo održati HATEOAS (Hypermedia as the Engine of Application State) princip zajedno sa REST (Representational State Transfer) principom. Upravo zbog toga koristimo HTMX library, koji nam omogućava da dobijemo modernu interaktivnu aplikaciju, ali bez da izgubimo HATEOAS i REST principe. Prednost ovog načina rada je da je svo stanje na serveru, 
+dakle ima samo jedan izvor istine što drastično smanjuje kompleksnost aplikacije.\hfill \break
+
+\underline{Baza podataka} se koristi za pohranjivanje, dohvaćanje, brisanje i ažuriranje podataka. Za bazu smo odlučili koristiti SQLite3 jer je jednostavna za korištenje, ne zahtjeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.\hfill \break
+
+Radi bolje organizacije koda, aplikacija je podijeljena na module. Pošto znamo iz dokumentacije što koji dio aplikacije radi i što je potrebno za unutarnju komunikaciju moguće je raditi sve dijelove aplikacije paralelno. Svaki modul je zasebna cjelina koja se sastoji od Expressa i baze podataka.\hfill \break
+
+Dijelovi backend aplikacije na web poslužitelju su:
+\begin{itemize}
+  \item Sloj domene (engl. routes)
+  \item Sloj nadzora (engl. controllers)
+  \item Sloj baze podataka (engl. database)
+  \item Sloj podataka (engl. models)
+\end{itemize}
+\hfill \break
+\underline{Sloj domene} je sloj koji se sastoji od express ruta. U ovom sloju su definirane rute koje se mogu pozvati iz React aplikacije te se u njima definiraju koje funkcije iz sloja nadzora se trebaju pozvati.\hfill \break
+
+\underline{Sloj nadzora} je sloj koji se sastoji od express kontrolera. Njegov zadatak je da obradi zahtjev koji je dobio od sloja domene. U ovom sloju se pozivaju funkcije koje koriste upite iz sloja baze podataka i bazu podataka.\hfill \break
+
+\underline{Sloj podataka} se koristi za definiranje izgleda baze podataka. Ovaj sloj se koristi kada se baza prvi put stvara kako bi se automatski definirao izgled baze podataka (engl. migrate).\hfill \break
+
+\underline{Sloj baze podataka} je sloj koji se sastoji od upita prema bazi podataka. Odlučili smo ga odvojiti od sloja nadzora kako bi se izbjeglo dupliciranje koda te kako bi imali što manje konflikata kod spajanja.\hfill \break
+
+
+Tijek dohvaćanja informacija iz baze podataka:
+\begin{itemize}
+	\item Sloj korisnika
+	\item sloj domene
+	\item sloj nadzora
+	\item sloj baze podataka
+	\item sloj podataka
+  \end{itemize}
+
+Sumiranje svih prednosti:
+\begin{itemize}
+  \item Jednostavnost "prednjeg" dijela sustava zbog HATEOAS i REST principa (izbjegavanje dupliciranja stanja na klijentu)
+  \item Jednostavnost produljenja i izmjene koda zbog odvojenosti slojeva
+  \item Jednostavna baza podataka koja ne zahtjeva nikakvu konfiguraciju
+  \item Jednostavna instalacija i pokretanje aplikacije (docker compose)
+\end{itemize}
+
 
 	
 		

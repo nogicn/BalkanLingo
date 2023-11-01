@@ -297,9 +297,6 @@ UC11.d Korisnik uci rijeci modom upit tekstualnim oblikom (engleske) rijeci uz s
         3.a Ne dobije povratnu informaciju
         4.a Aplikacija ne izade
 	
-
-
-
 UC12 dolazak na postavke korisnickog racuna
 	Glavni sudionik: Korisnik
 	Cilj: Korisnik dolazi na stranicu za postavke korisnickog racuna

@@ -61,42 +61,546 @@
 					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
 					
 
-					\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+					\noindent \underbar{\textbf{UC1 Pristup stranici}}
 					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Dohvaćanje početne stranice
+						\item \textbf{Sudionici:} Server
+						\item \textbf{Preduvjet:} -
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik upisuje URL
+							\item Server dohvaća početnu stranicu
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[] \begin{packed_enum}
-								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
-								
-							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
-							
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item[2.a] Server nije u funkciji
 						\end{packed_item}
 					\end{packed_item}
-				
-					
+
+					\noindent \underbar{\textbf{UC2 Prijava u sustav}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Prijava u korisnički račun
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Postoji korisnički račun u bazi
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Odabrana login opcija
+							\item Upis email adrese
+							\item Unos ispravne lozinke
+							\item Pritisnuti Login dugme
+							\item Server dohvaća podatke o korisniku
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item[2.a] Neispravna ili nepostojeća email adresa
+							\item[3.a] Neispravna lozinka
+							\item[5.a] Nešto sa serverom ili bazom????
+						\end{packed_item}
+					\end{packed_item}
+					\noindent \underbar{\textbf{UC3 Registracija u sustav}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Registracija novog korisničkog računa
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik nema račun
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Odabrana opcija za registraciju
+							\item Unos imena i prezimena
+							\item Unos email adrese
+							\item Pritisnuto dugme za Registraciju
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item[3.a] Već postoji račun s unesenom email adresom
+							\item[5.a] Nije uspjelo generiranje jednokratne šifre?
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC4.a Korisnik dodaje rječnik za učenje (Dashboard)}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Prikaz i odabir dostupnih rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je prijavljen
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Pritisnuto dugme + (Opcija za odabir rječnika)
+							\item Prikaz i odabir dostupnih rječnika
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item[2.a] Nema dostupnih rječnika
+							\item[2.b] Pokušaj dodavanja već dodanog rječnika
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC4.b Korisnik briše/odustaje od učenja jezika}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Brisanje rječnika s korisničkog računa
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je prijavljen, korisnik ima barem jedan rječnik dodan
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik odabere rječnik
+							\item Korisnik pritisne dugme za brisanje
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC5.a Administrator dodaje rječnik}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Dodavanje rječnika u sustav
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Pritisnuto dugme +
+							\item Otvaranje forme za dodavanje rječnika
+							\item Unos imena rječnika
+							\item Unos jezika rječnika
+							\item Pritisnuto dugme Dodaj rječnik
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item[5.a] Dodavanje već postojećeg rječnika
+							\item[5.b] Neuspjelo dodavanje rječnika u bazu podataka
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC5.b Administrator briše rječnik}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Brisanje rječnika iz sustava
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, postoji rječnik u sustavu
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Administrator hovera preko rječnika
+							\item Administrator pritisne ikonu kanti za smeće koja se pojavila na rječniku
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1. Nema rječnika u sustavu
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC5.c Administrator dodaje riječi}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Uređivanje rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, postoji rječnik
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Kod rječnika se stisne gumb za uređivanje
+							\item Otvori se forma za pretraživanje riječi tog jezika
+							\item Nakon pronalaska tražene riječi stisni gumb + pored nje
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1. Nema napravljenog rječnika
+							\item 2. Problem s API-jem za dohvaćanje riječi iz udaljenog rječnika
+							\item 3. Riječ već u rječniku, opcija za uklanjanje iz rječnika
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC5.d Administrator briše riječi}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Uređivanje rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, postoji rječnik
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Kod rječnika se stisne gumb za uređivanje
+							\item Otvori se forma za pretraživanje riječi tog jezika
+							\item Nakon pronalaska tražene riječi stisni gumb - pored nje
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1. Nema napravljenog rječnika
+							\item 2. Problem s API-jem za dohvaćanje riječi iz udaljenog rječnika
+							\item 3. Riječ nije u rječniku, opcija za dodavanje iz rječnika
+						\end{packed_item}
+					\end{packed_item}
+					\noindent \underbar{\textbf{UC6.a Admin daje korisniku administratorske privilegije}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Dodjeljivanje administratorskih privilegija korisniku
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Ima administratorske privilegije
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Otvara admin dashboard
+							\item Upisuje email korisnika
+							\item Pronađen korisnik
+							\item Pritiska opciju za dodavanje admin privilegija
+							\item Korisniku se dodaju administratorske privilegije
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 3.a Korisnik ne postoji
+							\item 5.a Neuspjelo dodjeljivanje administratorskih privilegija
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC6.b Admin oduzima korisniku administratorske privilegije}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Oduzimanje administratorskih privilegija korisniku
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Ima administratorske privilegije
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Otvara admin dashboard
+							\item Upisuje email korisnika
+							\item Pronađen korisnik
+							\item Pritiska opciju za micanje admin privilegija
+							\item Korisniku se oduzimaju administratorske privilegije
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 3.a Korisnik ne postoji
+							\item 5.a Neuspjelo oduzimanje administratorskih privilegija
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC7 Admin briše korisnički račun}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Brisanje korisnika iz baze podataka
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Ima administratorske privilegije
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Otvara admin dashboard
+							\item Upisuje email korisnika
+							\item Pronađen korisnik
+							\item Pritiska opciju za brisanje korisnika
+							\item Korisnik se miče iz baze podataka
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 3.a Korisnik ne postoji u bazi podataka
+							\item 5.a Neuspjelo micanje korisnika iz baze podataka
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC8.a Korisnik mijenja svoj email}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Izmjena email adrese
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je već prijavljen u sustav
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik odabire opciju promjene email adrese
+							\item Korisnik unosi trenutnu lozinku
+							\item Korisnik unosi novu email adresu
+							\item Korisnik unosi lozinku ponovno
+							\item Korisnikova email adresa postaje novonavedena adresa
+							\item Poruka o uspješnoj promjeni email adrese
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Korisnik nije prijavljen u sustav
+							\item 1.b Preusmjeravanje na stranicu za prijavu
+							\item 2.a Korisnik je krivo unio svoju lozinku prvi put
+							\item 2.b Ponovni unos lozinke
+							\item 3.a Korisnik je unio neispravnu (nevažeću) email adresu
+							\item 4.a Korisnik je krivo unio svoju lozinku drugi put
+							\item 5.a Nova email adresa se nije unijela u bazu podataka
+							\item 5.b Poruka o neuspješnoj promjeni email adrese
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC8.b Korisnik mijenja svoju lozinku}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Izmjena korisničke lozinke
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik ima korisnički račun
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik odabire opciju promjene lozinke
+							\item Korisnik unosi trenutnu lozinku
+							\item Korisnik unosi novu lozinku
+							\item Korisnik unosi novu lozinku ponovno
+							\item Lozinka se mijenja
+							\item Poruka o uspješnoj promjeni lozinke
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Korisnik nema korisnički račun
+							\item 1.b Preusmjeravanje na stranicu za registraciju
+							\item 2.a Korisnik je krivo unio svoju trenutnu lozinku
+							\item 3.a Unesena nova lozinka nije u skladu s pravilima za sigurnost lozinke
+							\item 4.a Korisnik je krivo unio novu lozinku ponovno
+							\item 5.a Lozinka nije promijenjena u bazi podataka
+							\item 5.b Poruka o neuspješnoj promjeni lozinke
+						\end{packed_item}
+					\end{packed_item}
+					\noindent \underbar{\textbf{UC9 Korisnik se odjavljuje sa svog računa}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Odjava sa web-aplikacije
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je trenutno ulogiran u aplikaciji
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Na vrhu stranice pritisne gumb za odjavu iz aplikacije
+							\item Server odjavljuje korisnika
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 2.a Nešto sa serverom ili bazom????
+							\item 2.b Račun je obrisan dok session traje
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC10 Korisnik bira učenje odabranog rječnika}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Odabir učenja odabranog rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je trenutno ulogiran u aplikaciji i ima dodan rječnik za svoj način učenja
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik na glavoj stranici odabire rječnik koji želi učiti
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.a Korisnik uči riječi modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva riječ za učenje modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda
+							\item Korisnik odabire neku hrvatsku riječ
+							\item Ovisno o točnosti odabira, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 3.a Ne dobije povratnu informaciju
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.b Korisnik uči riječi modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje hrvatskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva riječ za učenje modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda
+							\item Korisnik odabire neku hrvatsku riječ
+							\item Ovisno o točnosti odabira, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 3.a Ne dobije povratnu informaciju
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.c Korisnik uči riječi modom upit izgovorom (engleske) riječi uz pisanje riječi na (engleskom)}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit izgovorom (engleske) riječi uz pisanje riječi na (engleskom)
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva zvučni zapis koji može slušati
+							\item Korisnik upisuje riječ u tekstualnu kutiju
+							\item Korisnik stisne gumb za slanje riječi
+							\item Ovisno o točnosti upisa, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 1.b Zvučni zapis ne može se pustiti
+							\item 3.a Ne radi gumb za slanje
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.d Korisnik uči riječi modom upit tekstualnim oblikom (engleske) riječi uz snimanje izgovora}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit (engleske) riječi uz snimanje izgovora
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva riječ za učenje modom upit tekstualnim oblikom (engleske) riječi uz snimanje izgovora
+							\item Korisnik šalje glasovni zapis svog izgovora
+							\item Ovisno o točnosti odabira, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 3.a Ne dobije povratnu informaciju
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+					\noindent \underbar{\textbf{UC9 Korisnik se odjavljuje sa svog računa}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Odjava sa web-aplikacije
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je trenutno ulogiran u aplikaciji
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Na vrhu stranice pritisne gumb za odjavu iz aplikacije
+							\item Server odjavljuje korisnika
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 2.a Nešto sa serverom ili bazom????
+							\item 2.b Račun je obrisan dok session traje
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC10 Korisnik bira učenje odabranog rječnika}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Odabir učenja odabranog rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je trenutno ulogiran u aplikaciji i ima dodan rječnik za svoj način učenja
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik na glavoj stranici odabire rječnik koji želi učiti
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.a Korisnik uči riječi modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva riječ za učenje modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda
+							\item Korisnik odabire neku hrvatsku riječ
+							\item Ovisno o točnosti odabira, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 3.a Ne dobije povratnu informaciju
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.b Korisnik uči riječi modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje hrvatskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva riječ za učenje modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda
+							\item Korisnik odabire neku hrvatsku riječ
+							\item Ovisno o točnosti odabira, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 3.a Ne dobije povratnu informaciju
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.c Korisnik uči riječi modom upit izgovorom (engleske) riječi uz pisanje riječi na (engleskom)}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit izgovorom (engleske) riječi uz pisanje riječi na (engleskom)
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva zvučni zapis koji može slušati
+							\item Korisnik upisuje riječ u tekstualnu kutiju
+							\item Korisnik stisne gumb za slanje riječi
+							\item Ovisno o točnosti upisa, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 1.b Zvučni zapis ne može se pustiti
+							\item 3.a Ne radi gumb za slanje
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC11.d Korisnik uči riječi modom upit tekstualnim oblikom (engleske) riječi uz snimanje izgovora}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Učenje riječi modom upit (engleske) riječi uz snimanje izgovora
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik dobiva riječ za učenje modom upit tekstualnim oblikom (engleske) riječi uz snimanje izgovora
+							\item Korisnik šalje glasovni zapis svog izgovora
+							\item Ovisno o točnosti odabira, dobiva povratnu informaciju
+							\item Izlaz iz trenutnog moda učenja
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+							\item 3.a Ne dobije povratnu informaciju
+							\item 4.a Aplikacija ne izade iz moda
+						\end{packed_item}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC12 Dolazak na postavke korisničkog računa}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Cilj:} Korisnik dolazi na stranicu za postavke korisničkog računa
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je prijavljen na račun
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Korisnik stisne na ikonu svoga profila
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item 1.a Nešto sa serverom ili bazom????
+						\end{packed_item}
+					\end{packed_item}
+
+
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
 					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
