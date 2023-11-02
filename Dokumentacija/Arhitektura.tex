@@ -53,46 +53,141 @@ Sumiranje svih prednosti:
   \item Jednostavna instalacija i pokretanje aplikacije (docker compose)
 \end{itemize}
 
+				
+				\section{Baza podataka}
 
-	
-		
+Baza podataka
+Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugrađeni sustav za upravljanje bazama podataka koji se često koristi za manje aplikacije i mobilne aplikacije zbog svoje jednostavnosti i portabilnosti. SQLite omogućava učinkovito pohranjivanje i upravljanje podacima u lokalnom okruženju te je posebno prikladan za manje sustave koji ne zahtijevaju složene baze podataka. Sustav je temeljen na relacijskom modelu i sadrži slijedeće tablice.
+\begin{itemize}
+    \item user
+    \item dictionary
+    \item dictionary\_user
+    \item word
+    \item active\_question
+    \item user\_word
+\end{itemize}
 
-		
+\subsection{Opis tablica}
 
-				
-		\section{Baza podataka}
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
-		
-			\subsection{Opis tablica}
-			
+Tablica \textbf{"user"} sadrži informacije o korisnicima sustava. Svaki korisnik ima jedinstveni identifikator (id), ime (name), prezime (surname), email adresu (email), lozinku (password) te zastavicu is\_admin koja označava je li korisnik administrator (1) ili ne (0). Zastavica is\_admin je predstavljena INTEGER tipom jer SQLite ne podržava tip BOOLEAN.
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
-				
-				
-				\begin{longtblr}[
-					label=none,
-					entry=none
-					]{
-						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
-						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-				\end{longtblr}
-				
-				
-			
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{user}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator korisnika. \\ \hline
+name & VARCHAR & Ime korisnika. \\ \hline
+surname & VARCHAR & Prezime korisnika. \\ \hline
+email & VARCHAR & Email adresa korisnika. \\ \hline
+password & VARCHAR & Lozinka korisnika. \\ \hline
+is\_admin & INTEGER & Označava da li je korisnik administrator (1/0). \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language).
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{dictionary}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator rječnika. \\ \hline
+name & VARCHAR & Naziv rječnika. \\ \hline
+language & VARCHAR & Jezik riječnika. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje riječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{dictionary\_user}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+user\_id & INTEGER & Referenca na korisnika koji je povezan s određenim rječnikom. \\ \hline
+dictionary\_id & INTEGER & Referenca na rječnik koji je dodijeljen korisniku. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"word"} sadrži informacije o riječima koje korisnici uče. Svaka riječ ima jedinstveni identifikator (id) te informacije o stranoj riječi (foreign\_word), dodatnom opisu strane riječi (foreign\_description), prijevodu na hrvatski jezik (native\_word), dodatnom opisu hrvatskog prijevoda (native\_description), zvučnoj datoteci za izgovor riječi (pronunciation) te referencu na rječnik kojem pripada riječ (dictionary\_id).
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[10,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{word}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+foreign\_word & VARCHAR & Strana riječ koju korisnici uče. \\ \hline
+foreign\_description & VARCHAR & Dodatne informacije ili opis za stranu riječ. \\ \hline
+native\_word & VARCHAR & Prijevod strane riječi na hrvatski jezik. \\ \hline
+native\_description & VARCHAR & Dodatne informacije ili opis za hrvatski prijevod riječi. \\ \hline
+pronunciation & VARCHAR & Zvučna datoteka koja sadrži izgovor strane riječi. \\ \hline
+dictionary\_id & INTEGER & Referenca na rječnik kojem pripada riječ. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"active\_questions"} sadrži informacije o aktivnim pitanjima povezanim s određenim korisnicima. Koristi se u svrhu praćenja pitanja na različitim platformama. Svakom korisniku je dodijeljen maksimalno 1 redak u ovoj tablici. Svako aktivno pitanje ima jedinstveni identifikator (id) i referencu na riječ na koju se pitanje odnosi (word\_id), referencu na korisnika koji trenutno rješava pitanje (user\_id) te označava vrstu pitanja (1 za odabir ponuđenog odgovora, 2 za tipkanje odgovora, 3 za test izgovora) putem stupca type.
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{active\_question}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator aktivnog pitanja. \\ \hline
+word\_id & INTEGER & Referenca na riječ na koju se pitanje odnosi. \\ \hline
+user\_id & INTEGER & Referenca na korisnika koji trenutno rješava pitanje. \\ \hline
+type & INTEGER & Označava vrstu pitanja (1 za odabir ponuđenog odgovora, 2 za tipkanje odgovora, 3 za test izgovora). \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"user\_word"} sadrži podatke o riječima koje su povezane s određenim korisnicima. Praktički, to je skupina riječi koje sustav može ispitati korisnika. Svaki zapis u tablici ima jedinstveni identifikator (id) te referencu na korisnika kojem riječ pripada (user\_id), referencu na riječ (word\_id), datum kad je korisnik zadnji put točno odgovorio na riječ (last\_answered), vremenski odmak za iduće pojavljivanje riječi (delay) te zastavicu active koja označava je li riječ trenutno aktivna za danog korisnika (1) ili ne (0).
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{user\_word}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+user\_id & INTEGER & Referenca na korisnika kojem riječ pripada. \\ \hline
+word\_id & INTEGER & Referenca riječi. \\ \hline
+last\_answered & VARCHAR & Datum kad je korisnik zadnji put točno odgovorio na riječ. \\ \hline
+delay & INTEGER & Vremenski odmak za iduće pojavljivanje riječi. \\ \hline
+active & INTEGER & Da li je riječ trenutno aktivna za danog korisnika (1/0). \\ \hline
+\end{longtblr}
+
+					
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
-			
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/baza_dijagram.png} 
+					\centering
+					\caption{Dijagram razreda}
+					\label{fig:class_diagram}
+				\end{figure}			
 			\eject
 			
 			
