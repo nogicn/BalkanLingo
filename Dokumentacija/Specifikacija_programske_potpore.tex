@@ -1,21 +1,14 @@
 \chapter{Specifikacija programske potpore}
 		
 	\section{Funkcionalni zahtjevi}
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
-				
-			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
-			
+						
 			\noindent \textbf{Dionici:}
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Registrirani korisnik
+				\item Neregistrirani korisnik
+				\item Administrator			
 				
 			\end{packed_enum}
 			
@@ -23,30 +16,45 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Neregistrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
-					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
-					
+					\item registrirati se u sustav
+					\item prijaviti se u sustav
 				\end{packed_enum}
+
+				
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+				\item  \underbar{Registrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
-					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item pregledavati rječnike
+					\item dodavati rječnike na svoj korisnički račun
+					\item brisati rječnike na svoj korisnički račun
+					\item uređivati rječnike na svoj korisnički račun
+					\item učiti iz rječnika
+					\item uređivati svoj korisnički račun
 					
 				\end{packed_enum}
+
+				\item \underbar{Administrator (inicijator) može:}
+				\begin{packed_enum}
+					\item pregledavati rječnike u sustavu
+					\item dodavati rječnike u sustav
+					\item brisati rječnike iz sustava
+					\item uređivati rječnike u sustavu
+					\item uređivati korisničke račune
+					\item dodjeljivati administratorske privilegije
+					\item oduzimati administratorske privilegije
+				\end{packed_enum}
+
+				\item \underbar{Baza podataka (sudionik):}
+				\begin{packed_enum}
+					\item pohranjuje podatke o korisnicima i njihovim rječnicima
+					\item pohranjuje podatke o rječnicima
+					\item pohranjuje podatke o riječima
+				\end{packed_enum}
+
 			\end{packed_enum}
 			
 			\eject 
@@ -54,12 +62,6 @@
 			
 				
 			\subsection{Obrasci uporabe}
-				
-				\textbf{\textit{dio 1. revizije}}
-				
-				\subsubsection{Opis obrazaca uporabe}
-					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
-					
 
 					\noindent \underbar{\textbf{UC1.a Pristup stranici neregistriran}}
 					\begin{packed_item}
@@ -600,15 +602,85 @@
 
 
 				\subsubsection{Dijagrami obrazaca uporabe}
-					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
-				\eject		
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/OsnovnaFunkcionalnost.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe vezanog uz odabir učenja} 
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject	
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/OsnovnaFunkcionalnostAdmina.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe vezanog uz odabir učenja} 
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject	
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/Prijava.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe prijavljenih i neprijavljenih korisnika}
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/Jezgrene.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe jezgrenih funkcionalnosti} 
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject
 				
+				
+
+
 			\subsection{Sekvencijski dijagrami}
-				
-				\textbf{\textit{dio 1. revizije}}\\
-				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+					% small title that is also bold and not italic
+					\subsubsection{UC2 - Prijava u sustav}
+
+					Korisnik se prijavljuje u sustav kako bi mogao koristiti sve funkcionalnosti koje sustav nudi. Nakon što je korisnik unio svoje podatke, sustav provjerava jesu li ispravni. Ako jesu, korisniku se prikazuje početna stranica. Ako nisu, sustav obavještava korisnika da su podaci neispravni.\\
+					
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/UC2.png} 
+					\centering
+					\caption{Dijagram razreda}
+					\label{fig:class_diagram}
+				\end{figure}	
+				\eject
+
+				\subsection*{UC5.a Admin pravi rječnik}
+
+				Administrator potiskuje gumb "+" za dodavanje rječnika. Otvara se forma za dodavanje rječnika. Administrator unosi ime rječnika i jezik rječnika. Nakon toga potiskuje gumb "Dodaj rječnik". Ako je rječnik uspješno dodan, administratoru se prikazuje poruka o uspješnom dodavanju rječnika. Ako je rječnik već dodan, administratoru se prikazuje poruka da je rječnik već dodan.\\
+
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/UC5.png} 
+					\centering
+					\caption{Dijagram razreda}
+					\label{fig:class_diagram}
+				\end{figure}	
+				\eject
+
+				\subsection*{UC11 - Korisnik bira ucenje odabranog rječnika}
+
+				Korisnik odabire rječnik koji želi učiti. Nakon toga potiskuje gumb "Uči". Korisniku se prikazuje stranica za učenje odabranog rječnika.\\
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/UC11.png} 
+					\centering
+					\caption{Dijagram razreda}
+					\label{fig:class_diagram}
+				\end{figure}	
+				\eject
+
+				\subsection*{UC12 - Korisnik uči riječi modom 1}
+
+				Korisniku se prikazuje riječ za učenje. Korisnik odabire odgovor. Sustav provjerava je li odgovor točan. Ako je odgovor točan, korisniku se prikazuje poruka o točnom odgovoru. Ako je odgovor netočan, korisniku se prikazuje poruka o netočnom odgovoru. Nakon toga korisniku se prikazuje sljedeća riječ.\\
+
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/UC12.png} 
+					\centering
+					\caption{Dijagram razreda}
+					\label{fig:class_diagram}
+				\end{figure}	
 				\eject
 	
 		\section{Ostali zahtjevi}

@@ -1,115 +1,72 @@
 \chapter{Opis projektnog zadatka}
-		
-		\textbf{\textit{dio 1. revizije}}\\
-		
-		\textit{Na osnovi projektnog zadatka detaljno opisati korisničke zahtjeve. Što jasnije opisati cilj projektnog zadatka, razraditi problematiku zadatka, dodati nove aspekte problema i potencijalnih rješenja. Očekuje se minimalno 3, a poželjno 4-5 stranica opisa.	Teme koje treba dodatno razraditi u ovom poglavlju su:}
+
+		Cilj ovog projekta je razviti programsku potporu za web aplikaciju "BalkanLingo" koja omogućuje koristnicima da uče jezike.
+		Naša aplikacija će omogućiti korisnicima da uče jezike na zabavan i interaktivan način kroz web aplikaciju .
+		Aplikacija ima više načina učenja, a to su: 
 		\begin{packed_item}
-			\item \textit{potencijalna korist ovog projekta}
-			\item \textit{postojeća slična rješenja (istražiti i ukratko opisati razlike u odnosu na zadani zadatak). Dodajte slike koja predočavaju slična rješenja.}
-			\item \textit{skup korisnika koji bi mogao biti zainteresiran za ostvareno rješenje.}
-			\item \textit{mogućnost prilagodbe rješenja }
-			\item \textit{opseg projektnog zadatka}
-			\item \textit{moguće nadogradnje projektnog zadatka}
+			\item učenje upitom prijevoda
+			\item izgovor riječi
+			\item slušanje riječi
 		\end{packed_item}
-		
-		\textit{Za pomoć pogledati reference navedene u poglavlju „Popis literature“, a po potrebi konzultirati sadržaj na internetu koji nudi dobre smjernice u tom pogledu.}
-		\eject
-		
-		\section{Primjeri u \LaTeX u}
-		
-		\textit{Ovo potpoglavlje izbrisati.}\\
 
-		U nastavku se nalaze različiti primjeri kako koristiti osnovne funkcionalnosti \LaTeX a koje su potrebne za izradu dokumentacije. Za dodatnu pomoć obratiti se asistentu na projektu ili potražiti upute na sljedećim web sjedištima:
-		\begin{itemize}
-			\item Upute za izradu diplomskog rada u \LaTeX u - \url{https://www.fer.unizg.hr/_download/repository/LaTeX-upute.pdf}
-			\item \LaTeX\ projekt - \url{https://www.latex-project.org/help/}
-			\item StackExchange za Tex - \url{https://tex.stackexchange.com/}\\
-		
-		\end{itemize} 	
-
-
-		
-		\noindent \underbar{podcrtani tekst}, \textbf{podebljani tekst}, 	\textit{nagnuti tekst}\\
-		\noindent \normalsize primjer \large primjer \Large primjer \LARGE {primjer} \huge {primjer} \Huge primjer \normalsize
-				
-		\begin{packed_item}
-			
-			\item  primjer
-			\item  primjer
-			\item  primjer
-			\item[] \begin{packed_enum}
-				\item primjer
-				\item[] \begin{packed_enum}
-					\item[1.a] primjer
-					\item[b] primjer
-				\end{packed_enum}
-				\item primjer
-			\end{packed_enum}
-			
-		\end{packed_item}
-		
-		\noindent primjer url-a: \url{https://www.fer.unizg.hr/predmet/proinz/projekt}
-		
-		\noindent posebni znakovi: \# \$ \% \& \{ \} \_ 
-		$|$ $<$ $>$ 
-		\^{} 
-		\~{} 
-		$\backslash$ 
-		
-		
-		\begin{longtblr}[
-			label=none,
-			entry=none
-			]{
-				width = \textwidth,
-				colspec={|X[8,l]|X[8, l]|X[16, l]|}, 
-				rowhead = 1,
-			} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-			\hline \SetCell[c=3]{c}{\textbf{naslov unutar tablice}}	 \\ \hline[3pt]
-			\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-			korisnickoIme	& VARCHAR &   	\\ \hline 
-			email & VARCHAR &   \\ \hline 
-			ime & VARCHAR	&  		\\ \hline 
-			\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-		\end{longtblr}
-		
-
-		\begin{longtblr}[
-				caption = {Naslov s referencom izvan tablice},
-				entry = {Short Caption},
-			]{
-				width = \textwidth, 
-				colspec = {|X[8,l]|X[8,l]|X[16,l]|}, 
-				rowhead = 1,
-			}
-			\hline
-			\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-			korisnickoIme	& VARCHAR &   	\\ \hline 
-			email & VARCHAR &   \\ \hline 
-			ime & VARCHAR	&  		\\ \hline 
-			\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-		\end{longtblr}
-	
-
-
-		
-		
-		%unos slike
+		\textbf{Učenje upitom prijevoda} je način učenja u kojem korisniku se prikazuju 4 riječi na jednom jeziku, a korisnik treba odabrati točan prijevod te riječi na drugom jeziku.
+		Na ovaj način korisnik uči riječi i njihove prijevode. Aplikacija koja radi na sličan način za ovaj tip je Kahoot, koji nudi 4 odgovora od kojih je samo jedan točan na postavljeno pitanje. U našem slučaju mi ne pitamo pitanje nego koji je prijevod riječi.
 		\begin{figure}[H]
-			%\includegraphics[scale=0.4]{slike/aktivnost.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
-			\caption{Primjer slike s potpisom}
-			\label{fig:promjene}
+			\includegraphics[width=0.8\linewidth]{slike/Kahoot.png}
+			\caption{Primjer odabira točnog odgovora sa Kahoota}
+			\label{fig:rijecnik}
 		\end{figure}
 		
+		\textbf{Izgovor riječi} je način učenja u kojem korisniku se prikazuje riječ na jednom jeziku, a korisnik onda dobiva povratnu informaciju koliko je točan njegov izgovor.
+		\\
+		\\
+		\textbf{Slušanje riječi} je način učenja u kojem korisniku se prikazuje riječ na jednom jeziku, a korisnik mora upisati kako se ta riječ izgovara na drugom jeziku.
 		\begin{figure}[H]
-			%\includegraphics[width=\textwidth]{slike/aktivnost.PNG} %veličina u odnosu na širinu linije
-			\caption{Primjer slike s potpisom 2}
-			\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
+			\centering
+			\includegraphics[width=0.4\linewidth]{slike/Duolingo.png}
+			\caption{Primjer slušanja riječi iz Duolinga}
+			\label{fig:rijecnik}
 		\end{figure}
-		
-		Referenciranje slike \ref{fig:promjene2} u tekstu.
-		
+
+		\textbf{Registracija} je proces u kojem korisnik unosi svoje podatke kako bi mogao koristiti aplikaciju.
+		Korisnik mora unijeti svoje ime, prezime, korisničko ime, e-mail adresu.
+		Ako je registracija uspješna, korisnik na email dobiva random password koji mora promijeniti prilikom prvog logina.
+		\\
+		\\
+		\textbf{Prijava} je proces u kojem korisnik unosi svoje korisničko ime i lozinku kako bi mogao koristiti aplikaciju.
+		Ako korisnik postoji, onda se prikazuje dashboard, a ako ne postoji, onda se prikazuje poruka da korisnik ne postoji
+		\\
+		\\
+		\textbf{Dashboard} je stranica na kojoj se nalaze riječnici koje je korisnik dosad učio, ako nije učio niti jedan rječnik, onda se prikazuje prazna stranica sa jednom ikonom koja otvara stranicu za dodavanje novog rječnika koji želi učiti.
+		\\
+		\\
+		\textbf{Rječnik} je skup riječi koje korisnik želi učiti.
+		Rječnik se sastoji od imena rječnika, jezika na kojem je rječnik, riječi u oba jezika i primjer rečenice na oba jezika.
+		\\
+		\\
+		Aplikacija ima dva tipa računa i to su:
+		\begin{packed_item}
+			\item \textbf{Korisnik} 
+			\item \textbf{Administrator}
+		\end{packed_item}
+
+		\textbf{Korisnik} ima mogućnost učenja rječnika i jezika koristeći sva tri načina učenja koja se rotiraju.
+		Kada se korisnik ulogira u aplikaciju, onda se prikazuje dashboard sa svim riječnicima koje je korisnik dosad učio ili dodao.
+		Korisnik ima mogućnost dodavanja novih rječnika koje želi učiti iz postojeće baze podataka.
+		Kada korisnik točno odgovori na pitanje, onda se ta riječ stavlja u pool riječi koji ima odstupanje od 1,3,5,7,15,30 dana.
+		To odstupanje se povečava svaki put kada korisnik točno odgovori na pitanje, ako odgovori netočno, onda se odstupanje vraća na 1 dan.
+		Ako korisnik tijekom rješavanja prijeđe na novi uređaj ili zatvori aplikaciju, onda se njegovo zadnje pitanje sprema u bazu podataka.
+		Korisnik ima mogućnost resetiranja lozinke.
+		\\
+		\\
+		\textbf{Administrator} ima mogućnost dodavanja, brisanja i izmjenivanja novih rječnika, jezika i riječi u bazu podataka.
+		Po potrebi može resetirati lozinku korisnika.
+		Administrator ne može učiti rječnike jer mu se na dashboardu prikazuju svi riječnici koji postoje u bazi podataka.
+		Administrator može dodati i nove administratore.
+		\\
+		\\
+
 		\eject
 		
 	
