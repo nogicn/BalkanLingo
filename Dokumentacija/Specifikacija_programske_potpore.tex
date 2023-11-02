@@ -600,14 +600,43 @@
 
 
 				\subsubsection{Dijagrami obrazaca uporabe}
-					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
-				\eject		
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/OsnovnaFunkcionalnost.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe vezanog uz odabir učenja} 
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject	
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/OsnovnaFunkcionalnostAdmina.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe vezanog uz odabir učenja} 
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject	
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/Prijava.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe prijavljenih i neprijavljenih korisnika}
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/Jezgrene.png} 
+					\centering
+					\caption{Dijagram obrazaca uporabe jezgrenih funkcionalnosti} 
+					\label{fig:class_diagram}
+				\end{figure}
+				\eject
 				
+				
+
+
 			\subsection{Sekvencijski dijagrami}
 					% small title that is also bold and not italic
-					\subsubsection{dio 1. revizije}
-					% describe actors
+					\subsubsection{UC2 - Prijava u sustav}
+
+					Korisnik se prijavljuje u sustav kako bi mogao koristiti sve funkcionalnosti koje sustav nudi. Nakon što je korisnik unio svoje podatke, sustav provjerava jesu li ispravni. Ako jesu, korisniku se prikazuje početna stranica. Ako nisu, sustav obavještava korisnika da su podaci neispravni.\\
 					
 				\begin{figure}[H]
 					\includegraphics[scale=0.5]{dijagrami/UC2.png} 
@@ -616,6 +645,11 @@
 					\label{fig:class_diagram}
 				\end{figure}	
 				\eject
+
+				\subsection*{UC5.a Admin pravi rječnik}
+
+				Administrator potiskuje gumb "+" za dodavanje rječnika. Otvara se forma za dodavanje rječnika. Administrator unosi ime rječnika i jezik rječnika. Nakon toga potiskuje gumb "Dodaj rječnik". Ako je rječnik uspješno dodan, administratoru se prikazuje poruka o uspješnom dodavanju rječnika. Ako je rječnik već dodan, administratoru se prikazuje poruka da je rječnik već dodan.\\
+
 				\begin{figure}[H]
 					\includegraphics[scale=0.5]{dijagrami/UC5.png} 
 					\centering
@@ -623,6 +657,10 @@
 					\label{fig:class_diagram}
 				\end{figure}	
 				\eject
+
+				\subsection*{UC11 - Korisnik bira ucenje odabranog rječnika}
+
+				Korisnik odabire rječnik koji želi učiti. Nakon toga potiskuje gumb "Uči". Korisniku se prikazuje stranica za učenje odabranog rječnika.\\
 				\begin{figure}[H]
 					\includegraphics[scale=0.5]{dijagrami/UC11.png} 
 					\centering
@@ -630,6 +668,11 @@
 					\label{fig:class_diagram}
 				\end{figure}	
 				\eject
+
+				\subsection*{UC12 - Korisnik uči riječi modom 1}
+
+				Korisniku se prikazuje riječ za učenje. Korisnik odabire odgovor. Sustav provjerava je li odgovor točan. Ako je odgovor točan, korisniku se prikazuje poruka o točnom odgovoru. Ako je odgovor netočan, korisniku se prikazuje poruka o netočnom odgovoru. Nakon toga korisniku se prikazuje sljedeća riječ.\\
+
 				\begin{figure}[H]
 					\includegraphics[scale=0.5]{dijagrami/UC12.png} 
 					\centering
