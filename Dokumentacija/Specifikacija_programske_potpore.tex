@@ -1,21 +1,14 @@
 \chapter{Specifikacija programske potpore}
 		
 	\section{Funkcionalni zahtjevi}
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
-				
-			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
-			
+						
 			\noindent \textbf{Dionici:}
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Registrirani korisnik
+				\item Neregistrirani korisnik
+				\item Administrator			
 				
 			\end{packed_enum}
 			
@@ -23,30 +16,45 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Neregistrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
-					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
-					
+					\item registrirati se u sustav
+					\item prijaviti se u sustav
 				\end{packed_enum}
+
+				
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+				\item  \underbar{Registrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
-					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item pregledavati rječnike
+					\item dodavati rječnike na svoj korisnički račun
+					\item brisati rječnike na svoj korisnički račun
+					\item uređivati rječnike na svoj korisnički račun
+					\item učiti iz rječnika
+					\item uređivati svoj korisnički račun
 					
 				\end{packed_enum}
+
+				\item \underbar{Administrator (inicijator) može:}
+				\begin{packed_enum}
+					\item pregledavati rječnike u sustavu
+					\item dodavati rječnike u sustav
+					\item brisati rječnike iz sustava
+					\item uređivati rječnike u sustavu
+					\item uređivati korisničke račune
+					\item dodjeljivati administratorske privilegije
+					\item oduzimati administratorske privilegije
+				\end{packed_enum}
+
+				\item \underbar{Baza podataka (sudionik):}
+				\begin{packed_enum}
+					\item pohranjuje podatke o korisnicima i njihovim rječnicima
+					\item pohranjuje podatke o rječnicima
+					\item pohranjuje podatke o riječima
+				\end{packed_enum}
+
 			\end{packed_enum}
 			
 			\eject 
@@ -54,12 +62,6 @@
 			
 				
 			\subsection{Obrasci uporabe}
-				
-				\textbf{\textit{dio 1. revizije}}
-				
-				\subsubsection{Opis obrazaca uporabe}
-					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
-					
 
 					\noindent \underbar{\textbf{UC1.a Pristup stranici neregistriran}}
 					\begin{packed_item}
