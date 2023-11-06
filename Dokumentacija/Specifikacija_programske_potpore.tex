@@ -6,8 +6,8 @@
 			
 			\begin{packed_enum}
 				
-				\item Registrirani korisnik
-				\item Neregistrirani korisnik
+				\item Prijavljeni korisnik
+				\item Neprijavljeni korisnik
 				\item Administrator			
 				
 			\end{packed_enum}
@@ -16,7 +16,7 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Neregistrirani korisnik (inicijator) može:}
+				\item  \underbar{Neprijavljen korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					\item registrirati se u sustav
@@ -25,7 +25,7 @@
 
 				
 			
-				\item  \underbar{Registrirani korisnik (inicijator) može:}
+				\item  \underbar{Prijavljeni korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					\item pregledavati rječnike
@@ -63,9 +63,9 @@
 				
 			\subsection{Obrasci uporabe}
 
-					\noindent \underbar{\textbf{UC1.a Pristup stranici neregistriran}}
+					\noindent \underbar{\textbf{UC1.a Pristup stranici neprijavljen}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Neprijavljeni korisnik
 						\item \textbf{Cilj:} Dohvaćanje početne stranice
 						\item \textbf{Sudionici:} Server
 						\item \textbf{Preduvjet:} Ne biti prijavljen na korisnički račun
@@ -76,9 +76,9 @@
 						\end{packed_enum}
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC1.b Pristup stranici registriran}}
+					\noindent \underbar{\textbf{UC1.b Pristup stranici prijavljen}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Dohvaćanje početne stranice
 						\item \textbf{Sudionici:} Server
 						\item \textbf{Preduvjet:} Biti prijavljen na korisnički račun
@@ -92,7 +92,7 @@
 
 					\noindent \underbar{\textbf{UC2 Prijava u sustav}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Neprijavljeni korisnik
 						\item \textbf{Cilj:} Prijava u korisnički račun
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Postoji korisnički račun u bazi
@@ -115,7 +115,7 @@
 					
 					\noindent \underbar{\textbf{UC3.a Registracija u sustav}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Neprijavljeni korisnik
 						\item \textbf{Cilj:} Registracija novog korisničkog računa
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik nema račun
@@ -136,7 +136,7 @@
 					
 					\noindent \underbar{\textbf{UC3.b Postavljanje lozinke na prvoj prijavi}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Postavljanje lozinke
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik se prijavio preko jednokratne lozinke
@@ -159,7 +159,7 @@
 
 					\noindent \underbar{\textbf{UC4.a Korisnik dodaje rječnik za učenje}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Prikaz i odabir dostupnih rječnika
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je prijavljen
@@ -178,7 +178,7 @@
 
 					\noindent \underbar{\textbf{UC4.b Korisnik odustaje od učenja jezika}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Brisanje rječnika s korisničkog računa
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je prijavljen, korisnik ima barem jedan rječnik dodan
@@ -439,7 +439,7 @@
 
 					\noindent \underbar{\textbf{UC9.a Korisnik mijenja svoj email}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Izmjena email adrese
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je već prijavljen u sustav
@@ -468,7 +468,7 @@
 
 					\noindent \underbar{\textbf{UC9.b Korisnik mijenja svoju lozinku}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Izmjena korisničke lozinke
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik ima korisnički račun
@@ -495,7 +495,7 @@
 					
 					\noindent \underbar{\textbf{UC10 Korisnik se odjavljuje sa svog računa}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Odjava sa web-aplikacije
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je trenutno prijavljen u aplikaciju
@@ -514,7 +514,7 @@
 
 					\noindent \underbar{\textbf{UC11 Korisnik bira učenje odabranog rječnika}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Odabir učenja odabranog rječnika
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je trenutno prijavljen u aplikaciji i ima dodan rječnik za svoj način učenja
@@ -528,7 +528,7 @@
 
 					\noindent \underbar{\textbf{UC12.a Korisnik uči riječi modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit (engleske) riječi uz odabir (hrvatskog) prijevoda
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
@@ -543,7 +543,7 @@
 
 					\noindent \underbar{\textbf{UC12.b Korisnik uči riječi modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit (hrvatske) riječi uz odabir (engleskog) prijevoda
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje hrvatskog jezika
@@ -558,7 +558,7 @@
 
 					\noindent \underbar{\textbf{UC12.c Korisnik uči riječi modom upit izgovorom (engleske) riječi uz pisanje riječi na (engleskom)}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit izgovorom (engleske) riječi uz pisanje riječi na (engleskom)
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
@@ -574,7 +574,7 @@
 
 					\noindent \underbar{\textbf{UC12.d Korisnik uči riječi modom upit tekstualnim oblikom (engleske) riječi uz snimanje izgovora}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit (engleske) riječi uz snimanje izgovora
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
@@ -590,7 +590,7 @@
 
 					\noindent \underbar{\textbf{UC13 Dolazak na postavke korisničkog računa}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Korisnik
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Korisnik dolazi na stranicu za postavke korisničkog računa
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je prijavljen na račun
@@ -612,7 +612,7 @@
 				\begin{figure}[H]
 					\includegraphics[scale=0.5]{dijagrami/OsnovnaFunkcionalnostAdmina.png} 
 					\centering
-					\caption{Dijagram obrazaca uporabe vezanog uz odabir učenja} 
+					\caption{Dijagram obrazaca uporabe vezanog uz uređivanje riječi} 
 					\label{fig:class_diagram}
 				\end{figure}
 				\eject	
