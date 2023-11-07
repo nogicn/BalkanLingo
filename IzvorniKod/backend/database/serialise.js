@@ -1,16 +1,31 @@
-const userModel = require('../models/users_model');
-const { createUser } = require('./users_db');
+const userModel = require('../models/user_model');
 const db = require('./database');
+const axios = require('axios');
+
+function postUserAxios(name, surname, email, password) {
+    axios.post('http://localhost:3000/user/register', {
+        name: name,
+        surname: surname,
+        email: email,
+        password: password
+    })
+    .then(function (response) {
+        //console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
 
 function migration(){
-    db.serialize(function() {
-        db.run(userModel.createUserTable);
-        db.run("INSERT INTO user (name, surname, email, password, admin) VALUES (?, ?, ?, ?, ?)", ["Admin", "Admin", "admin@gmail.com", "admin", true]);
-        db.run("INSERT INTO user (name, surname, email, password, admin) VALUES (?, ?, ?, ?, ?)", ["User", "User", "user@gmail.com", "user", false]);
-        console.log("Migration complete")
-    }
-    );
-    
+    db.prepare(userModel.createUserTable).run();
+
+    postUserAxios("Admin", "Admin", "admin@gmail.com", "admin");
+    postUserAxios("User", "User", "user@gmail.com", "user");
+
+    console.log("Migration complete")
 }
+
 
 exports.migration = migration;
