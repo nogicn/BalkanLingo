@@ -7,7 +7,7 @@
         <meta name="author" content="">
         <meta name="keywords" content="">
         <title>Prijava</title>
-        <link rel="stylesheet" href="./css/login.css">
+        <link rel="stylesheet" href="/css/login.css">
     </head>
     <body>
         <div class="container flex">
@@ -52,12 +52,12 @@
                         </svg>
                     </div>
                 </div>
-                <form action="/user/authenticateLogin" method="post">
+                <form action="/user/login" method="post">
                     <label for="email">EMAIL</label>
                     <input id="email" name="email" type="email" placeholder="unesi svoj email..." required>
                     <label for="name">LOZINKA</label>
-                    <input id="name" name="name" type="password" placeholder="unesi svoju lozinku..." required>
-                    <a href="/sendPaswordReset" class="forgot">Ne znaš lozinku?</a>
+                    <input id="name" name="password" type="password" placeholder="unesi svoju lozinku..." required>
+                    <a href="/reset" class="forgot">Ne znaš lozinku?</a>
                     <div class="link">
                         <button type="submit" class="login">Prijavi se</button>
                         <h3>Nemaš korisnički profil?</h3>

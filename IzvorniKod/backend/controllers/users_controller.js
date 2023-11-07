@@ -8,9 +8,10 @@ function createUser(req, res) {
     const { name, surname, email, password } = req.body;
     console.log(name, surname, email, password);
     try {
-        const result = db.prepare(user.createUser).run(name, surname, email, password);
+        const result = db.prepare(user.createUser).run(name, surname, email, "password");
         console.log(result.lastInsertRowid);
-        res.json(result.lastInsertRowid);
+        //res.json(result.lastInsertRowid);
+        res.render('resetPassNotif', { title: 'Register' });
     } catch (err) {
         console.error(err);
         res.status(404).send("User not created " + err.message);
@@ -21,7 +22,9 @@ function createUser(req, res) {
 function loginUser(req, res) {
     const { email, password } = req.body;
     try {
-        const row = db.prepare(user.loginEmailPassword).get(email, password);
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+        const row = db.prepare(user.loginEmailPassword).get(email, hash);
         if (!row) {
             console.log("User not found");
             res.status(404).send("User not found");
@@ -34,7 +37,8 @@ function loginUser(req, res) {
                 req.session.token = token;
                 req.session.email = email;
                 console.log(update);
-                res.json(update);
+                //res.json(update);
+                res.render('landingPage', { title: 'BalkanLinGO' });
             }
         }
       } catch (err) {
@@ -58,8 +62,8 @@ function logoutUser(req, res) {
     }
     req.session.token = null;
     req.session.email = null;
-    res.json(update);
-    //res.redirect('/');
+    //res.json(update);
+    res.redirect('/');
 }   
 
 //Get all users
@@ -75,10 +79,34 @@ function getAllUsers(req, res) {
     }
 }
 
+function resetPwd(req, res) {
+    const { email, password, password2 } = req.body;
+    console.log(email, password, password2);
+    try {
+        const row = db.prepare(user.getUserByEmail).get(email);
+        if (!row) {
+            console.log("User not found");
+            res.status(404).send("User not found");
+        } else {
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(password, salt);
+            const update = db.prepare(user.updatePasswordByEmail).run(hash, email);
+            if (update.changes !== 0) {
+                console.log(update);
+                res.render('login', { title: 'Login' });
+            }
+        }
+      } catch (err) {
+            console.error(err);
+            res.status(500).send("Internal Server Error: " + err.message);
+      }
+}
+
 // export all functions
 module.exports = {
     createUser,
     loginUser,
     getAllUsers,
-    logoutUser
+    logoutUser,
+    resetPwd
 }

@@ -20,6 +20,10 @@ const loginEmailPassword = `SELECT * FROM user WHERE email = ? AND password = ?`
 
 const getAllUsers = `SELECT * FROM user`;
 
+const getUserByEmail = 'SELECT * from user WHERE email = ?';
+
+const updatePasswordByEmail = `UPDATE user SET password = ? WHERE email = ? RETURNING *;`;
+
 const getUserByToken = `SELECT * FROM user WHERE token = ?;`;
 const updateTokenByEmail = `UPDATE user SET token = ? WHERE email = ? RETURNING *;`;
 
@@ -30,7 +34,9 @@ module.exports = {
     getAllUsers,
     getUserByToken,
     updateTokenByEmail,
-    createUserWithRole
+    createUserWithRole,
+    getUserByEmail,
+    updatePasswordByEmail
 };
 
 

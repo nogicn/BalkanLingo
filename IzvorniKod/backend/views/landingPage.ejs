@@ -8,6 +8,13 @@
         <meta name="keywords" content="">
         <title>BalkanLingo</title>
         <link rel="stylesheet" href="/css/dashboard.css">
+    <script>
+        window.onload = function() {
+                if(!sessionStorage.getItem('token')){
+                window.location.href = "/user/login";
+            }
+        }
+    </script>
     </head>
     <body>
         <div class="navbar">
@@ -16,7 +23,7 @@
             </div>
             <div class="navbar-right">
                 <img src="/images/orange-user.png" alt="">
-                <img src="/images/orange-logout.png" alt="">
+                <a href="/user/logout"><img src="/images/orange-logout.png" alt=""></a>
             </div>
         </div>
         <hr>
