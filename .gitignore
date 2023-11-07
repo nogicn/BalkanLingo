@@ -144,3 +144,4 @@ dist
 *.toc
 Dokumentacija/PROGI_ProjektnaDokumentacija.fdb_latexmk
 Dokumentacija/PROGI_ProjektnaDokumentacija.fls
+.DS_Store
