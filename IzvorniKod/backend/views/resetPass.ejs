@@ -11,7 +11,7 @@
 
         <title>Zaboravljena lozinka</title>
 
-        <link rel="stylesheet" href="./css/login.css">
+        <link rel="stylesheet" href="/css/login.css">
     </head>
 
     <body>
@@ -33,13 +33,13 @@
                     </div>
 
                 </div>
-                <form action="/user/authenticateLogin" method="post">
-                    
-                
-                    <label for="name">NOVA LOZINKA</label>
-                    <input id="name" name="name" type="password" placeholder="unesi svoju lozinku..." required>
-                    <label for="name">POTRVDI LOZINKU</label>
-                    <input id="name" name="name" type="password" placeholder="ponovno unesi svoju lozinku..." required>
+                <form action="/user/reset" method="post">
+                    <label for="email">EMAIL</label>
+                    <input id="name" name="email" type="email" placeholder="unesi svoj email..." required>
+                    <label for="password">NOVA LOZINKA</label>
+                    <input id="name" name="password" type="password" placeholder="unesi svoju lozinku..." required>
+                    <label for="password2">POTRVDI LOZINKU</label>
+                    <input id="name" name="password2" type="password" placeholder="ponovno unesi svoju lozinku..." required>
                     <br>
                     <div class="link">
                         <button type="submit" class="login">SPREMI</button>

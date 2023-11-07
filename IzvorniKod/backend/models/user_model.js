@@ -31,11 +31,20 @@ const getUserByToken = `
     SELECT * FROM user WHERE token = @token;
 `;
 
+const getUserByEmail = `
+    SELECT * from user WHERE email = @email;
+`;
+
 const updateTokenByEmail = `
     UPDATE user SET token = @token WHERE email = @email RETURNING *;
 `;
+
 const updateTokenById = `
     UPDATE user SET token = @token WHERE id = @id RETURNING *;
+`;
+
+const updatePasswordByEmail = `
+    UPDATE user SET password = @password WHERE email = @email RETURNING *;
 `;
 
 module.exports = {
@@ -45,8 +54,8 @@ module.exports = {
     loginEmailPassword,
     getAllUsers,
     getUserByToken,
+    getUserByEmail,
     updateTokenByEmail,
-    updateTokenById
+    updateTokenById,
+    updatePasswordByEmail
 };
-
-
