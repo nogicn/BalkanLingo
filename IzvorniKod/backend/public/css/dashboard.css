@@ -59,9 +59,90 @@ html, body {
   
   
   .main {
-    height: 84%; /* The main content takes the remaining 90% of the height */
+    min-height: 84%; /* The main content takes the remaining 90% of the height */
     padding: 20px;
     background-color: #ffecd3; /* Adjust the background color as needed */
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .dictionary{
+    height: 200px;
+    width: 125px;
+    margin: 15px;
+    min-height: 210px;
+    min-width: 140px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/france.png");
+    background-size: 200%;
+    background-position: center;
+    backdrop-filter: brightness(0.7);
+    transition: all 0.2s;
+  }
+
+  .dictionary:hover{
+    transition: all 0.2s;
+    background-size: 250%;
+  }
+
+  .add-dictionary{
+    height: 200px;
+    width: 135px;
+    margin: 12px;
+    min-height: 210px;
+    min-width: 140px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: all 0.2s;
+    border: 4px dashed #ff9f1c;
+    cursor: pointer;
+  }
+
+  .add-dictionary p{
+    text-align: center;
+    color: #ff9f1c;
+  }
+
+  .add-dictionary:hover{
+    filter: brightness(1.1);
+  }
+
+  .dictionary-name{
+    max-width: 100%;
+    margin-top: 5px;
+    color: #ffffff;
+    text-shadow: black 1px 0 10px;
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-container button{
+    margin: 5px;
+    width: 160%;
+    align-self: center;
+    border: none;
+    border-radius: 30px;
+    padding: 4px 10px;
+    background-color: #2EC4b6;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .button-container button:hover{
+    filter: brightness(1.05);
+    transform: scale(1.05);
   }
 
   hr{
@@ -71,7 +152,13 @@ html, body {
   }
   
 
-  @media (max-width: 500px) {
+  @media (max-width: 550px) {
+
+    .main{
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
     .footer-left {
         display: none;
         font-size: 7px;
