@@ -7,12 +7,16 @@ const salt = bcrypt.genSaltSync(10);
 // create a new user
 function createUser(req, res) {
     const { name, surname, email, password } = req.body;
-    console.log(name, surname, email, password);
+    //console.log(name, surname, email, password);
     try {
-        const result = db.prepare(user.createUser).run(name, surname, email, "password");
-        console.log(result.lastInsertRowid);
-        //res.json(result.lastInsertRowid);
-        res.render('resetPassNotif', { title: 'Register' });
+        const hash = bcrypt.hashSync(password, salt);
+        const result = db.prepare(user.createUser).run({name:name, surname:surname, email:email, password:hash});
+        if (result.changes !== 0) {
+            console.log(result);
+            res.render('resetPassNotif', { title: 'Register' });
+        }else{
+            res.redirect('/login');
+        }
     } catch (err) {
         console.error(err);
         res.status(404).send("User not created " + err.message);
@@ -25,7 +29,7 @@ function loginUser(req, res) {
     try {
         
         const hash = bcrypt.hashSync(password, salt);
-        const row = db.prepare(user.loginEmailPassword).get(email, hash);
+        const row = db.prepare(user.loginEmailPassword).get({email:email, password:hash});
         console.log(row);
         if (!row) {
             console.log("User not found");
@@ -34,13 +38,13 @@ function loginUser(req, res) {
             req.session.token = null;
             const token = jwt.sign({'mail':req.body.email}, 'iamaverystrongsecretyesyes?');
             console.log(token);
-            const update = db.prepare(user.updateTokenByEmail).get(token, email);
+            const update = db.prepare(user.updateTokenByEmail).get({token:token, email:email})
             if (update.changes !== 0) {
                 req.session.token = token;
                 req.session.email = email;
                 console.log(update);
                 //res.json(update);
-                res.render('landingPage', { title: 'BalkanLinGO' });
+                res.redirect('/');
             }
         }
       } catch (err) {
@@ -51,23 +55,33 @@ function loginUser(req, res) {
 
 
 function logoutUser(req, res) {
-    let checkToken = db.prepare(user.getUserByToken).get(req.session.token)
+    let checkToken = db.prepare(user.getUserByToken).get({ token: req.session.token });
     console.log(checkToken);
+
     if (checkToken.id == undefined) {
         res.status(302).send("Error no token");
         return;
     }
-    let update = db.prepare(user.updateTokenByEmail).run(null, req.session.email);
+
+    let update = db.prepare(user.updateTokenByEmail).run({ token: null, email: req.session.email });
+
     if (update.changes == 0) {
         res.status(302).send("Error");
         return;
     }
-    req.session.token = null;
-    req.session.email = null;
-    //res.json(update);
-    res.redirect('/');
-}   
 
+    const cookies = req.cookies;
+
+    for (const cookieName in cookies) {
+        if (cookies.hasOwnProperty(cookieName)) {
+            console.log(cookieName, cookies[cookieName]);
+        // Set each cookie's expiration date to a date in the past
+        res.cookie(cookieName, '', { expires: new Date(0), path: '/' });
+        }
+    }
+    req.session.destroy();
+    res.redirect('/');
+}
 //Get all users
 function getAllUsers(req, res) {
     try {
@@ -85,14 +99,14 @@ function resetPwd(req, res) {
     const { email, password, password2 } = req.body;
     console.log(email, password, password2);
     try {
-        const row = db.prepare(user.getUserByEmail).get(email);
+        const row = db.prepare(user.getUserByEmail).get({email:email});
         if (!row) {
             console.log("User not found");
             res.status(404).send("User not found");
         } else {
             
             const hash = bcrypt.hashSync(password, salt);
-            const update = db.prepare(user.updatePasswordByEmail).run(hash, email);
+            const update = db.prepare(user.updatePasswordByEmail).run({password:hash, email:email})
             if (update.changes !== 0) {
                 console.log(update);
                 res.render('login', { title: 'Login' });
@@ -110,5 +124,5 @@ module.exports = {
     loginUser,
     getAllUsers,
     logoutUser,
-    resetPwd
+    resetPwd,
 }

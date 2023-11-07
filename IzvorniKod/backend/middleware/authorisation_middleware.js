@@ -3,7 +3,7 @@ const users = require('../models/user_model');
 
 const checkAuth = (req, res, next) => {
     try {
-        const row = db.prepare(users.getUserByToken).get(req.session.token);
+        const row = db.prepare(users.getUserByToken).get({token:req.session.token});
         if (!row) {
             console.log("User not logged in");
             res.status(404).send("User not logged in");
