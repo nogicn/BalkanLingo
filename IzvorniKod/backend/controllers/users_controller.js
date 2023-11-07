@@ -22,8 +22,8 @@ function createUser(req, res) {
 function loginUser(req, res) {
     const { email, password } = req.body;
     try {
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password, salt);
+        
+        const hash = bcrypt.hashSync(password, process.env.SALT);
         const row = db.prepare(user.loginEmailPassword).get(email, hash);
         if (!row) {
             console.log("User not found");
@@ -88,8 +88,8 @@ function resetPwd(req, res) {
             console.log("User not found");
             res.status(404).send("User not found");
         } else {
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(password, salt);
+            
+            const hash = bcrypt.hashSync(password, process.env.SALT);
             const update = db.prepare(user.updatePasswordByEmail).run(hash, email);
             if (update.changes !== 0) {
                 console.log(update);

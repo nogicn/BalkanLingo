@@ -20,10 +20,10 @@ router.get('/login', function (req, res) {
 router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
-/*
-router.get('/', function(req, res, next) {
+
+router.get('/addDictionary', function(req, res, next) {
   res.render('addDictionary', { title: 'Express' });
 });
-*/
+
 
 module.exports = router;

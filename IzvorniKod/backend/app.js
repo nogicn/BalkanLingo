@@ -6,6 +6,13 @@ var logger = require('morgan');
 var http = require('http');
 const bodyParser = require('body-parser');
 var session = require('express-session');
+var dotenv = require('dotenv');
+dotenv.config();
+const bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(10);
+
+// add salt to env
+process.env.SALT = salt;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users_router');
