@@ -43,6 +43,7 @@ function loginUser(req, res) {
       }
 }
 
+
 function logoutUser(req, res) {
     let checkToken = db.prepare(user.getUserByToken).get(req.session.token)
     console.log(checkToken);
@@ -56,8 +57,10 @@ function logoutUser(req, res) {
         return;
     }
     req.session.token = null;
+    req.session.email = null;
     res.json(update);
-}
+    //res.redirect('/');
+}   
 
 //Get all users
 function getAllUsers(req, res) {
