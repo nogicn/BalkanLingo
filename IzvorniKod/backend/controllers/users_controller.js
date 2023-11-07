@@ -6,20 +6,35 @@ const salt = bcrypt.genSaltSync(10);
 
 // create a new user
 function createUser(req, res) {
-    const { name, surname, email, password } = req.body;
-    //console.log(name, surname, email, password);
-    try {
-        const hash = bcrypt.hashSync(password, salt);
-        const result = db.prepare(user.createUser).run({name:name, surname:surname, email:email, password:hash});
-        if (result.changes !== 0) {
-            console.log(result);
-            res.render('resetPassNotif', { title: 'Register' });
-        }else{
-            res.redirect('/login');
+    // check if incoming request is coming from localhost
+    if (req.hostname !== 'localhost') {
+        const { name, surname, email, password } = req.body;
+        //console.log(name, surname, email, password);
+        try {
+            const hash = bcrypt.hashSync(password, salt);
+            const result = db.prepare(user.createUser).run({name:name, surname:surname, email:email, password:hash});
+        } catch (err) {
+            console.error(err);
+            res.status(404).send("User not created " + err.message);
         }
-    } catch (err) {
-        console.error(err);
-        res.status(404).send("User not created " + err.message);
+    }else {
+        const { name, surname, email } = req.body;
+        //console.log(name, surname, email, password);
+        try {
+            // create random string for password
+            const password = Math.random().toString(36).slice(-8);
+            const hash = bcrypt.hashSync(password, salt);
+            const result = db.prepare(user.createUser).run({name:name, surname:surname, email:email, password:hash});
+            if (result.changes !== 0) {
+                console.log(result);
+                res.render('resetPassNotif', { title: 'Register' });
+            }else{
+                res.redirect('/login');
+            }
+        } catch (err) {
+            console.error(err);
+            res.status(404).send("User not created " + err.message);
+        }
     }
 }
 
