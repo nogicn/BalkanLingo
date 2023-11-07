@@ -2,6 +2,7 @@ const user = require('../models/user_model');
 const db = require('../database/database');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(10);
 
 // create a new user
 function createUser(req, res) {
@@ -23,8 +24,9 @@ function loginUser(req, res) {
     const { email, password } = req.body;
     try {
         
-        const hash = bcrypt.hashSync(password, process.env.SALT);
+        const hash = bcrypt.hashSync(password, salt);
         const row = db.prepare(user.loginEmailPassword).get(email, hash);
+        console.log(row);
         if (!row) {
             console.log("User not found");
             res.status(404).send("User not found");
@@ -89,7 +91,7 @@ function resetPwd(req, res) {
             res.status(404).send("User not found");
         } else {
             
-            const hash = bcrypt.hashSync(password, process.env.SALT);
+            const hash = bcrypt.hashSync(password, salt);
             const update = db.prepare(user.updatePasswordByEmail).run(hash, email);
             if (update.changes !== 0) {
                 console.log(update);
