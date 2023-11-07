@@ -1,6 +1,6 @@
 const createUserTable = `
     CREATE TABLE user (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         surname TEXT NOT NULL,
         email TEXT NOT NULL,
