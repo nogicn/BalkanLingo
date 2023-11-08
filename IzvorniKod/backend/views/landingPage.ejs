@@ -17,42 +17,31 @@
     </script>
     </head>
     <body>
-        <div class="navbar">
-            <div class="navbar-left">
-                <img src="/images/logoM.png" alt="">
-            </div>
-            <div class="navbar-right">
-                <img src="/images/orange-user.png" alt="">
-                <a href="/user/logout"><img src="/images/orange-logout.png" alt=""></a>
-            </div>
-        </div>
-        <hr>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
         <div class="main">
-            <!-- MAin content -->
-            <div class="dictionary">
-                <h3 class="dictionary-name">&#x1F1EB;&#x1F1F7; Francuski</h3>
-                <div class="button-container">
-                    <button><b>ODABERI</b></button>
-                    <button>UREDI</button>
+            <!-- Main content -->
+            <% for (let i = 0; i < dictionaries.length; i++) { %>
+                <div class="dictionary" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<%= dictionaries[i].image_link %>');">
+                  <h3 class="dictionary-name"><%= dictionaries[i].name %> </h3>
+                  <div class="button-container">
+                    
+                    <% if(is_admin==true) { %>
+                        <button><b>UREDI</b></button>
+                        <button><b>OBRIŠI</b></button>
+                    <% } else { %>
+                        <button><b>ODABERI</b></button>
+                        <button><b>OBRIŠI</b></button>
+                    <% } %>
+                  </div>
                 </div>
-            </div>
-            <div class="dictionary">
-                <h3 class="dictionary-name">&#x1F1EB;&#x1F1F7; Francuski</h3>
-                <div class="button-container">
-                    <button><b>ODABERI</b></button>
-                    <button>UREDI</button>
+              <% } %>
+            <a href="/addDict">
+                <div class="add-dictionary">
+                    <div class="add-button"><img src="/images/orange-add.png" alt=""></div>
+                    <p>DODAJ NOVI<br>RJEČNIK</p>
                 </div>
-            </div><div class="dictionary">
-                <h3 class="dictionary-name">&#x1F1EB;&#x1F1F7; Francuski</h3>
-                <div class="button-container">
-                    <button><b>ODABERI</b></button>
-                    <button>UREDI</button>
-                </div>
-            </div>
-            <div class="add-dictionary">
-                <div class="add-button"><img src="/images/orange-add.png" alt=""></div>
-                <p>DODAJ NOVI<br>RJEČNIK</p>
-            </div>
+            </a>
         </div>
         <hr>
         <div class="footer">

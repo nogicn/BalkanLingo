@@ -42,8 +42,9 @@ function createUser(req, res) {
 function loginUser(req, res) {
     const { email, password } = req.body;
     try {
-        
+        console.log(db.prepare(user.getAllUsers).all());
         const hash = bcrypt.hashSync(password, salt);
+        console.log(hash);
         const row = db.prepare(user.loginEmailPassword).get({email:email, password:hash});
         console.log(row);
         if (!row) {
@@ -57,9 +58,12 @@ function loginUser(req, res) {
             if (update.changes !== 0) {
                 req.session.token = token;
                 req.session.email = email;
+                req.session.name = update.name;
+                req.session.surname = update.surname;
+                req.session.is_admin = update.is_admin == 1 ? true : false;
                 console.log(update);
                 //res.json(update);
-                res.redirect('/');
+                res.redirect('/dashboard');
             }
         }
       } catch (err) {
@@ -133,6 +137,23 @@ function resetPwd(req, res) {
       }
 }
 
+function editUser(req, res) {
+    const { name, surname } = req.body;
+    console.log(name, surname);
+    try {
+        const update = db.prepare(user.updateUserByToken).run({name:name, surname:surname, token:req.session.token})
+        if (update.changes !== 0) {
+            console.log(update);
+            req.session.name = name;
+            req.session.surname = surname;
+            res.redirect('/user/edit');
+        }
+      } catch (err) {
+            console.error(err);
+            res.status(500).send("Internal Server Error: " + err.message);
+      }
+}
+
 // export all functions
 module.exports = {
     createUser,
@@ -140,4 +161,5 @@ module.exports = {
     getAllUsers,
     logoutUser,
     resetPwd,
+    editUser
 }

@@ -14,13 +14,19 @@ const createNewDictionary = `
 
 const getDictionariesForUser = `
     SELECT dictionary.*
-    FROM dictionary, user_dictionary
-    WHERE dictionary.id = user_dictionary.dictionary_id
-    AND user_dictionary.user_id = @userId;
+    FROM dictionary, dictionary_user
+    WHERE dictionary.id = dictionary_user.dictionary_id
+    AND dictionary_user.user_id = @userId;
+`;
+
+const getAllDictionaries = `
+    SELECT *
+    FROM dictionary;
 `;
 
 module.exports = {
     createDictionaryTable,
     createNewDictionary,
-    getDictionariesForUser
+    getDictionariesForUser,
+    getAllDictionaries
 }

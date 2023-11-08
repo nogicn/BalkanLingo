@@ -32,6 +32,7 @@ app.use('/', indexRouter);
 app.use('/user', usersRouter);
 
 migration.migration();
+migration.hashBuiltins();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

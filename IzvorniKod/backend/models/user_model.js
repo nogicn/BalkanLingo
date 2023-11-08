@@ -47,6 +47,10 @@ const updatePasswordByEmail = `
     UPDATE user SET password = @password WHERE email = @email RETURNING *;
 `;
 
+const updateUserByToken = `
+    UPDATE user SET name = @name, surname = @surname WHERE token = @token RETURNING *;
+`;
+
 module.exports = {
     createUserTable,
     createUser,
@@ -57,5 +61,6 @@ module.exports = {
     getUserByEmail,
     updateTokenByEmail,
     updateTokenById,
-    updatePasswordByEmail
+    updatePasswordByEmail,
+    updateUserByToken
 };

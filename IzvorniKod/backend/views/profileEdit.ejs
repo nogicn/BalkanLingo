@@ -10,33 +10,28 @@
         <link rel="stylesheet" href="/css/addDic.css">
     </head>
     <body>
-        <div class="navbar">
-            <div class="navbar-left">
-                <a href="/"><img src="/images/logoM.png" alt=""></a>
-            </div>
-            <div class="navbar-right">
-               <a href="/user/uredi"><img src="/images/orange-user.png" alt=""></a>
-                <img src="/images/orange-logout.png" alt="">
-            </div>
-        </div>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
         <hr>
         <div class="main">
             <div class="flex-container profile-container">
                 <h1>UREDI PROFIL</h1>
                 <img class="profile-img" src="/images/woman-post.svg" alt="">
 
-                <div class="word-edit-container">
-                    <label for="home" class="word-edit-label ">IME</label>
-                    <input class="word-edit" type="text" id="home" name="home" placeholder="autofill...">
-                </div>
-                <div class="word-edit-container">
-                    <label for="home" class="word-edit-label ">PREZIME</label>
-                    <input class="word-edit" type="text" id="home" name="home" placeholder="autofill...">
-                </div>
-                <div class="save-changes-container">
-                    <button class="save-changes">SPREMI PROMJENE</button>
-                    <img src="/images/blue-warning.png" alt="">
-                </div>
+                <form action="/user/edit" method="POST">
+                    <div class="word-edit-container">
+                        <label for="home" class="word-edit-label ">IME</label>
+                        <input class="word-edit" type="text" id="home" name="name" value="<%= name %>">
+                    </div>
+                    <div class="word-edit-container">
+                        <label for="home" class="word-edit-label ">PREZIME</label>
+                        <input class="word-edit" type="text" id="home" name="surname" value="<%= surname %>">
+                    </div>
+                    <div class="save-changes-container">
+                        <button class="save-changes" type="submit">SPREMI PROMJENE</button>
+                        <img src="/images/blue-warning.png" alt="">
+                    </div>
+                </form>
                 <p><a id="pass-reset" href="/reset">Ne znaš lozinku?</a></p>
             </div>
         </div>
