@@ -277,6 +277,7 @@ html, body {
       display: flex;
       align-items: center;
       flex-direction: column;
+      margin-bottom: 20px;
     }
 
     .word-edit-container{
@@ -326,6 +327,62 @@ html, body {
     /*namijenjeno za warning sliku ako dodamo*/
     .save-changes-container img{
       position: absolute;
+      top: 32%;
+      left: 110%;
+      width: 50px
+    }
+
+    /* ODI POCINJE ZA EDIT PROFILE*/
+
+    .flex-container h1{
+      font-size: 1.8rem;
+      min-width: 200px;
+      margin: 0;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .profile-img{
+      margin-top: 30px;
+      margin-bottom: 40px;
+      width: 55%;
+    }
+
+    .profile-container{
+      width: 30%;
+    }
+
+    .profile-container .save-changes-container{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      align-items: center;
+    }
+
+    .profile-container .save-changes-container .save-changes{
+      width: 90%;
+      padding: 14px 40px;
+      margin: 0;
+      font-size: 1rem;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 20px;
+    }
+
+    .flex-container.profile-container p a {
+      text-decoration: none;
+      color: #ff9f1c;
+      min-width: 100px;
+    }
+
+    .flex-container.profile-container p a:hover {
+      text-decoration: underline;
+    }
+
+    .profile-container .save-changes-container img{
+      position: absolute;
+      top: 0%;
+      left: 100%;
       width: 50px
     }
 
@@ -339,6 +396,10 @@ html, body {
     }
   }
 
+  .profile-container{
+    width: 40%;
+  }
+
   @media(max-width: 885px){
     .word-search-image{
       left: 85%;
@@ -349,6 +410,20 @@ html, body {
 
     .word-edit::placeholder{
       font-size: 1rem;
+    }
+
+    .profile-container .save-changes-container .save-changes{
+      width: 90%;
+      padding: 14px 40px;
+      margin: 0;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .profile-container{
+      width: 55%;
     }
   }
 
@@ -421,6 +496,13 @@ html, body {
       left: 98%;
       min-width: 45px;
 
+    }
+
+    .save-changes-container img{
+      position: absolute;
+      top: 46%;
+      left: 105%;
+      width: 30px
     }
   }
 
