@@ -21,6 +21,10 @@ router.get('/dictSearch', function (req, res) {
   res.render('dictSearch', { title: 'Search Dictionary' });
 });
 
+router.get('/editWord', function (req, res) {
+  res.render('editWord', { title: 'Search Dictionary' });
+});
+
 router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });

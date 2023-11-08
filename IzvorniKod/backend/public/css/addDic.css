@@ -147,6 +147,11 @@ html, body {
     font-weight: bolder;
   }
 
+  .title-word{
+    color: #ff9f1c;
+    font-weight: bold;
+  }
+
   .word-add{
     height: 50px;
     width: 100%;
@@ -232,15 +237,118 @@ html, body {
   }
 
 
+    /*Odi pocinje dio za editanje rijeci */
+
+    .word-edit{
+      height: 50px;
+      width: 90%;
+      margin: 5px;
+      margin-bottom: 10px;
+      background-color: #ffffff;
+      border-radius: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      padding-left: 20px;
+      background-color: #ffb145;
+    }
+
+    .word-edit::placeholder{
+      font-size: 1.2rem;
+      align-self: center;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .word-edit-label{
+      margin-right: 60%;
+      font: inherit;
+    }
+
+    .word-edit:focus{
+      background-color: #ffcb83;
+    }
+
+    .word-edit-container{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .word-edit-container{
+      position: relative;
+    }
+
+    .word-edit-container .img-container{
+      position: absolute;
+      top: 28px;
+      left: 98%;
+      min-width: 85px;
+
+    }
+
+    .img-container img{
+      width: 40px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .img-container img:hover{
+      filter: invert(0.5);
+    }
+
+    .save-changes{
+      margin-top: 30px;
+      background-color: #2ec4b6;
+      color: #ffffff;
+      padding: 12px 40px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .save-changes:hover{
+      filter: brightness(1.05);
+      text-shadow: white 1px 0 10px;
+      padding: 12px 50px;
+    }
+
+    .save-changes-container{
+      position: relative;
+    }
+
+    /*namijenjeno za warning sliku ako dodamo*/
+    .save-changes-container img{
+      position: absolute;
+      width: 50px
+    }
+
+
   @media(max-width: 1277px){
     .word-search-image{
       left: 90%;
+    }
+    .word-edit-label{
+      margin-right: 50%;
     }
   }
 
   @media(max-width: 885px){
     .word-search-image{
       left: 85%;
+    }
+    .word-edit-label{
+      margin-right: 40%;
+    }
+
+    .word-edit::placeholder{
+      font-size: 1rem;
     }
   }
 
@@ -275,12 +383,44 @@ html, body {
         width: 80%;
       }
 
+      .img-container img{
+        width: 30px;
+      }
+
+      .word-edit-container .img-container{
+        position: absolute;
+        top: 32px;
+        left: 98%;
+        min-width: 65px;
+  
+      }
+
 
   }
 
-  @media(max-width: 380px){
+  @media(max-width: 400px){
     .word-search-image{
       left: 80%;
+    }
+
+    .word-edit-label{
+      margin-right: 20%;
+    }
+
+    .word-edit::placeholder{
+      font-size: 0.8rem;
+    }
+
+    .img-container img{
+      width: 20px;
+    }
+
+    .word-edit-container .img-container{
+      position: absolute;
+      top: 37px;
+      left: 98%;
+      min-width: 45px;
+
     }
   }
 
