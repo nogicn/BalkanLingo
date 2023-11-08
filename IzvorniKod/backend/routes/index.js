@@ -17,12 +17,16 @@ router.get('/login', function (req, res) {
     res.render('login', { title: 'Login' });
 });
 
+router.get('/dictSearch', function (req, res) {
+  res.render('dictSearch', { title: 'Search Dictionary' });
+});
+
 router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
 
 router.get('/addDictionary', function(req, res, next) {
-  res.render('addDictionary', { title: 'Express' });
+  res.render('addDictionary', { title: 'Add Dictionary' });
 });
 
 

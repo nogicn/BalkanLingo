@@ -1,10 +1,10 @@
-@import url('https://fonts.cdnfonts.com/css/oswald-4');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@200&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Oswald Regular', 'Poppins', sans-serif;
+  font-family: 'Oswald Regular', sans-serif;
 }
 
 html, body {
@@ -78,6 +78,7 @@ html, body {
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
   }
 
   .flex-container .home-image{
@@ -137,9 +138,113 @@ html, body {
     border: 1px solid #ff9f1c;
     margin: 0;
   }
-  
 
-  @media (max-width: 550px) {
+  /*Odi pocinje dio za dodavanje rijeci u rijecnik */
+
+  .language-title{
+    font-size: 1.5rem;
+    margin-top: 30px;
+    font-weight: bolder;
+  }
+
+  .word-add{
+    height: 50px;
+    width: 100%;
+    margin:20px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .word-search-image{
+    width: 40px;
+    position:absolute;
+    top: 82px;
+    left: 93%;
+    cursor: pointer;
+  }
+
+  .word-search-image:hover{
+    animation: shake 0.5s;
+  }
+
+  .word-search{
+    height: 50px;
+    width: 101%;
+    margin:20px;
+    margin-bottom: 5px;
+    background-color: #cbf3f0;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font: inherit;
+    padding-left: 10px;
+  }
+
+  .word-search::placeholder{
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+  }
+
+  .word-search:focus::placeholder{
+    color: #ffffff;
+  }
+
+  .word-search:focus{
+    background-color: #2ec4b6;
+    color: #ffffff;
+  }
+
+  .actual-word{
+    font-weight: bold;
+    margin-left: 20px;
+  }
+
+  .word-buttons{
+    display: flex;
+    align-items: center;
+  
+  }
+
+  .word-buttons img{
+    transition: all 0.2s;
+    width: 40px;
+    margin-right: 10px;
+  }
+
+  .word-buttons .edit-button:hover{
+    animation: shake 0.5s;
+  }
+
+  .add-button:hover{
+    filter: invert(0.3);
+    transform: scale(1.05);
+  }
+
+
+  @media(max-width: 1277px){
+    .word-search-image{
+      left: 90%;
+    }
+  }
+
+  @media(max-width: 885px){
+    .word-search-image{
+      left: 85%;
+    }
+  }
+
+  @media (max-width: 580px) {
 
     .footer-left {
         display: none;
@@ -165,9 +270,25 @@ html, body {
         max-width: 150px;
       }
 
+    
       .flex-container{
         width: 80%;
       }
 
 
   }
+
+  @media(max-width: 380px){
+    .word-search-image{
+      left: 80%;
+    }
+  }
+
+
+  @keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+}
