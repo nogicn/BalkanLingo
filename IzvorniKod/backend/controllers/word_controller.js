@@ -72,6 +72,8 @@ function checkAnswer(req, res) {
         // update active question
         let activeQuestion = db.prepare(activeQuestionModel.setActiveQuestion).run({userId:user.id, wordId:null, type:1});
         res.redirect('/learnSession');
+    }{
+        res.send("Wrong answer");
     }
 }
 
