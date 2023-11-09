@@ -85,6 +85,7 @@ surname & VARCHAR & Prezime korisnika. \\ \hline
 email & VARCHAR & Email adresa korisnika. \\ \hline
 password & VARCHAR & Lozinka korisnika. \\ \hline
 is\_admin & INTEGER & Označava da li je korisnik administrator (1/0). \\ \hline
+token & VARCHAR & Token koji se koristi za autentifikaciju korisnika. \\ \hline
 \end{longtblr}
 
 Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language).
@@ -101,6 +102,8 @@ Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik i
 \SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator rječnika. \\ \hline
 name & VARCHAR & Naziv rječnika. \\ \hline
 language & VARCHAR & Jezik riječnika. \\ \hline
+image\_link & VARCHAR & Link na sliku koja predstavlja rječnik. \\ \hline
+flag\_icon\_link & VARCHAR & Link zastave jezika rječnika ili oznaka u UTF-8. \\ \hline
 \end{longtblr}
 
 Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje riječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
