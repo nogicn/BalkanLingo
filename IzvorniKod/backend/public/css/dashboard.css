@@ -56,7 +56,12 @@ html, body {
     max-height: 60px;
   }
 
-  
+  /* remove all styles from a tag */
+  a {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+  }
   
   .main {
     min-height: 84%; /* The main content takes the remaining 90% of the height */

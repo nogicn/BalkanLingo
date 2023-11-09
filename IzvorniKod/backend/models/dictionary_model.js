@@ -24,9 +24,25 @@ const getAllDictionaries = `
     FROM dictionary;
 `;
 
+const deleteDictionary = `
+    DELETE FROM dictionary
+    WHERE dictionary.id = @id;
+`;
+
+const getDictionariesNotAssignedToUser = `
+    SELECT dictionary.*
+    FROM dictionary
+    WHERE dictionary.id NOT IN (
+        SELECT dictionary_id
+        FROM dictionary_user
+        WHERE user_id = @userId
+    );
+`;
 module.exports = {
     createDictionaryTable,
     createNewDictionary,
     getDictionariesForUser,
-    getAllDictionaries
+    getAllDictionaries,
+    deleteDictionary,
+    getDictionariesNotAssignedToUser
 }

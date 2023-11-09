@@ -1,5 +1,3 @@
-const db = require('../database/database');
-
 const createWordTable = `
     CREATE TABLE word (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -26,9 +24,29 @@ const deleteWordByMeaning = `
     DELETE FROM word WHERE foreign_word = @foreignWord AND foreignDescription = @foreignDescription AND nativeWord = @nativeWord AND nativeDescription = @nativeDescription;
 `;
 
+const getWordByDictionaryId = `
+    SELECT * FROM word WHERE dictionary_id = @dictionaryId;
+`;
+
+const deleteWordByDictionaryId = `
+    DELETE FROM word WHERE dictionary_id = @dictionaryId;
+`;
+
+const getAllWords = `
+    SELECT * FROM word;
+`;
+
+const getWordById = `
+    SELECT * FROM word WHERE id = @wordId;
+`;
+
 module.exports = {
     createWordTable,
     createWord,
     deleteWordById,
-    deleteWordByMeaning
+    deleteWordByMeaning,
+    getWordByDictionaryId,
+    deleteWordByDictionaryId,
+    getAllWords,
+    getWordById
 }

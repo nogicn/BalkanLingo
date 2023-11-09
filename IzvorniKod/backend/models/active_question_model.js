@@ -13,7 +13,12 @@ const setActiveQuestion = `
     INSERT INTO active_question (user_id, word_id, type) VALUES (@userId, @wordId, @type);
 `;
 
+const getActiveQuestion = `
+    SELECT * FROM active_question WHERE user_id = @userId;
+`;
+
 module.exports = {
     createActiveQuestionTable,
-    setActiveQuestion
+    setActiveQuestion,
+    getActiveQuestion
 }

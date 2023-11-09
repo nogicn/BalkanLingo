@@ -11,8 +11,9 @@ dotenv.config();
 
 
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index_router');
 var usersRouter = require('./routes/users_router');
+var dictionaryRouter = require('./routes/dictionary_router');
 const migration = require('./database/serialise');
 
 var app = express();
@@ -28,8 +29,10 @@ app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 app.use(session({secret: "omgthissecretkeyissosecure"}));
 
+
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+app.use('/dictionary', dictionaryRouter);
 
 migration.migration();
 migration.hashBuiltins();

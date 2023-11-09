@@ -1,14 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var checkAuth = require('../middleware/authorisation_middleware');
-var indexController = require('../controllers/index_controller');
+var wordController = require('../controllers/word_controller');
+var dictionaryController = require('../controllers/dictionary_controller');
 
 /* GET home page. */
-router.get('/', checkAuth, function (req, res) {
+router.get('/', function (req, res) {
     res.render('home', { title: 'Home' });
 });
 
-router.get('/dashboard', checkAuth, indexController.dashboard);
+router.get('/dashboard', checkAuth, wordController.dashboard);
 
 router.get('/register', function (req, res) {
     res.render('register', { title: 'Register' });
@@ -30,7 +31,7 @@ router.get('/dict', checkAuth, function (req, res) {
     res.render('dictSearch', { title: 'Dictionary' });
 });
 
-router.get('/addDict', checkAuth, indexController.addDict);
+router.get('/addDict', checkAuth, dictionaryController.addDict);
 
 router.get('/dictSearch', function (req, res) {
   res.render('dictSearch', { title: 'Search Dictionary' });
@@ -52,9 +53,8 @@ router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
 
-router.get('/addDictionary', function(req, res, next) {
-  res.render('addDictionary', { title: 'Add Dictionary' });
-});
+
+
 
 
 module.exports = router;
