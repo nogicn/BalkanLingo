@@ -52,7 +52,7 @@ router.get('/profileEdit', checkAuth, function (req, res) {
   res.render('profileEdit', { title: 'Search Dictionary' });
 });
 
-router.get('/reset', checkAuth, function (req, res) {
+router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
 
