@@ -20,23 +20,18 @@
                     <h3>ODABERI TOČAN PRIJEVOD</h3>
                 </div>
                 <div class="word-and-phrase">
-                    <p class="word-hrv">RIJEČ NA HRVATSKOM JEZIKU</p>
-                    <p class="phrase-hrv">"FRAZA"</p>
+                    <p class="word-hrv"><%= currentWord.nativeWord %></p>
+                    <p class="phrase-hrv"><%= currentWord.nativeDescription %></p>
                 </div>
                 <div class="kahoot-area">
-                    <div class="kahoot-card">
-                        <div class="kahoot-word">RIJEČ NA STRANOM JEZIKU</div>
-                        <div class="kahoot-phrase">HINT:"fraza na stranom jeziku"</div>
-                    </div><div class="kahoot-card">
-                        <div class="kahoot-word">RIJEČ NA STRANOM JEZIKU</div>
-                        <div class="kahoot-phrase">HINT:"fraza na stranom jeziku"</div>
-                    </div><div class="kahoot-card">
-                        <div class="kahoot-word">RIJEČ NA STRANOM JEZIKU</div>
-                        <div class="kahoot-phrase">HINT:"fraza na stranom jeziku"</div>
-                    </div><div class="kahoot-card">
-                        <div class="kahoot-word">RIJEČ NA STRANOM JEZIKU</div>
-                        <div class="kahoot-phrase">HINT:"fraza na stranom jeziku"</div>
-                    </div>
+                    <% for (let i = 0; i < words.length; i++) { %>
+                    <a href="/dictionary/checkWord/<%= words[i].id %>">
+                        <div class="kahoot-card">
+                            <div class="kahoot-word"><%= words[i].foreignWord %></div>
+                            <div class="kahoot-phrase">HINT: <%= words[i].foreignDescription %></div>
+                        </div>
+                    </a>
+                    <% } %>
                 </div>
                 <div class="return-home">
                     <a href="/">
@@ -45,7 +40,7 @@
                     </a>
                 </div>
                 <div class="next-question">
-                    <a href="/">
+                    <a href="/dictionary/nextQuestion/<%= dictionaryId %>">
                         <img src="/images/orange-next.png" alt="">
                         <p>sljedeće pitanje</p>
                     </a>

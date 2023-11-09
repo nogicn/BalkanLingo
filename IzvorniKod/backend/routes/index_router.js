@@ -6,7 +6,12 @@ var dictionaryController = require('../controllers/dictionary_controller');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('home', { title: 'Home' });
+    if(req.session.token){
+        res.redirect('/dashboard');
+    }
+    else{
+        res.render('home', { title: 'Home' });
+    }
 });
 
 router.get('/dashboard', checkAuth, wordController.dashboard);
@@ -33,23 +38,21 @@ router.get('/dict', checkAuth, function (req, res) {
 
 router.get('/addDict', checkAuth, dictionaryController.addDict);
 
-router.get('/dictSearch', function (req, res) {
+router.get('/dictSearch', checkAuth, function (req, res) {
   res.render('dictSearch', { title: 'Search Dictionary' });
 });
 
-router.get('/learnSession', function (req, res) {
-  res.render('learnSession', { title: 'Search Dictionary' });
-});
+router.get('/learnSession/:id', checkAuth, wordController.learnSession);
 
-router.get('/editWord', function (req, res) {
+router.get('/editWord', checkAuth, function (req, res) {
   res.render('editWord', { title: 'Search Dictionary' });
 });
 
-router.get('/profileEdit', function (req, res) {
+router.get('/profileEdit', checkAuth, function (req, res) {
   res.render('profileEdit', { title: 'Search Dictionary' });
 });
 
-router.get('/reset', function (req, res) {
+router.get('/reset', checkAuth, function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
 

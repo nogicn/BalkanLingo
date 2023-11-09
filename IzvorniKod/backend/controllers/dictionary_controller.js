@@ -13,8 +13,9 @@ function getAllDictionaries(req, res) {
 function searchDictionary(req, res) {
     const id = req.params.id;
     const allwords = db.prepare(wordModel.getWordByDictionaryId).all({dictionaryId:id});
+    const Dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
     //const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:req.session.userId});
-    res.render('dictSearch', { title: 'Search Dictionary', words: allwords });
+    res.render('dictSearch', { title: 'Search Dictionary', words: allwords, dictionary: Dictionary });
 }
 
 function removeDictionary(req, res) {
@@ -51,17 +52,29 @@ function removeDictionary(req, res) {
 }
 
 function addDict(req, res) {
-    // get user from db
-    const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
-    // get all dictionaries not assigned to user
-    const dictionaries = db.prepare(dictionaryModel.getDictionariesNotAssignedToUser).all({userId:user.id});
+    if (req.session.is_admin) {
+        res.redirect('/dashboard');
+    }else{
+        // get user from db
+        const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
+        // get all dictionaries not assigned to user
+        const dictionaries = db.prepare(dictionaryModel.getDictionariesNotAssignedToUser).all({userId:user.id});
 
-    res.render('addDictionary', { title: 'Add Dictionary', dictionaries: dictionaries });
+        res.render('addDictionary', { title: 'Add Dictionary', dictionaries: dictionaries });
+    }
+}
+
+function addDictToUser(req, res) {
+    const id = req.params.id;
+    const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
+    const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:user.id});
+    res.redirect('/dashboard');
 }
 
 module.exports = {
     getAllDictionaries,
     searchDictionary,
     removeDictionary,
-    addDict
+    addDict,
+    addDictToUser
 }

@@ -30,7 +30,7 @@
                        <button><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
                         <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } else { %>
-                        <button><b>ODABERI</b></button>
+                        <button><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
                         <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } %>
                   </div>

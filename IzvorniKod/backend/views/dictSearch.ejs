@@ -10,28 +10,23 @@
         <link rel="stylesheet" href="/css/addDic.css">
     </head>
     <body>
-        <div class="navbar">
-            <div class="navbar-left">
-                <a href="/"><img src="/images/logoM.png" alt=""></a>
-            </div>
-            <div class="navbar-right">
-               <a href="/user/uredi"><img src="/images/orange-user.png" alt=""></a>
-                <img src="/images/orange-logout.png" alt="">
-            </div>
-        </div>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
         <hr>
         <div class="main">
             <div class="flex-container">
-                <h2 class="language-title">FRANCUSKI</h2>
+                <h2 class="language-title"><%= dictionary.name %></h2>
                 <input class="word-search" type="text" placeholder="Pretrazi strane rijeci...">
                 <img class="word-search-image" src="/images/white-search.png" alt="">
-                <div class="word-add">
-                    <div class="actual-word">STRANA RIJEC</div>
-                    <div class="word-buttons">
-                        <img  class="edit-button" src="/images/blue-edit.png" alt="">
-                        <img class="add-button" src="/images/black-add.png" alt="">
+                <% for (let i = 0; i < words.length; i++) { %>
+                    <div class="word-add">
+                        <div class="actual-word"><%= words[i].foreignWord %> </div>
+                        <div class="word-buttons">
+                            <img  class="edit-button" src="/images/blue-edit.png" alt="">
+                            <img class="add-button" src="/images/black-add.png" alt="">
+                        </div>
                     </div>
-                </div>
+                <% } %>
                 <a href="/"><img  class="home-image" src="/images/orange-home.png" alt=""></a>
             </div>
         </div>

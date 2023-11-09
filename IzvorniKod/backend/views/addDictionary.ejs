@@ -23,22 +23,12 @@
         <div class="main">
             <div class="flex-container">
                 <img class="two-aliens" src="/images/two-aliens-deciding.svg" alt="">
+                <% for (let i = 0; i < dictionaries.length; i++) { %>
                 <div class="language-add">
-                    <div class="language-name">KINESKI</div>
-                    <img src="/images/black-add.png" alt="">
+                    <div class="language-name"><%= dictionaries[i].name %></div>
+                    <a href="/dictionary/addDictionaryToUser/<%= dictionaries[i].id%>"><img src="/images/black-add.png" alt=""></a>
                 </div>
-                <div class="language-add">
-                    <div class="language-name">KINESKI</div>
-                    <img src="/images/black-add.png" alt="">
-                </div>
-                <div class="language-add">
-                    <div class="language-name">KINESKI</div>
-                    <img src="/images/black-add.png" alt="">
-                </div>
-                <div class="language-add">
-                    <div class="language-name">KINESKI</div>
-                    <img src="/images/black-add.png" alt="">
-                </div>
+                <% } %>
             </div>
         </div>
         <hr>

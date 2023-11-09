@@ -38,11 +38,20 @@ const getDictionariesNotAssignedToUser = `
         WHERE user_id = @userId
     );
 `;
+
+const getDictionaryById = `
+    SELECT *
+    FROM dictionary
+    WHERE id = @id;
+`;
+
 module.exports = {
     createDictionaryTable,
     createNewDictionary,
     getDictionariesForUser,
     getAllDictionaries,
     deleteDictionary,
-    getDictionariesNotAssignedToUser
+    getDictionariesNotAssignedToUser,
+    getDictionaryById
+
 }
