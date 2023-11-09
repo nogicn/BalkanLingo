@@ -14,7 +14,9 @@ router.get('/logout', checkAuth, user_controller.logoutUser);
 
 // create get all users route
 router.get('/', checkAuth, user_controller.getAllUsers);
+
 // import users controller
+router.post('/edit', checkAuth, user_controller.editUser);
 
 // reset password
 router.post('/reset', user_controller.resetPwd);

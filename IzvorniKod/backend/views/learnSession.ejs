@@ -7,41 +7,45 @@
         <meta name="author" content="">
         <meta name="keywords" content="">
         <title>BalkanLingo</title>
-        <link rel="stylesheet" href="/css/dashboard.css">
-    <script>
-        window.onload = function() {
-            
-            // check if there is cookie with token %TODO%
-            
-        }
-    </script>
+        <link rel="stylesheet" href="/css/learnSes.css">
     </head>
     <body>
         <!-- Navbar -->
         <% include partials/navbar.ejs %>
+        <hr>
         <div class="main">
-            <!-- Main content -->
-            <% for (let i = 0; i < dictionaries.length; i++) { %>
-                <div class="dictionary" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<%= dictionaries[i].image_link %>');">
-                  <h3 class="dictionary-name"><%= dictionaries[i].flag_icon_link %> <%= dictionaries[i].name %> </h3>
-                  <div class="button-container">
-                    
-                    <% if(is_admin==true) { %>
-                       <button><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
-                    <% } else { %>
-                        <button><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+            <div class="learn-session">
+                <div class="session-title">
+                    <img src="/images/black-multiple-choice.png" alt="">
+                    <h3>ODABERI TOČAN PRIJEVOD</h3>
+                </div>
+                <div class="word-and-phrase">
+                    <p class="word-hrv"><%= currentWord.nativeWord %></p>
+                    <p class="phrase-hrv"><%= currentWord.nativeDescription %></p>
+                </div>
+                <div class="kahoot-area">
+                    <% for (let i = 0; i < words.length; i++) { %>
+                    <a href="/dictionary/checkWord/<%= words[i].id %>">
+                        <div class="kahoot-card">
+                            <div class="kahoot-word"><%= words[i].foreignWord %></div>
+                            <div class="kahoot-phrase">HINT: <%= words[i].foreignDescription %></div>
+                        </div>
+                    </a>
                     <% } %>
-                  </div>
                 </div>
-              <% } %>
-            <a href="/addDict">
-                <div class="add-dictionary">
-                    <div class="add-button"><img src="/images/orange-add.png" alt=""></div>
-                    <p>DODAJ NOVI<br>RJEČNIK</p>
+                <div class="return-home">
+                    <a href="/">
+                        <img src="/images/orange-home.png" alt="">
+                        <p>završi sesiju učenja</p>
+                    </a>
                 </div>
-            </a>
+                <div class="next-question">
+                    <a href="/dictionary/nextQuestion/<%= dictionaryId %>">
+                        <img src="/images/orange-next.png" alt="">
+                        <p>sljedeće pitanje</p>
+                    </a>
+                </div>
+            </div>
         </div>
         <hr>
         <div class="footer">

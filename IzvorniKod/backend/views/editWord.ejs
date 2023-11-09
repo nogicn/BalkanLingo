@@ -7,41 +7,59 @@
         <meta name="author" content="">
         <meta name="keywords" content="">
         <title>BalkanLingo</title>
-        <link rel="stylesheet" href="/css/dashboard.css">
-    <script>
-        window.onload = function() {
-            
-            // check if there is cookie with token %TODO%
-            
-        }
-    </script>
+        <link rel="stylesheet" href="/css/addDic.css">
     </head>
     <body>
-        <!-- Navbar -->
-        <% include partials/navbar.ejs %>
+        <div class="navbar">
+            <div class="navbar-left">
+                <a href="/"><img src="/images/logoM.png" alt=""></a>
+            </div>
+            <div class="navbar-right">
+               <a href="/user/uredi"><img src="/images/orange-user.png" alt=""></a>
+                <img src="/images/orange-logout.png" alt="">
+            </div>
+        </div>
+        <hr>
         <div class="main">
-            <!-- Main content -->
-            <% for (let i = 0; i < dictionaries.length; i++) { %>
-                <div class="dictionary" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<%= dictionaries[i].image_link %>');">
-                  <h3 class="dictionary-name"><%= dictionaries[i].flag_icon_link %> <%= dictionaries[i].name %> </h3>
-                  <div class="button-container">
-                    
-                    <% if(is_admin==true) { %>
-                       <button><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
-                    <% } else { %>
-                        <button><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
-                    <% } %>
-                  </div>
+            <div class="flex-container">
+                <div class="language-title">FRANCUSKI</div>
+                <div class="language-title title-word">RIJEČ</div>
+                <div class="word-edit-container">
+                    <label for="home" class="word-edit-label">DOMAĆA RIJEČ</label>
+                    <input class="word-edit" type="text" id="home" name="home" placeholder="Riječ">
                 </div>
-              <% } %>
-            <a href="/addDict">
-                <div class="add-dictionary">
-                    <div class="add-button"><img src="/images/orange-add.png" alt=""></div>
-                    <p>DODAJ NOVI<br>RJEČNIK</p>
+                <div class="word-edit-container">
+                    <label for="home" class="word-edit-label word-edit-phrase">DOMAĆA FRAZA</label>
+                    <input class="word-edit" type="text" id="home" name="home" placeholder="Naučio sam ovu riječ">
+                    <div class="img-container">
+                        <img src="/images/black-add.png" alt="">
+                        <img src="/images/black-remove.png" alt="">
+                    </div>
                 </div>
-            </a>
+                <div class="word-edit-container">
+                    <label for="home" class="word-edit-label ">STRANA RIJEČ</label>
+                    <input class="word-edit" type="text" id="home" name="home" placeholder="Word">
+                </div>
+                <div class="word-edit-container">
+                    <label for="home" class="word-edit-label word-edit-phrase">STRANA FRAZA</label>
+                    <input class="word-edit" type="text" id="home" name="home" placeholder="I've learned a new word!">
+                    <div class="img-container">
+                        <img src="/images/black-add.png" alt="">
+                        <img src="/images/black-remove.png" alt="">
+                    </div>
+                </div>
+                <div class="word-edit-container">
+                    <label for="home" class="word-edit-label">AUDIOZAPIS</label>
+                    <input class="word-edit" type="text" id="home" name="home" placeholder="word.mp3">
+                    <div class="img-container">
+                        <img src="/images/black-upload.png" alt="">
+                    </div>
+                </div>
+                <div class="save-changes-container">
+                    <button class="save-changes">SPREMI PROMJENE</button>
+                    <img src="/images/blue-warning.png" alt="">
+                </div>
+            </div>
         </div>
         <hr>
         <div class="footer">

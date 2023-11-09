@@ -14,13 +14,44 @@ const createNewDictionary = `
 
 const getDictionariesForUser = `
     SELECT dictionary.*
-    FROM dictionary, user_dictionary
-    WHERE dictionary.id = user_dictionary.dictionary_id
-    AND user_dictionary.user_id = @userId;
+    FROM dictionary, dictionary_user
+    WHERE dictionary.id = dictionary_user.dictionary_id
+    AND dictionary_user.user_id = @userId;
+`;
+
+const getAllDictionaries = `
+    SELECT *
+    FROM dictionary;
+`;
+
+const deleteDictionary = `
+    DELETE FROM dictionary
+    WHERE dictionary.id = @id;
+`;
+
+const getDictionariesNotAssignedToUser = `
+    SELECT dictionary.*
+    FROM dictionary
+    WHERE dictionary.id NOT IN (
+        SELECT dictionary_id
+        FROM dictionary_user
+        WHERE user_id = @userId
+    );
+`;
+
+const getDictionaryById = `
+    SELECT *
+    FROM dictionary
+    WHERE id = @id;
 `;
 
 module.exports = {
     createDictionaryTable,
     createNewDictionary,
-    getDictionariesForUser
+    getDictionariesForUser,
+    getAllDictionaries,
+    deleteDictionary,
+    getDictionariesNotAssignedToUser,
+    getDictionaryById
+
 }

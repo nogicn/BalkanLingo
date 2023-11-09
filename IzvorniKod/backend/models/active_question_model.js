@@ -1,19 +1,30 @@
 const createActiveQuestionTable = `
     CREATE TABLE active_question (
-        user_id INTEGER PRIMARY KEY,
-        word_id INTEGER NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER ,
+        word_id INTEGER,
         type INTEGER NOT NULL DEFAULT 1, -- (1, 2, 3)
         FOREIGN KEY (user_id) REFERENCES user(id),
         FOREIGN KEY (word_id) REFERENCES word(id)
     );
 `;
 
-const setActiveQuestion = `
+const deleteActiveQuestion = `
     DELETE FROM active_question WHERE user_id = @userId;
+    
+`;
+
+const setActiveQuestion = `
     INSERT INTO active_question (user_id, word_id, type) VALUES (@userId, @wordId, @type);
+`;
+
+const getActiveQuestion = `
+    SELECT * FROM active_question WHERE user_id = @userId;
 `;
 
 module.exports = {
     createActiveQuestionTable,
-    setActiveQuestion
+    getActiveQuestion,
+    setActiveQuestion,
+    deleteActiveQuestion
 }
