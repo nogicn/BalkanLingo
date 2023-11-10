@@ -6,12 +6,7 @@ var dictionaryController = require('../controllers/dictionary_controller');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    if(req.session.token){
-        res.redirect('/dashboard');
-    }
-    else{
         res.render('home', { title: 'Home' });
-    }
 });
 
 router.get('/dashboard', checkAuth, wordController.dashboard);
