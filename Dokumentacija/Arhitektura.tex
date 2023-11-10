@@ -6,56 +6,55 @@
   \item Baza podataka
 \end{itemize}
 
-\underline{Web preglednik} je program koji služi za prikaz web stranica. Svaki preglednik interpretira HTML dokumente i prikazuje ih korisniku. On je zapravo posrednik između korisnika i podataka kojima želi pristupiti.\hfill \break
+\underline{Web preglednik} je "program koji omogućava surfanje". On služi kao korisničko sučelje i prikazivatelj podataka te enkapsulira kompletnu komunikaciju i HTTP zahtjeve te odgovore između korisnika i servera. Preglednici interpretiraju HTTP odgovore servera, najčešće HTML dokumente (i dodatke na koje se HTML dokumenti referiraju) te ih prikladno prikazuje.\hfill \break
 
-\underline{Web poslužitelj} je program koji šalje HTML dokumente pregledniku. 
-Odabrali smo Express jer su svi već upoznati s njim sa predmeta web1. 
-U našem projektu on je također zadužen za komunikaciju s bazom podataka i obradu zahtjeva koje dobiva od preglednika. Obrada zahtjeva rezultira slanjem HTML-a pregledniku umjesto da šalje JSON podatke. Razlog toga je da želimo održati HATEOAS (Hypermedia as the Engine of Application State) princip zajedno sa REST (Representational State Transfer) principom. Upravo zbog toga koristimo HTMX library, koji nam omogućava da dobijemo modernu interaktivnu aplikaciju, ali bez da izgubimo HATEOAS i REST principe. Prednost ovog načina rada je da je svo stanje na serveru, 
-dakle ima samo jedan izvor istine što drastično smanjuje kompleksnost aplikacije.\hfill \break
+\underline{Web poslužitelj} je program koji obrađuje podatke, čeka korisnike te interagira s njima (odgovara HTML dokumentima). 
+Odabrali smo Express jer su svi članovi tima dobro upoznati s njim i nismo smatrali da je projekt suviše kompleksan za ovu (u svijetu raširenu) tehnologiju. U našem projektu on je također zadužen za komunikaciju s bazom podataka i obradu zahtjeva koje dobiva od preglednika. Obrada zahtjeva rezultira slanjem HTML-a pregledniku umjesto da se šalju JSON podaci. Razlog tome jest da želimo održati HATEOAS (Hypermedia as the Engine of Application State) princip zajedno sa REST (Representational State Transfer) principom. Zbog toga koristimo HTMX koji nam omogućava razvoj moderne i interaktivne aplikaciju bez da kompromitiramo navedene principe. Dodatno, HTMX rješava probleme kao: mali broj elemenata koji mogu slati zahtjeve, podržanost isključivo GET i POST metoda, osvježavanje cijele stranice umjesto samo ažuriranih komponenti. Prednost ovog načina rada jest i taj da je svo stanje zapravo na serveru, a HTMX ga prikazuje. Tada ne moramo dodatno sinkronizirati stanje na serveru i stanje na klijentu i  drastično se smanjuje kompleksnost aplikacije.\hfill \break
 
-\underline{Baza podataka} se koristi za pohranjivanje, dohvaćanje, brisanje i ažuriranje podataka. Za bazu smo odlučili koristiti SQLite3 jer je jednostavna za korištenje, ne zahtjeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.\hfill \break
+\underline{Baza podataka} koristi se za pohranju, dohvaćanje, brisanje i ažuriranje podataka. Koristimo tehnologiju SQLite3 jer je jednostavna za korištenje, ne zahtjeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.\hfill \break
+\eject
+U svrhu bolje organizacije koda, aplikacija je podijeljena na module. Pošto iz dokumentacije znamo što koji dio aplikacije radi, moguće je na svim modulima raditi aplikacije paralelno. Svaki se može interpretirati kao zasebna cjelina koja se sastoji od serverske tehnologije i baze podataka.\hfill \break
 
-Radi bolje organizacije koda, aplikacija je podijeljena na module. Pošto znamo iz dokumentacije što koji dio aplikacije radi i što je potrebno za unutarnju komunikaciju moguće je raditi sve dijelove aplikacije paralelno. Svaki modul je zasebna cjelina koja se sastoji od Expressa i baze podataka.\hfill \break
-
-Dijelovi backend aplikacije na web poslužitelju su:
+Dijelovi serverske strane aplikacije su:
 \begin{itemize}
-  \item Sloj domene (engl. routes)
-  \item Sloj nadzora (engl. controllers)
-  \item Sloj baze podataka (engl. database)
-  \item Sloj podataka (engl. models)
+  \item Sloj domene (engl. \textit{routes})
+  \item Sloj nadzora (engl. \textit{controllers})
+  \item Sloj baze podataka (engl. \textit{database})
+  \item Sloj podataka (engl. \textit{models})
 \end{itemize}
-\hfill \break
-\underline{Sloj domene} je sloj koji se sastoji od express ruta. U ovom sloju su definirane rute koje se mogu pozvati iz React aplikacije te se u njima definiraju koje funkcije iz sloja nadzora se trebaju pozvati.\hfill \break
+\hfill
+\\
 
-\underline{Sloj nadzora} je sloj koji se sastoji od express kontrolera. Njegov zadatak je da obradi zahtjev koji je dobio od sloja domene. U ovom sloju se pozivaju funkcije koje koriste upite iz sloja baze podataka i bazu podataka.\hfill \break
+\underline{Sloj domene} je sloj koji se sastoji od Express ruta. U ovom su sloju definirane rute koje se mogu pozvati iz korisničkog sučelja aplikacije te se u njima definira i koje funkcije iz sloja nadzora trebamo pozvati.\hfill \break
 
-\underline{Sloj podataka} se koristi za definiranje izgleda baze podataka. Ovaj sloj se koristi kada se baza prvi put stvara kako bi se automatski definirao izgled baze podataka (engl. migrate).\hfill \break
+\underline{Sloj nadzora} je sloj koji se sastoji od Express kontrolera. Zadatak  ovog sloja jest obrada zahtjeva sloja domene. U ovom se sloju pozivaju funkcije koje koriste bazu podataka i upite iz sloja baze podataka.\hfill \break
 
-\underline{Sloj baze podataka} je sloj koji se sastoji od upita prema bazi podataka. Odlučili smo ga odvojiti od sloja nadzora kako bi se izbjeglo dupliciranje koda te kako bi imali što manje konflikata kod spajanja.\hfill \break
+\underline{Sloj podataka} koristi se za definiranje izgleda baze podataka. Ovaj se sloj koristi kada se baza prvi put stvara kako bi se automatski definirao izgled baze podataka (engl. \textit{migrate}).\hfill \break
+
+\underline{Sloj baze podataka} je sloj koji se sastoji od upita prema bazi podataka. Odlučili smo ga odvojiti od sloja nadzora kako bi se izbjeglo dupliciranje koda te kako bismo imali što manje konflikata kod spajanja.\hfill \eject
 
 
 Tijek dohvaćanja informacija iz baze podataka:
 \begin{itemize}
 	\item Sloj korisnika
-	\item sloj domene
-	\item sloj nadzora
-	\item sloj baze podataka
-	\item sloj podataka
+	\item Sloj domene
+	\item Sloj nadzora
+	\item Sloj baze podataka
+	\item Sloj podataka
   \end{itemize}
 
 Sumiranje svih prednosti:
 \begin{itemize}
-  \item Jednostavnost "prednjeg" dijela sustava zbog HATEOAS i REST principa (izbjegavanje dupliciranja stanja na klijentu)
-  \item Jednostavnost produljenja i izmjene koda zbog odvojenosti slojeva
+  \item Jednostavnost "prednjeg" dijela sustava zbog HATEOAS i REST \newline principa (izbjegavanje dupliciranja stanja na klijentu)
+  \item Jednostavnost nadogradnje i izmjene koda zbog odvojenosti slojeva
   \item Jednostavna baza podataka koja ne zahtjeva nikakvu konfiguraciju
-  \item Jednostavna instalacija i pokretanje aplikacije (docker compose)
+  \item Jednostavna instalacija i pokretanje aplikacije (\textit{docker compose})
 \end{itemize}
 
 				
 				\section{Baza podataka}
 
-Baza podataka
-Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugrađeni sustav za upravljanje bazama podataka koji se često koristi za manje aplikacije i mobilne aplikacije zbog svoje jednostavnosti i portabilnosti. SQLite omogućava učinkovito pohranjivanje i upravljanje podacima u lokalnom okruženju te je posebno prikladan za manje sustave koji ne zahtijevaju složene baze podataka. Sustav je temeljen na relacijskom modelu i sadrži slijedeće tablice.
+Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugrađeni sustav za upravljanje bazama podataka koji se često koristi za manje aplikacije i mobilne aplikacije zbog svoje jednostavnosti i prenosivosti. SQLite omogućava učinkovito pohranjivanje i upravljanje podacima u lokalnom okruženju te je posebno prikladan za manje sustave koji ne zahtijevaju složene baze podataka. Sustav je temeljen na relacijskom modelu i sadrži sljedeće tablice:
 \begin{itemize}
     \item user
     \item dictionary
@@ -67,7 +66,7 @@ Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugr
 
 \subsection{Opis tablica}
 
-Tablica \textbf{"user"} sadrži informacije o korisnicima sustava. Svaki korisnik ima jedinstveni identifikator (id), ime (name), prezime (surname), email adresu (email), lozinku (password) te zastavicu is\_admin koja označava je li korisnik administrator (1) ili ne (0). Zastavica is\_admin je predstavljena INTEGER tipom jer SQLite ne podržava tip BOOLEAN.
+Tablica \textbf{"user"} sadrži informacije o korisnicima sustava. Svaki korisnik ima jedinstveni identifikator (id), ime (name), prezime (surname), adresu elektroničke pošte (email), lozinku (password) te zastavicu is\_admin koja označava je li korisnik administrator (1) ili ne (0). Zastavica is\_admin je predstavljena INTEGER tipom jer SQLite ne podržava tip BOOLEAN.
 
 
 \begin{longtblr}[
@@ -82,7 +81,7 @@ Tablica \textbf{"user"} sadrži informacije o korisnicima sustava. Svaki korisni
 \SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator korisnika. \\ \hline
 name & VARCHAR & Ime korisnika. \\ \hline
 surname & VARCHAR & Prezime korisnika. \\ \hline
-email & VARCHAR & Email adresa korisnika. \\ \hline
+email & VARCHAR & Adresa elektroničke pošte korisnika. \\ \hline
 password & VARCHAR & Lozinka korisnika. \\ \hline
 is\_admin & INTEGER & Označava da li je korisnik administrator (1/0). \\ \hline
 token & VARCHAR & Token koji se koristi za autentifikaciju korisnika. \\ \hline
@@ -101,12 +100,12 @@ Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik i
 \hline \SetCell[c=3]{c}{\textbf{dictionary}} \\ \hline[3pt]
 \SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator rječnika. \\ \hline
 name & VARCHAR & Naziv rječnika. \\ \hline
-language & VARCHAR & Jezik riječnika. \\ \hline
+language & VARCHAR & Jezik rječnika. \\ \hline
 image\_link & VARCHAR & Link na sliku koja predstavlja rječnik. \\ \hline
 flag\_icon\_link & VARCHAR & Link zastave jezika rječnika ili oznaka u UTF-8. \\ \hline
 \end{longtblr}
 
-Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje riječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
+Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje rječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
 
 \begin{longtblr}[
     label=none,
