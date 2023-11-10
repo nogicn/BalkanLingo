@@ -4,6 +4,7 @@ const dictionaryUserModel = require('../models/dictionary_user_model');
 const userModel = require('../models/user_model');
 const wordModel = require('../models/word_model');
 const dictinoaryUserModel = require('../models/dictionary_user_model');
+const activeQuestionModel = require('../models/active_question_model');
 
 function getAllDictionaries(req, res) {
     const dictionaries = db.prepare("SELECT * FROM dictionary").all();
@@ -23,6 +24,11 @@ function removeDictionary(req, res) {
 
         try {
             const id = req.params.id;
+            const getAllWordsFromDictionary = db.prepare(wordModel.getWordByDictionaryId).all({dictionaryId:id});
+            for (let i = 0; i < getAllWordsFromDictionary.length; i++) {
+                const deleteWord = db.prepare(activeQuestionModel.deleteActiveQuestionWordId).run({wordId:getAllWordsFromDictionary[i].id});
+            }
+            
             const allwords = db.prepare(wordModel.deleteWordByDictionaryId).run({dictionaryId:id});
             const allusers = db.prepare(userModel.getAllUsers).all();
             for (let i = 0; i < allusers.length; i++) {
