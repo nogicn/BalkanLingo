@@ -4,6 +4,7 @@ const dictionaryUserModel = require('../models/dictionary_user_model');
 const userModel = require('../models/user_model');
 const wordModel = require('../models/word_model');
 const dictinoaryUserModel = require('../models/dictionary_user_model');
+const activeQuestionModel = require('../models/active_question_model');
 
 function getAllDictionaries(req, res) {
     const dictionaries = db.prepare("SELECT * FROM dictionary").all();
@@ -14,7 +15,6 @@ function searchDictionary(req, res) {
     const id = req.params.id;
     const allwords = db.prepare(wordModel.getWordByDictionaryId).all({dictionaryId:id});
     const Dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
-    //const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:req.session.userId});
     res.render('dictSearch', { title: 'Search Dictionary', words: allwords, dictionary: Dictionary });
 }
 
@@ -23,6 +23,11 @@ function removeDictionary(req, res) {
 
         try {
             const id = req.params.id;
+            const getAllWordsFromDictionary = db.prepare(wordModel.getWordByDictionaryId).all({dictionaryId:id});
+            for (let i = 0; i < getAllWordsFromDictionary.length; i++) {
+                const deleteWord = db.prepare(activeQuestionModel.deleteActiveQuestionWordId).run({wordId:getAllWordsFromDictionary[i].id});
+            }
+            
             const allwords = db.prepare(wordModel.deleteWordByDictionaryId).run({dictionaryId:id});
             const allusers = db.prepare(userModel.getAllUsers).all();
             for (let i = 0; i < allusers.length; i++) {
@@ -51,7 +56,7 @@ function removeDictionary(req, res) {
     }
 }
 
-function addDict(req, res) {
+function addDictionary(req, res) {
     if (req.session.is_admin) {
         res.redirect('/dashboard');
     }else{
@@ -64,7 +69,7 @@ function addDict(req, res) {
     }
 }
 
-function addDictToUser(req, res) {
+function addDictionaryToUser(req, res) {
     const id = req.params.id;
     const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
     const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:user.id});
@@ -75,6 +80,6 @@ module.exports = {
     getAllDictionaries,
     searchDictionary,
     removeDictionary,
-    addDict,
-    addDictToUser
+    addDict: addDictionary,
+    addDictToUser: addDictionaryToUser
 }

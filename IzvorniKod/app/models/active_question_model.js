@@ -14,6 +14,11 @@ const deleteActiveQuestion = `
     
 `;
 
+const deleteActiveQuestionWordId = `
+    DELETE FROM active_question WHERE word_id = @wordId;
+    
+`;
+
 const setActiveQuestion = `
     INSERT INTO active_question (user_id, word_id, type) VALUES (@userId, @wordId, @type);
 `;
@@ -26,5 +31,6 @@ module.exports = {
     createActiveQuestionTable,
     getActiveQuestion,
     setActiveQuestion,
-    deleteActiveQuestion
+    deleteActiveQuestion,
+    deleteActiveQuestionWordId
 }
