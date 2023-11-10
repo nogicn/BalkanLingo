@@ -15,7 +15,6 @@ function searchDictionary(req, res) {
     const id = req.params.id;
     const allwords = db.prepare(wordModel.getWordByDictionaryId).all({dictionaryId:id});
     const Dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
-    //const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:req.session.userId});
     res.render('dictSearch', { title: 'Search Dictionary', words: allwords, dictionary: Dictionary });
 }
 
@@ -57,7 +56,7 @@ function removeDictionary(req, res) {
     }
 }
 
-function addDict(req, res) {
+function addDictionary(req, res) {
     if (req.session.is_admin) {
         res.redirect('/dashboard');
     }else{
@@ -70,7 +69,7 @@ function addDict(req, res) {
     }
 }
 
-function addDictToUser(req, res) {
+function addDictionaryToUser(req, res) {
     const id = req.params.id;
     const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
     const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:user.id});
@@ -81,6 +80,6 @@ module.exports = {
     getAllDictionaries,
     searchDictionary,
     removeDictionary,
-    addDict,
-    addDictToUser
+    addDict: addDictionary,
+    addDictToUser: addDictionaryToUser
 }
