@@ -11,7 +11,7 @@
 \underline{Web poslužitelj} je program koji obrađuje podatke, čeka korisnike te interagira s njima (odgovara HTML dokumentima). 
 Odabrali smo Express jer su svi članovi tima dobro upoznati s njim i nismo smatrali da je projekt suviše kompleksan za ovu (u svijetu raširenu) tehnologiju. U našem projektu on je također zadužen za komunikaciju s bazom podataka i obradu zahtjeva koje dobiva od preglednika. Obrada zahtjeva rezultira slanjem HTML-a pregledniku umjesto da se šalju JSON podaci. Razlog tome jest da želimo održati HATEOAS (Hypermedia as the Engine of Application State) princip zajedno sa REST (Representational State Transfer) principom. Zbog toga koristimo HTMX koji nam omogućava razvoj moderne i interaktivne aplikacije bez da kompromitiramo navedene principe. Dodatno, HTMX rješava probleme kao: mali broj elemenata koji mogu slati zahtjeve, podržanost isključivo GET i POST metoda, osvježavanje cijele stranice umjesto samo ažuriranih komponenti. Prednost ovog načina rada jest i taj da je svo stanje zapravo na serveru, a HTMX ga prikazuje. Tada ne moramo dodatno sinkronizirati stanje na serveru i stanje na klijentu i  drastično se smanjuje kompleksnost aplikacije.\hfill \break
 
-\underline{Baza podataka} koristi se za pohranju, dohvaćanje, brisanje i ažuriranje podataka. Koristimo tehnologiju SQLite3 jer je jednostavna za korištenje, ne zahtjeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.\hfill \break
+\underline{Baza podataka} koristi se za pohranu, dohvaćanje, brisanje i ažuriranje podataka. Koristimo tehnologiju SQLite3 jer je jednostavna za korištenje, ne zahtijeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.\hfill \break
 \eject
 U svrhu bolje organizacije koda, aplikacija je podijeljena na module. Pošto iz dokumentacije znamo što koji dio aplikacije radi, moguće je na svim modulima raditi aplikacije paralelno. Svaki se može interpretirati kao zasebna cjelina koja se sastoji od serverske tehnologije i baze podataka.\hfill \break
 
@@ -47,7 +47,7 @@ Sumiranje svih prednosti:
 \begin{itemize}
   \item Jednostavnost "prednjeg" dijela sustava zbog HATEOAS i REST \newline principa (izbjegavanje dupliciranja stanja na klijentu)
   \item Jednostavnost nadogradnje i izmjene koda zbog odvojenosti slojeva
-  \item Jednostavna baza podataka koja ne zahtjeva nikakvu konfiguraciju
+  \item Jednostavna baza podataka koja ne zahtijeva nikakvu konfiguraciju
   \item Jednostavna instalacija i pokretanje aplikacije (\textit{docker compose})
 \end{itemize}
 
@@ -83,7 +83,7 @@ name & VARCHAR & Ime korisnika. \\ \hline
 surname & VARCHAR & Prezime korisnika. \\ \hline
 email & VARCHAR & Adresa elektroničke pošte korisnika. \\ \hline
 password & VARCHAR & Lozinka korisnika. \\ \hline
-is\_admin & INTEGER & Označava da li je korisnik administrator (1/0). \\ \hline
+is\_admin & INTEGER & Označava je li korisnik administrator (1/0). \\ \hline
 token & VARCHAR & Token koji se koristi za autentifikaciju korisnika. \\ \hline
 \end{longtblr}
 
@@ -177,7 +177,7 @@ user\_id & INTEGER & Referenca na korisnika kojem riječ pripada. \\ \hline
 word\_id & INTEGER & Referenca riječi. \\ \hline
 last\_answered & VARCHAR & Datum kad je korisnik zadnji put točno odgovorio na riječ. \\ \hline
 delay & INTEGER & Vremenski odmak za iduće pojavljivanje riječi. \\ \hline
-active & INTEGER & Da li je riječ trenutno aktivna za danog korisnika (1/0). \\ \hline
+active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \hline
 \end{longtblr}
 
 					
@@ -194,8 +194,8 @@ active & INTEGER & Da li je riječ trenutno aktivna za danog korisnika (1/0). \\
 		\section{Dijagram razreda}        
 
 			
-			%\subsection{Dijagram Kontrollera}
-            Dijagram kontrollera prikazuje koje su sve funkcije dostupne i koji router ih nasljeđuje. Također prikazuje i middleware funkcije i koji ih routeri koriste.
+			%\subsection{Dijagram kontrolera}
+            Dijagram kontrolera prikazuje koje su sve funkcije dostupne i koji router ih nasljeđuje. Također prikazuje i middleware funkcije i koji ih routeri koriste.
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/slika1.png} 
 					\centering
