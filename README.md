@@ -46,9 +46,9 @@ To run the application manually, you'll need Node.js version 20 or higher.
 # Docker Setup
 To run the application using Docker:
 
-1. Change directory to the "app" folder:
+1. Change directory to the "IzvorniKod" folder:
     ```bash
-    cd IzvorniKod/app
+    cd IzvorniKod
     ```
 
 2. Build a Docker image named "balkan-lingo":
