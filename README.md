@@ -7,7 +7,7 @@
   - Password: 123
 
 # Adding users
-- First go to "Registriraj se"
+- First go to "Registriraj se", after registration you will be redirected after 5 seconds.
 - After registering go to "Prijavi se" and click on "Ne znaš lozinku"
 - ** this is temporary** enter email and the password you want
 - You are redirected to "Prijavi se" and log in
