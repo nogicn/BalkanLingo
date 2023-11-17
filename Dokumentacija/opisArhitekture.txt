@@ -1,0 +1,50 @@
+Arhitektura je podijeljena na 2 dijela:
+- Web poslužitelj
+- Baza podataka
+
+Web preglednik je program koji služi za prikaz web stranica.
+Svaki preglednik iterpretira HTML dokumente i prikazuje ih korisniku.
+On je zapravo posrednik između korisnika i podataka kojima želi pristupiti.
+
+Web poslužitelj je program koji šalje HTML dokumente pregledniku. Odabrali smo express jer su svi već upoznati s njim sa predmeta web1
+U našem projektu on je također zadužen za komunikaciju s bazom podataka i obradu zahtjeva koje dobiva od preglednika.
+Obrada zahtjeva rezultira slanjem HTML-a pregledniku umjesto da šalje JSON podatke.
+Razlog toga je da želimo održati HATEOAS (Hypermedia as the Engine of Application State) princip zajedno sa REST (Representational State Transfer) principom.
+Upravo zbog toga koristimo HTMX library, koji nam omogućava da dobijemo modernu interaktivnu aplikaciju, ali bez da izgubimo HATEOAS i REST principe.
+Prednost ovog načina rada je da je svo stanje na serveru, dakle ima samo jedan izvor istine što drastično smanjuje kompleksnost aplikacije.
+
+Baza podataka se koristi za pohranjivanje, dohvaćanje, brisanje i ažuriranje podataka.
+Za bazu smo odlučili koristiti SQlite3 jer je jednostavna za korištenje, ne zahtjeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.
+
+Radi bolje organizacije koda, aplikacija je podijeljena na module.
+Pošto znamo iz dokumentacije što koji dio aplikacije radi i što je potrebno za unutarnju komunikaciju moguće je raditi sve dijelove aplikacije paralelno.
+Svaki modul je zasebna cjelina koja se sastoji od Expressa i baze podataka.
+
+Dijelovi backend aplikacije na web poslužitelju su:
+Sloj domene (engl. routes)
+Sloj nadzora (engl. controllers)
+Sloj baze podataka (engl. database)
+Sloj podataka (engl. models)
+
+Sloj domene je sloj koji se sastoji od express ruta. 
+U ovom sloju su definirane rute koje se mogu pozvati iz React aplikacije te se u njima definiraju koje funkcije iz sloja nadzora se trebaju pozvati.
+
+Sloj nadzora je sloj koji se sastoji od express kontrolera.
+Njegov zadatak je da obradi zahtjev koji je dobio od sloja domene.
+U ovom sloju se pozivaju funkcije koje koriste upite iz sloja baze podataka i bazu podataka.
+
+Sloj podataka se koristi za definiranje izgleda baze podataka.
+Ovaj sloj se koristi kada se baza prvi put stvara kako bi se automatski definirao izgled baze podataka (engl. migrate).
+
+Sloj baze podataka je sloj koji se sastoji od upita prema bazi podataka. 
+Odlučili smo ga odvojiti od sloja nadzora kako bi se izbjeglo dupliciranje koda te kako bi imali što manje konflitka kod spajanja.
+
+Tijek dohvačanja informacija iz baze podataka:
+Sloj korisnika -> sloj domene -> sloj nadzora -> sloj baze podataka -> sloj podataka
+
+
+Sumiranje svih prednosti:
+- Jednostavnost "prednjeg" dijela sustava zbog HATEOAS i REST principa (izbjegavanje dupliciranja stanja na klijentu)
+- Jednostavnost produljenja i izmjene koda zbog odvojenosti slojeva
+- Jednostavna baza podataka koja ne zahtjeva nikakvu konfiguraciju
+- Jednostavna instalacija i pokretanje aplikacije (docker compose)

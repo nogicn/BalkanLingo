@@ -1,71 +1,242 @@
 \chapter{Arhitektura i dizajn sustava}
-		
-		\textbf{\textit{dio 1. revizije}}\\
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+\noindent Arhitektura je podijeljena na 2 dijela:
+\begin{itemize}
+  \item Web poslužitelj
+  \item Baza podataka
+\end{itemize}
 
-	
-		
+\underline{Web preglednik} je "program koji omogućava surfanje". On služi kao korisničko sučelje i prikazivatelj podataka te enkapsulira kompletnu komunikaciju i HTTP zahtjeve te odgovore između korisnika i servera. Preglednici interpretiraju HTTP odgovore servera, najčešće HTML dokumente (i dodatke na koje se HTML dokumenti referiraju) te ih prikladno prikazuje.\hfill \break
 
-		
+\underline{Web poslužitelj} je program koji obrađuje podatke, čeka korisnike te interagira s njima (odgovara HTML dokumentima). 
+Odabrali smo Express jer su svi članovi tima dobro upoznati s njim i nismo smatrali da je projekt suviše kompleksan za ovu (u svijetu raširenu) tehnologiju. U našem projektu on je također zadužen za komunikaciju s bazom podataka i obradu zahtjeva koje dobiva od preglednika. Obrada zahtjeva rezultira slanjem HTML-a pregledniku umjesto da se šalju JSON podaci. Razlog tome jest da želimo održati HATEOAS (Hypermedia as the Engine of Application State) princip zajedno sa REST (Representational State Transfer) principom. Zbog toga koristimo HTMX koji nam omogućava razvoj moderne i interaktivne aplikacije bez da kompromitiramo navedene principe. Dodatno, HTMX rješava probleme kao: mali broj elemenata koji mogu slati zahtjeve, podržanost isključivo GET i POST metoda, osvježavanje cijele stranice umjesto samo ažuriranih komponenti. Prednost ovog načina rada jest i taj da je svo stanje zapravo na serveru, a HTMX ga prikazuje. Tada ne moramo dodatno sinkronizirati stanje na serveru i stanje na klijentu i  drastično se smanjuje kompleksnost aplikacije.\hfill \break
+
+\underline{Baza podataka} koristi se za pohranu, dohvaćanje, brisanje i ažuriranje podataka. Koristimo tehnologiju SQLite3 jer je jednostavna za korištenje, ne zahtijeva nikakvu konfiguraciju i dovoljno je brza za potrebe manjih do srednjih aplikacija.\hfill \break
+\eject
+U svrhu bolje organizacije koda, aplikacija je podijeljena na module. Pošto iz dokumentacije znamo što koji dio aplikacije radi, moguće je na svim modulima raditi aplikacije paralelno. Svaki se može interpretirati kao zasebna cjelina koja se sastoji od serverske tehnologije i baze podataka.\hfill \break
+
+Dijelovi serverske strane aplikacije su:
+\begin{itemize}
+  \item Sloj domene (engl. \textit{routes})
+  \item Sloj nadzora (engl. \textit{controllers})
+  \item Sloj baze podataka (engl. \textit{database})
+  \item Sloj podataka (engl. \textit{models})
+\end{itemize}
+\hfill
+\\
+
+\underline{Sloj domene} je sloj koji se sastoji od Express ruta. U ovom su sloju definirane rute koje se mogu pozvati iz korisničkog sučelja aplikacije te se u njima definira i koje funkcije iz sloja nadzora trebamo pozvati.\hfill \break
+
+\underline{Sloj nadzora} je sloj koji se sastoji od Express kontrolera. Zadatak  ovog sloja jest obrada zahtjeva sloja domene. U ovom se sloju pozivaju funkcije koje koriste bazu podataka i upite iz sloja baze podataka.\hfill \break
+
+\underline{Sloj podataka} koristi se za definiranje izgleda baze podataka. Ovaj se sloj koristi kada se baza prvi put stvara kako bi se automatski definirao izgled baze podataka (engl. \textit{migrate}).\hfill \break
+
+\underline{Sloj baze podataka} je sloj koji se sastoji od upita prema bazi podataka. Odlučili smo ga odvojiti od sloja nadzora kako bi se izbjeglo dupliciranje koda te kako bismo imali što manje konflikata kod spajanja.\hfill \eject
+
+
+Tijek dohvaćanja informacija iz baze podataka:
+\begin{itemize}
+	\item Sloj korisnika
+	\item Sloj domene
+	\item Sloj nadzora
+	\item Sloj baze podataka
+	\item Sloj podataka
+  \end{itemize}
+
+Sumiranje svih prednosti:
+\begin{itemize}
+  \item Jednostavnost "prednjeg" dijela sustava zbog HATEOAS i REST \newline principa (izbjegavanje dupliciranja stanja na klijentu)
+  \item Jednostavnost nadogradnje i izmjene koda zbog odvojenosti slojeva
+  \item Jednostavna baza podataka koja ne zahtijeva nikakvu konfiguraciju
+  \item Jednostavna instalacija i pokretanje aplikacije (\textit{docker compose})
+\end{itemize}
 
 				
-		\section{Baza podataka}
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
-		
-			\subsection{Opis tablica}
-			
+				\section{Baza podataka}
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
-				
-				
-				\begin{longtblr}[
-					label=none,
-					entry=none
-					]{
-						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
-						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-				\end{longtblr}
-				
-				
-			
+Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugrađeni sustav za upravljanje bazama podataka koji se često koristi za manje aplikacije i mobilne aplikacije zbog svoje jednostavnosti i prenosivosti. SQLite omogućava učinkovito pohranjivanje i upravljanje podacima u lokalnom okruženju te je posebno prikladan za manje sustave koji ne zahtijevaju složene baze podataka. Sustav je temeljen na relacijskom modelu i sadrži sljedeće tablice:
+\begin{itemize}
+    \item user
+    \item dictionary
+    \item dictionary\_user
+    \item word
+    \item active\_question
+    \item user\_word
+\end{itemize}
+
+\subsection{Opis tablica}
+
+Tablica \textbf{"user"} sadrži informacije o korisnicima sustava. Svaki korisnik ima jedinstveni identifikator (id), ime (name), prezime (surname), adresu elektroničke pošte (email), lozinku (password) te zastavicu is\_admin koja označava je li korisnik administrator (1) ili ne (0). Zastavica is\_admin je predstavljena INTEGER tipom jer SQLite ne podržava tip BOOLEAN.
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{user}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator korisnika. \\ \hline
+name & VARCHAR & Ime korisnika. \\ \hline
+surname & VARCHAR & Prezime korisnika. \\ \hline
+email & VARCHAR & Adresa elektroničke pošte korisnika. \\ \hline
+password & VARCHAR & Lozinka korisnika. \\ \hline
+is\_admin & INTEGER & Označava je li korisnik administrator (1/0). \\ \hline
+token & VARCHAR & Token koji se koristi za autentifikaciju korisnika. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language).
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{dictionary}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator rječnika. \\ \hline
+name & VARCHAR & Naziv rječnika. \\ \hline
+language & VARCHAR & Jezik rječnika. \\ \hline
+image\_link & VARCHAR & Link na sliku koja predstavlja rječnik. \\ \hline
+flag\_icon\_link & VARCHAR & Link zastave jezika rječnika ili oznaka u UTF-8. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje rječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{dictionary\_user}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+user\_id & INTEGER & Referenca na korisnika koji je povezan s određenim rječnikom. \\ \hline
+dictionary\_id & INTEGER & Referenca na rječnik koji je dodijeljen korisniku. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"word"} sadrži informacije o riječima koje korisnici uče. Svaka riječ ima jedinstveni identifikator (id) te informacije o stranoj riječi (foreign\_word), dodatnom opisu strane riječi (foreign\_description), prijevodu na hrvatski jezik (native\_word), dodatnom opisu hrvatskog prijevoda (native\_description), zvučnoj datoteci za izgovor riječi (pronunciation) te referencu na rječnik kojem pripada riječ (dictionary\_id).
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[10,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{word}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+foreign\_word & VARCHAR & Strana riječ koju korisnici uče. \\ \hline
+foreign\_description & VARCHAR & Dodatne informacije ili opis za stranu riječ. \\ \hline
+native\_word & VARCHAR & Prijevod strane riječi na hrvatski jezik. \\ \hline
+native\_description & VARCHAR & Dodatne informacije ili opis za hrvatski prijevod riječi. \\ \hline
+pronunciation & VARCHAR & Zvučna datoteka koja sadrži izgovor strane riječi. \\ \hline
+dictionary\_id & INTEGER & Referenca na rječnik kojem pripada riječ. \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"active\_questions"} sadrži informacije o aktivnim pitanjima povezanim s određenim korisnicima. Koristi se u svrhu praćenja pitanja na različitim platformama. Svakom korisniku je dodijeljen maksimalno 1 redak u ovoj tablici. Svako aktivno pitanje ima jedinstveni identifikator (id) i referencu na riječ na koju se pitanje odnosi (word\_id), referencu na korisnika koji trenutno rješava pitanje (user\_id) te označava vrstu pitanja (1 za odabir ponuđenog odgovora, 2 za tipkanje odgovora, 3 za test izgovora) putem stupca type.
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{active\_question}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator aktivnog pitanja. \\ \hline
+word\_id & INTEGER & Referenca na riječ na koju se pitanje odnosi. \\ \hline
+user\_id & INTEGER & Referenca na korisnika koji trenutno rješava pitanje. \\ \hline
+type & INTEGER & Označava vrstu pitanja (1 za odabir ponuđenog odgovora, 2 za tipkanje odgovora, 3 za test izgovora). \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"user\_word"} sadrži podatke o riječima koje su povezane s određenim korisnicima. Praktički, to je skupina riječi koje sustav može ispitati korisnika. Svaki zapis u tablici ima jedinstveni identifikator (id) te referencu na korisnika kojem riječ pripada (user\_id), referencu na riječ (word\_id), datum kad je korisnik zadnji put točno odgovorio na riječ (last\_answered), vremenski odmak za iduće pojavljivanje riječi (delay) te zastavicu active koja označava je li riječ trenutno aktivna za danog korisnika (1) ili ne (0).
+
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{user\_word}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+user\_id & INTEGER & Referenca na korisnika kojem riječ pripada. \\ \hline
+word\_id & INTEGER & Referenca riječi. \\ \hline
+last\_answered & VARCHAR & Datum kad je korisnik zadnji put točno odgovorio na riječ. \\ \hline
+delay & INTEGER & Vremenski odmak za iduće pojavljivanje riječi. \\ \hline
+active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \hline
+\end{longtblr}
+
+					
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
-			
+				\begin{figure}[H]
+					\includegraphics[scale=0.5]{dijagrami/baza_dijagram.png} 
+					\centering
+					\caption{Dijagram razreda}
+					\label{fig:class_diagram}
+				\end{figure}			
 			\eject
 			
 			
-		\section{Dijagram razreda}
-		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+		\section{Dijagram razreda}        
+
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+			%\subsection{Dijagram kontrolera}
+            Dijagram razreda se koristi za prikaz razreda sustava, njihovih atributa, metoda i odnosa između njih.
+            Zbog preglednosti, dijagram je podijeljen na 3 dijela:
+            \begin{packed_item}
+                \item \textbf{Kontroleri}
+                \item \textbf{Rute}
+                \item \textbf{Modeli}
+            \end{packed_item}
+           
+
+            Slika 4.2 je dijagram kontrolera koji pokazuje dostupne funkcije i njihove atribute te povratne vrijednosti. Također prikazuje koji routeri koriste te funkcije.
+				\begin{figure}[H]
+					\includegraphics[width=0.9\textwidth]{dijagrami/slika1.png} 
+					\centering
+					\caption{Dijagram kontrolera}
+					\label{fig:class_diagram}
+				\end{figure}			
+			\eject
+            Dijagram ruta na slici 4.3 prikazuje koje su sve rute dostupne i modele koje koriste iz baze podataka. U projektu postoje dva tipa ruta. Prvi tip ruta je zadužen samo za slanje statičnih stranica u HTML-u. Drugi tip izvodi napredne operacije na bazi podataka (npr. Dohvati sve riječi iz rječnika), zatim generira HTML koristeći te podatke te šalje korisniku u HTML formatu.
+           % \subsection{Dijagram Ruta}
+				\begin{figure}[H]
+					\includegraphics[width=0.9\textwidth]{dijagrami/slika2.png} 
+					\centering
+					\caption{Dijagram ruta}
+					\label{fig:class_diagram}
+				\end{figure}			
+			\eject
+            Slika 4.4 prikazuje sve modele koji se koriste u projektu. Kod MVC projekata, u ovom dijelu su često neke klase nad kojoma se rade neke operacije. Nakon što se ti podaci promijene u toj klasi se onda promjene šalju na bazu podataka.
+            Slična stvar postoji i u javascript-u (node.js) i nazivaju se ORM (Object Relational Mapping) alati. ORM alati omogućuju da se podaci iz baze podataka prikažu kao objekti u kodu te da se ti objekti mogu jednostavno mijenjati i spremati u bazu podataka \textit{bez potrebe pisanja SQL upita}.
+            Problem kod implementacije svih ORM-a je da značajno usporavaju rad aplikacije zbog mnogih slojeva apstrakcije. Svi članovi dobro znaju SQL upite i pisanje SQL-a bi bilo jednako brzo kao i korištenje ORM-a. Zbog toga smo se odlučili za pisanje čistih SQL upita bez nepotrebne apstrakcije.
+            %\subsection{Dijagram Modela}
+				\begin{figure}[H]
+					\includegraphics[width=0.9\textwidth]{dijagrami/slika3.jpg} 
+					\centering
+					\caption{Dijagram modela}
+					\label{fig:class_diagram}
+				\end{figure}			
+			\eject
 			
 			\textbf{\textit{dio 2. revizije}}\\			
 			
 			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
 			
-			
-			
-			\eject
 		
 		\section{Dijagram stanja}
 			
