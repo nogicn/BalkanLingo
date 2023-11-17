@@ -6,6 +6,8 @@
 			
 			\begin{packed_enum}
 				
+				\item Naručitelj
+				\item Razvojni tim
 				\item Prijavljeni korisnik
 				\item Neprijavljeni korisnik
 				\item Administrator			
@@ -56,7 +58,20 @@
 					\item pohranjuje podatke o rječnicima
 					\item pohranjuje podatke o riječima
 				\end{packed_enum}
-
+				
+				\item \underbar{Word API(sudionik):}
+				\begin{packed_enum}
+					\item dohvaća riječi
+					\item dohvaća izgovor riječi
+				\end{packed_enum}
+				
+				\item \underbar{Servis za ocjenjivanje(sudionik):}
+				\begin{packed_enum}
+					\item uzima riječ
+					\item uzima izgovor korisnika
+					\item uspoređuje upisanu riječ i izgovor s dohvaćenim podacima o riječi i računa ocjenu
+				\end{packed_enum}
+				
 			\end{packed_enum}
 			
 			\eject 
@@ -236,7 +251,7 @@
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Administrator
 						\item \textbf{Cilj:} Dodavanje riječi u rječnik
-						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Sudionici:} Baza podataka, Word API
 						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
@@ -530,7 +545,7 @@
 					\end{packed_item}
 
 
-					\noindent \underbar{\textbf{UC12.a Korisnik uči riječi modom upit engleske riječi uz odabir hrvatskog prijevoda}}
+					\noindent \underbar{\textbf{UC12.a Korisnik uči modom upit engleske riječi uz odabir hrvatskog prijevoda}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit engleske riječi uz odabir hrvatskog prijevoda
@@ -545,7 +560,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC12.b Korisnik uči riječi modom upit hrvatske riječi uz odabir engleskog prijevoda}}
+					\noindent \underbar{\textbf{UC12.b Korisnik uči modom upit hrvatske riječi uz odabir engleskog prijevoda}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit hrvatske riječi uz odabir engleskog prijevoda
@@ -560,7 +575,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC12.c Korisnik uči riječi modom upit izgovorom engleske riječi uz pisanje riječi na engleskom}}
+					\noindent \underbar{\textbf{UC12.c Korisnik uči modom izgovor engleske riječi uz pisanje riječi na engleskom}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit izgovorom engleske riječi uz pisanje riječi na engleskom
@@ -576,11 +591,11 @@
 						\end{packed_enum}
 					\end{packed_item}
 
-					\noindent \underbar{\textbf{UC12.d Korisnik uči riječi modom upit tekstualnim oblikom engleske riječi uz snimanje izgovora}}
+					\noindent \underbar{\textbf{UC12.d Korisnik uči modom izgovor engleske riječi uz snimanje izgovora}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Učenje riječi modom upit engleske riječi uz snimanje izgovora
-						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Sudionici:} Baza podataka, servis za ocjenjivanje
 						\item \textbf{Preduvjet:} Korisnik je odabrao rječnik za učenje engleskog jezika
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}

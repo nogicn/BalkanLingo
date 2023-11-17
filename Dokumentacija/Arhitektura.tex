@@ -195,29 +195,40 @@ active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \h
 
 			
 			%\subsection{Dijagram kontrolera}
-            Dijagram kontrolera prikazuje koje su sve funkcije dostupne i koji router ih nasljeđuje. Također prikazuje i middleware funkcije i koji ih routeri koriste.
+            Dijagram razreda se koristi za prikaz razreda sustava, njihovih atributa, metoda i odnosa između njih.
+            Zbog preglednosti, dijagram je podijeljen na 3 dijela:
+            \begin{packed_item}
+                \item \textbf{Kontroleri}
+                \item \textbf{Rute}
+                \item \textbf{Modeli}
+            \end{packed_item}
+           
+
+            Slika 4.2 je dijagram kontrolera koji pokazuje dostupne funkcije i njihove atribute te povratne vrijednosti. Također prikazuje koji routeri koriste te funkcije.
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/slika1.png} 
 					\centering
-					\caption{Dijagram razreda}
+					\caption{Dijagram kontrolera}
 					\label{fig:class_diagram}
 				\end{figure}			
 			\eject
-            Dijagram ruta prikazuje koje su sve rute dostupne i koje modele koriste iz baze podataka.
+            Dijagram ruta na slici 4.3 prikazuje koje su sve rute dostupne i modele koje koriste iz baze podataka. U projektu postoje dva tipa ruta. Prvi tip ruta je zadužen samo za slanje statičnih stranica u HTML-u. Drugi tip izvodi napredne operacije na bazi podataka (npr. Dohvati sve riječi iz rječnika), zatim generira HTML koristeći te podatke te šalje korisniku u HTML formatu.
            % \subsection{Dijagram Ruta}
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/slika2.png} 
 					\centering
-					\caption{Dijagram razreda}
+					\caption{Dijagram ruta}
 					\label{fig:class_diagram}
 				\end{figure}			
 			\eject
-            Dijagram modela prikazuje kako su modeli povezani u bazi i koje atribute imaju.
+            Slika 4.4 prikazuje sve modele koji se koriste u projektu. Kod MVC projekata, u ovom dijelu su često neke klase nad kojoma se rade neke operacije. Nakon što se ti podaci promijene u toj klasi se onda promjene šalju na bazu podataka.
+            Slična stvar postoji i u javascript-u (node.js) i nazivaju se ORM (Object Relational Mapping) alati. ORM alati omogućuju da se podaci iz baze podataka prikažu kao objekti u kodu te da se ti objekti mogu jednostavno mijenjati i spremati u bazu podataka \textit{bez potrebe pisanja SQL upita}.
+            Problem kod implementacije svih ORM-a je da značajno usporavaju rad aplikacije zbog mnogih slojeva apstrakcije. Svi članovi dobro znaju SQL upite i pisanje SQL-a bi bilo jednako brzo kao i korištenje ORM-a. Zbog toga smo se odlučili za pisanje čistih SQL upita bez nepotrebne apstrakcije.
             %\subsection{Dijagram Modela}
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/slika3.jpg} 
 					\centering
-					\caption{Dijagram razreda}
+					\caption{Dijagram modela}
 					\label{fig:class_diagram}
 				\end{figure}			
 			\eject
