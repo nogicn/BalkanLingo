@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@200&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oswald Regular', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar, .footer {
+    height: 7%; /* 5% for the navbar and 5% for the footer */
+    background-color: #ffffff; /* Adjust the background color as needed */
+    color: #fff; /* Adjust the text color as needed */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .navbar-left, .navbar-right, .footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar img, .footer img {
+    margin: 0 10px;
+  }
+
+  .navbar-left img{
+    margin-bottom: 5px;
+    max-width: 320px;
+  }
+
+  .navbar-right img{
+    max-width: 50px;
+  }
+
+  .footer-left {
+    font-size: 13px;
+    margin-left: 15px;
+    display: inline-block;
+    color: black;
+  }
+
+  .footer-right svg{
+    margin-bottom: 20px;
+    max-width: 300px;
+    max-height: 60px;
+  }
+
+  /* remove all styles from a tag */
+  a {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+  }
+  
+  .main {
+    min-height: 84%; /* The main content takes the remaining 90% of the height */
+    padding: 20px;
+    background-color: #ffecd3; /* Adjust the background color as needed */
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .dictionary{
+    height: 200px;
+    width: 125px;
+    margin: 15px;
+    min-height: 210px;
+    min-width: 140px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/france.png");
+    background-size: 200%;
+    background-position: center;
+    backdrop-filter: brightness(0.7);
+    transition: all 0.2s;
+  }
+
+  .dictionary:hover{
+    transition: all 0.2s;
+    background-size: 250%;
+  }
+
+  .add-dictionary{
+    height: 200px;
+    width: 135px;
+    margin: 12px;
+    min-height: 210px;
+    min-width: 140px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: all 0.2s;
+    border: 4px dashed #ff9f1c;
+    cursor: pointer;
+  }
+
+  .add-dictionary p{
+    text-align: center;
+    color: #ff9f1c;
+  }
+
+  .add-dictionary:hover{
+    filter: brightness(1.1);
+  }
+
+  .dictionary-name{
+    max-width: 100%;
+    margin-top: 5px;
+    color: #ffffff;
+    text-shadow: black 1px 0 10px;
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-container button{
+    margin: 5px;
+    width: 160%;
+    align-self: center;
+    border: none;
+    border-radius: 30px;
+    padding: 4px 10px;
+    background-color: #2EC4b6;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .button-container button:hover{
+    filter: brightness(1.05);
+    transform: scale(1.05);
+  }
+
+  hr{
+    background-color: #ff9f1c;
+    border: 1px solid #ff9f1c;
+    margin: 0;
+  }
+  
+
+  @media (max-width: 550px) {
+
+    .main{
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .footer-left {
+        display: none;
+        font-size: 7px;
+        margin-left: 15px;
+        display: inline-block;
+        color: black;
+      }
+
+      .footer-right svg{
+        margin-bottom: 20px;
+        max-width: 200px;
+        max-height: 60px;
+      }
+
+      .navbar-right img{
+        max-width: 40px;
+      }
+    
+
+      .navbar-left img{
+        margin-bottom: 5px;
+        max-width: 150px;
+      }
+
+
+  }

@@ -1,3 +1,4 @@
+database.db
 # Logs
 logs
 *.log
@@ -145,3 +146,6 @@ dist
 
 *.toc
 Dokumentacija/PROGI_ProjektnaDokumentacija.synctex(busy)
+Dokumentacija/PROGI_ProjektnaDokumentacija.fdb_latexmk
+Dokumentacija/PROGI_ProjektnaDokumentacija.fls
+.DS_Store

@@ -1,0 +1,280 @@
+@import url('https://fonts.cdnfonts.com/css/oswald-4');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oswald Regular', 'Poppins', sans-serif;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  padding: 0 15px;
+  min-height: 100vh;
+  justify-content: center;
+  background: #FF9F1C;
+}
+
+.login-page {
+  justify-content: space-around;
+  max-width: 70%;
+  min-height: 600px;
+  border-radius: 55px;
+  background-color: #FFFFFF;
+  box-shadow: 15px 15px 10px rgba(0, 0 , 0, 0.1);
+  padding: 20px;
+}
+
+.login-page .text {
+  margin-top: 0;
+}
+
+.text{
+  width: 40%;
+}
+
+.login-page h1 {
+  color: #000000;
+  display: inline;
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.login-page p {
+  font-size: 1.4rem;
+}
+
+.logo img{
+  max-width: 18%;
+}
+
+.logo {
+  width: 100px; /* Adjust the width of the logo */
+  display: inline;
+  vertical-align: middle;
+}
+
+.project-name {
+  height: 22%;
+  top: 0px;
+  font-size: 45px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.image-bottom{
+  max-width: 100%;
+}
+
+.image-bottom img{
+  max-width: 100%;
+}
+
+.image-bottom svg{
+  max-width: 60%;
+    height: 200px;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+ 
+  padding: 20px;
+  
+  max-width: 450px;
+  width: 100%;
+}
+
+form input {
+  height: 55px;
+  width: 100%;
+  border: 1px;
+  border-radius: 50px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  padding: 0 14px;
+  background-color: rgb(251, 201, 135);
+}
+
+
+::placeholder {
+  color: #777;
+  font-size: 1.063rem;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.link button:hover{
+  filter: brightness(1.05);
+}
+
+.link .login {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: #2EC4B6;
+  padding: 15px 0;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.link .login:hover {
+  background: #2EC4B6;
+}
+
+.link h3{
+  margin-top: 7%;
+}
+
+form a {
+  text-decoration: none;
+}
+
+.link .forgot {
+  color: #1877f2;
+  font-size: 0.875rem;
+}
+
+.link .forgot:hover {
+  text-decoration: underline;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.button {
+  margin-top: 25px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button a {
+  padding: 15px 20px;
+  background: #42b72a;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1.063rem;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.button a:hover {
+  background: #3ba626;
+}
+
+input:focus {
+  outline: none;
+  filter: brightness(1.05);
+  box-shadow: 0 0 0 3px #FF9F1C;
+}
+
+form label {
+  font-size: 1.3rem;
+  color: #000;
+  margin-bottom: 5px;
+  margin-left: 3%;
+}
+
+.forgot {
+  color: #FF9F1C;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-bottom: 3%;
+  margin-left: 75%;
+}
+
+.forgot:hover {
+  text-decoration: none;
+}
+
+.register {
+  color: #FF9F1C;
+  font-size: 1.0rem;
+  text-decoration: none;
+}
+
+.register:hover {
+  text-decoration: underline;
+}
+
+
+@media (max-width: 900px) {
+
+  .login-page {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+  }
+
+  .login-page .text {
+    margin-bottom: 30px;
+  }
+
+  .login-page p{
+    font-size: 1.2rem;
+  }
+
+  .logo img{
+    transform: scale(4);
+  }
+
+  .image-bottom svg{
+    transform: scale(2);
+  }
+
+  .project-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .login-page h1 {
+    font-size: 3rem;
+  }
+
+  .login-page{
+    max-width: none;
+  }
+
+}
+
+@media (max-width: 460px) {
+  .login-page h1 {
+    font-size: 2.6rem;
+  }
+
+  .login-page p {
+    font-size: 1.2rem;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  .image-bottom svg{
+    transform: scale(2.5);
+  }
+
+
+}
