@@ -76,7 +76,6 @@ html, body {
   .flex-container{
     width: 50%;
     display: flex;
-    align-items: center;
     flex-direction: column;
     position: relative;
   }
@@ -145,6 +144,7 @@ html, body {
     font-size: 1.5rem;
     margin-top: 30px;
     font-weight: bolder;
+    text-align: center;
   }
 
   .title-word{
