@@ -1,0 +1,45 @@
+<div class="flex-container" id="wordContainer">
+    <div class="language-title"><%= dictionary.name %></div>
+    <div class="language-title title-word">RIJEČ</div>
+    <div class="word-edit-container">
+        <input type="hidden" name="wordId" value=<%= word.id %> >
+        <label for="home" class="word-edit-label">DOMAĆA RIJEČ</label>
+        <input class="word-edit" type="text" id="home" name="nativeWord" placeholder="Riječ" value=<%= word.nativeWord %> >
+        <div class="img-container">
+            <img src="/images/black-add.png" alt="" hx-post="/dictionary/fillWordData/<%= dictionary.id %>" hx-target="#wordContainer" hx-swap="outerHTML" hx-indicator="#loading"> 
+            <div id="loading" class="htmx-indicator"></div>
+        </div>
+    </div>
+   
+    <div class="word-edit-container">
+        <label for="home" class="word-edit-label word-edit-phrase">DOMAĆA FRAZA</label>
+        <input class="word-edit" type="text" id="home" name="nativeDescription" placeholder="Naučio sam ovu riječ" value='<%= word.nativeDescription %>' >
+        <div class="img-container">
+            <!-- <img src="/images/black-add.png" alt=""> 
+            <img src="/images/black-remove.png" alt=""> -->
+        </div>
+    </div>
+    <div class="word-edit-container">
+        <label for="home" class="word-edit-label ">STRANA RIJEČ</label>
+        <input class="word-edit" type="text" id="home" name="foreignWord" placeholder="Word" value=<%= word.foreignWord %> >
+    </div>
+    <div class="word-edit-container">
+        <label for="home" class="word-edit-label word-edit-phrase">STRANA FRAZA</label>
+        <input class="word-edit" type="text" id="home" name="foreignDescription" placeholder="I've learned a new word!" value='<%= word.foreignDescription %>' >
+        <div class="img-container">
+            <!-- <img src="/images/black-add.png" alt=""> 
+            <img src="/images/black-remove.png" alt=""> -->
+        </div>
+    </div>
+    <!--<div class="word-edit-container">
+        <label for="home" class="word-edit-label">AUDIOZAPIS</label>
+        <input class="word-edit" type="text" id="home" name="home" placeholder="word.mp3">
+        <div class="img-container">
+           <img src="/images/black-upload.png" alt="">
+        </div>
+    </div>-->
+    <div class="save-changes-container">
+        <button class="save-changes">SPREMI PROMJENE</button>
+        <img src="/images/blue-warning.png" alt="">
+    </div>
+</div>

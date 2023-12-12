@@ -74,6 +74,7 @@ html, body {
   }
 
   .flex-container{
+    align-items: center;
     width: 50%;
     display: flex;
     flex-direction: column;

@@ -18,6 +18,8 @@ const checkAuth = (req, res, next) => {
             }else {
                 req.session.is_admin = false;
             }
+            req.session.user_id = row.id;
+
             next();
         }
     }
