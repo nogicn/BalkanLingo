@@ -40,6 +40,10 @@ const getWordById = `
     SELECT * FROM word WHERE id = @wordId;
 `;
 
+const updateWord = `
+    UPDATE word SET foreignWord = @foreignWord, foreignDescription = @foreignDescription, nativeWord = @nativeWord, nativeDescription = @nativeDescription, pronounciation = @pronounciation WHERE id = @wordId;
+`;
+
 module.exports = {
     createWordTable,
     createWord,
@@ -48,5 +52,6 @@ module.exports = {
     getWordByDictionaryId,
     deleteWordByDictionaryId,
     getAllWords,
-    getWordById
+    getWordById,
+    updateWord
 }

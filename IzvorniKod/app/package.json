@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "axios": "^1.6.0",
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "better-sqlite3": "^9.0.0",
     "body-parser": "^1.20.2",
@@ -19,6 +19,7 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "translate-google-api": "^1.0.4"
   }
 }

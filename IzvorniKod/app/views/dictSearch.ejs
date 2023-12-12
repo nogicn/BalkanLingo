@@ -12,18 +12,21 @@
     <body>
         <!-- Navbar -->
         <% include partials/navbar.ejs %>
-        <hr>
         <div class="main">
             <div class="flex-container">
                 <h2 class="language-title"><%= dictionary.name %></h2>
                 <input class="word-search" type="text" placeholder="Pretrazi strane rijeci...">
+                <br>
+                <div class="img-container">
+                    <a href="/dictionary/addWord/<%= dictionary.id %>"><img src="/images/black-add.png" alt=""> </a>
+                </div>
                 <img class="word-search-image" src="/images/white-search.png" alt="">
                 <% for (let i = 0; i < words.length; i++) { %>
                     <div class="word-add">
                         <div class="actual-word"><%= words[i].foreignWord %> </div>
                         <div class="word-buttons">
-                            <img  class="edit-button" src="/images/blue-edit.png" alt="">
-                            <img class="add-button" src="/images/black-add.png" alt="">
+                            <a href= <%="/dictionary/editWord/"+ words[i].id %> ><img  class="edit-button" src="/images/blue-edit.png" alt=""></a>
+                            <a href= <%="/dictionary/deleteWord/"+ words[i].id %>><img class="add-button" src="/images/black-add.png" alt=""></a>
                         </div>
                     </div>
                 <% } %>
@@ -31,7 +34,7 @@
             </div>
         </div>
         <hr>
-        
+        <!-- Footer -->
         <% include partials/footer.ejs %>
     </body>
 </html>
