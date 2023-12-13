@@ -33,7 +33,12 @@ function createUser(req, res) {
 function loginUser(req, res) {
     const { email, password } = req.body;
     try {
-        const pass = db.prepare(user.getUserByEmail).get({email:email}).password;
+        const pass = db.prepare(user.getUserByEmail).get({email:email});
+        if (!pass) {
+            console.log("User not found");
+            res.status(404).send("User not found");
+        }
+        pass = pass.password;
         if(password != pass) {
             console.log(db.prepare(user.getAllUsers).all());
             const hash = bcrypt.hashSync(password, salt);

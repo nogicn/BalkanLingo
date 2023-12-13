@@ -44,6 +44,10 @@ const updateWord = `
     UPDATE word SET foreignWord = @foreignWord, foreignDescription = @foreignDescription, nativeWord = @nativeWord, nativeDescription = @nativeDescription, pronounciation = @pronounciation WHERE id = @wordId;
 `;
 
+const searchWordByDictionaryId = `
+    SELECT * FROM word WHERE dictionary_id = @dictionaryId AND (foreignWord LIKE '%' || @word || '%' OR nativeWord LIKE '%' || @word || '%');
+`;
+
 module.exports = {
     createWordTable,
     createWord,
@@ -53,5 +57,6 @@ module.exports = {
     deleteWordByDictionaryId,
     getAllWords,
     getWordById,
-    updateWord
+    updateWord,
+    searchWordByDictionaryId
 }

@@ -5,6 +5,7 @@ const userModel = require('../models/user_model');
 const wordModel = require('../models/word_model');
 const dictinoaryUserModel = require('../models/dictionary_user_model');
 const activeQuestionModel = require('../models/active_question_model');
+const ejs = require('ejs');
 
 function getAllDictionaries(req, res) {
     const dictionaries = db.prepare("SELECT * FROM dictionary").all();

@@ -14,7 +14,7 @@
     <body>
         <!-- Navbar -->
         <% include partials/navbar.ejs %>
-        <form action="/dictionary/editWord/<%= dictionary.id %>" method="POST" style=" all: unset;" >
+        <form action="/dictionary/editWord/<%= dictionary.id %>" method="POST" style=" all: unset;" id="data" >
         <div class="main">
             <% include partials/word.ejs %>
         </div>

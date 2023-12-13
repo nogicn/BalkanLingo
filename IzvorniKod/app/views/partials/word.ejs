@@ -6,7 +6,11 @@
         <label for="home" class="word-edit-label">DOMAĆA RIJEČ</label>
         <input class="word-edit" type="text" id="home" name="nativeWord" placeholder="Riječ" value=<%= word.nativeWord %> >
         <div class="img-container">
-            <img src="/images/black-add.png" alt="" hx-post="/dictionary/fillWordData/<%= dictionary.id %>" hx-target="#wordContainer" hx-swap="outerHTML" hx-indicator="#loading"> 
+            <img src="/images/black-add.png" alt="" hx-post="/dictionary/fillWordData/<%= dictionary.id %>" 
+            hx-target="#wordContainer" 
+            hx-swap="outerHTML" 
+            hx-indicator="#loading"
+            hx-include="#data"> 
             <div id="loading" class="htmx-indicator"></div>
         </div>
     </div>

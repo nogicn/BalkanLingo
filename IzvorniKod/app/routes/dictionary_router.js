@@ -27,6 +27,7 @@ router.post('/editWord/:id', checkAuth, wordController.editWord);
 
 router.get('/deleteWord/:id', checkAuth, wordController.deleteWord);
 
+router.post('/search/:id', checkAuth, wordController.searchWords);
 
 
 module.exports = router;

@@ -138,6 +138,7 @@ function editWord(req, res) {
         let id = req.body.wordId;
         // get word from database
         let word = db.prepare(wordModel.getWordById).get({wordId:id});
+        //console.log(word);
         // get data from form
         let foreignWord = req.body.foreignWord;
         let foreignDescription = req.body.foreignDescription;
@@ -154,7 +155,7 @@ function editWord(req, res) {
         let word = db.prepare(wordModel.getWordById).get({wordId:id});
         // get dictionary from database
         let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:word.dictionary_id});
-        console.log(word);
+        //console.log(word);
         res.render('editWord', { title: 'Edit Word', word: word, dictionary: dictionary});
     }
    
@@ -233,9 +234,10 @@ async function fillWordData(req, res) {
         example = await translate(nativeDescription[0], {to: languageCode});
         foreignWord = await translate(foreignWord[0], {to: languageCode});
     }
-
+    var wordId = req.body.wordId;
+    //console.log(word_id);
     // generate html
-    var html = await ejs.renderFile('views/partials/word.ejs', {word: {nativeWord : word, nativeDescription : nativeDescription, foreignWord : foreignWord[0], foreignDescription : example, pronounciation : ""}, dictionary: dictionary});
+    var html = await ejs.renderFile('views/partials/word.ejs', {word: {id : wordId, nativeWord : word, nativeDescription : nativeDescription, foreignWord : foreignWord[0], foreignDescription : example, pronounciation : ""}, dictionary: dictionary});
     console.log(html);
     res.status(200).send(html);
 
@@ -255,6 +257,16 @@ function deleteWord(req, res) {
     res.redirect('/dictionary/dictSearch/'+wordDictionaryId.dictionary_id);
 }
 
+async function searchWords(req, res) {
+    const id = req.params.id;
+    const word = req.body.word;
+    const allwords = db.prepare(wordModel.searchWordByDictionaryId).all({dictionaryId:id, word:word});
+    console.log(allwords);
+    const Dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
+    var html = await ejs.renderFile('views/partials/wordsList.ejs', { words: allwords });
+    res.status(200).send(html);
+}
+
 module.exports = {
     dashboard,
     learnSession,
@@ -263,5 +275,6 @@ module.exports = {
     editWord,
     deleteWord,
     addWord,
-    fillWordData
+    fillWordData,
+    searchWords
 }
