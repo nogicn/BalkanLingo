@@ -21,4 +21,6 @@ router.post('/edit', checkAuth, user_controller.editUser);
 // reset password
 router.post('/reset', user_controller.resetPwd);
 
+router.post('/createPass', user_controller.createPass);
+
 module.exports = router;
