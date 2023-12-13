@@ -124,6 +124,7 @@ function resetPwd(req, res) {
             console.log(password);
             const result = db.prepare(user.updatePasswordByEmail).run({email:email, password:password});
             if (result.changes !== 0) {
+                sendEmail(email, password);
                 console.log(result);
                 res.render('resetPassNotif', { title: 'Register' });
             }else{
