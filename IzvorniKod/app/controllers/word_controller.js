@@ -213,16 +213,20 @@ async function fillWordData(req, res) {
         break;
         }
     }*/
-    // check if there is an example 
-    var example = "";
-    for (var i = 0; i < extendedresult.data.length; i++) {
-        for (var j = 0; j < extendedresult.data[i].meanings.length; j++) {
-        if (extendedresult.data[i].meanings[j].definitions[0].example != undefined) {
-            example = extendedresult.data[i].meanings[j].definitions[0].example;
-            i = extendedresult.data.length;
-            break;
+    // check if there is an example in body, if not find one
+    if (req.body.nativeDescription == "") {
+        var example = "";
+        for (var i = 0; i < extendedresult.data.length; i++) {
+            for (var j = 0; j < extendedresult.data[i].meanings.length; j++) {
+                if (extendedresult.data[i].meanings[j].definitions[0].example != undefined) {
+                    example = extendedresult.data[i].meanings[j].definitions[0].example;
+                    i = extendedresult.data.length;
+                    break;
+                }
+            }
         }
-        }
+    }else{
+        var example = req.body.nativeDescription;
     }
     var nativeDescription = await translate(example, {to: "hr"});
     if (languageCode != "en"){
