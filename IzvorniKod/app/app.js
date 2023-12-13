@@ -35,7 +35,6 @@ app.use('/user', usersRouter);
 app.use('/dictionary', dictionaryRouter);
 
 migration.migration();
-migration.hashBuiltins();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
