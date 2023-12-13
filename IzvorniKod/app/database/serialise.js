@@ -14,8 +14,8 @@ function migration(){
     // timeout for creating dictionary_user table
     
     // create user
-    db.prepare(userModel.createAdmin).run({name:"Admin", surname:"Admin", email:"admin@gmail.com", password:"123"});
-    db.prepare(userModel.createUser).run({name:"User", surname:"User", email:"user@gmail.com", password:"123"});
+    db.prepare(userModel.createAdmin).run({name:"Admin", surname:"Admin", email:"***REMOVED***", password:"123"});
+    db.prepare(userModel.createUser).run({name:"User", surname:"User", email:"***REMOVED***", password:"123"});
     
     db.prepare(dictionaryModel.createNewDictionary).run({name:"Engleski", language:"EN", imageLink:"https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png", flagIconLink:"🇬🇧", description:"Engleski rjecnik"});
     db.prepare(wordModel.createWord).run({foreignWord:"Hello", foreignDescription:"Hello there neighbor", nativeWord:"Zdravo", nativeDescription:"Zdravo susjede", pronounciation:"null", dictionaryId:1});

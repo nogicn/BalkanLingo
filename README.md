@@ -1,9 +1,9 @@
 # Available Accounts
 - **Admin Account**
-  - Email: admin@gmail.com
+  - Email: ***REMOVED***
   - Password: 123
 - **User Account**
-  - Email: user@gmail.com
+  - Email: ***REMOVED***
   - Password: 123
 
 # Adding users
