@@ -3,6 +3,7 @@ const db = require('../database/database');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
+var sendEmail = require('../middleware/mail_middleware'); 
 
 // create a new user
 function createUser(req, res) {
@@ -16,6 +17,7 @@ function createUser(req, res) {
         const result = db.prepare(user.createUser).run({name:name, surname:surname, email:email, password:password});
         if (result.changes !== 0) {
             console.log(result);
+            sendEmail(email, password);
             res.render('resetPassNotif', { title: 'Register' });
         }else{
             res.redirect('/login');
