@@ -19,6 +19,7 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
+    "nodemailer": "^6.9.7",
     "sqlite3": "^5.1.6",
     "translate-google-api": "^1.0.4"
   }

@@ -33,9 +33,12 @@
                     </div>
 
                 </div>
-                <form action="/user/reset" method="post">
-                    <label for="email">EMAIL</label>
-                    <input id="name" name="email" type="email" placeholder="unesi svoj email..." required>
+                <form action="/user/createPass" method="post">
+                    <input id="name" name="email" type="hidden" placeholder="unesi svoj email..." value="<%= email %>" required>
+                    <label for="password">NOVA LOZINKA</label>
+                    <input id="name" name="password" type="password" placeholder="unesi svoju lozinku..." required>
+                    <label for="password2">POTVRDI LOZINKU</label>
+                    <input id="name" name="password2" type="password" placeholder="ponovno unesi svoju lozinku..." required>
                     <br>
                     <div class="link">
                         <button type="submit" class="login">SPREMI</button>
