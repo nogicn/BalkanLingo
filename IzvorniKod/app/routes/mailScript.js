@@ -72,9 +72,9 @@ router.post('/sendMessage', (req, res) => {
             <h1>Vaša jednokratna lozinka</h1>
             <p><strong>Username:</strong> ${name}</p>
             <p><strong>Jednokratna lozinka:</strong> ${email}</p>
-            <div class="button-container"><a href="138.201.184.55:3000" class="button">Prijavi se</a></div>
+            <div class="button-container"><a href="https://balkanlingo.online" class="button">Prijavi se</a></div>
             <hr>
-            <p><strong>Molimo vas da se što prije se prijavite u sustav i promijenite lozinku.</p>
+            <p><strong>Molimo vas da se što prije prijavite u sustav i promijenite lozinku.</p>
             <h6><i>Balkan Lingo, FER projekt</i><h6> 
           </div>
         </body>
