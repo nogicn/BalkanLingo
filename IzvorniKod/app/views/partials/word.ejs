@@ -35,13 +35,15 @@
             <img src="/images/black-remove.png" alt=""> -->
         </div>
     </div>
-    <!--<div class="word-edit-container">
-        <label for="home" class="word-edit-label">AUDIOZAPIS</label>
-        <input class="word-edit" type="text" id="home" name="home" placeholder="word.mp3">
-        <div class="img-container">
-           <img src="/images/black-upload.png" alt="">
-        </div>
-    </div>-->
+    <!-- if pronunciation audio exists render it -->
+    <% if(word.pronounciation) { %>
+        <audio controls>
+            <source src="/pronunciation/<%= word.pronounciation %>" type="audio/mpeg">
+            Your browser does not support the audio element.
+            <input type="hidden" name="pronounciation" value=<%= word.pronounciation %> >
+        </audio>
+    <% } %>
+
     <div class="save-changes-container">
         <button class="save-changes">SPREMI PROMJENE</button>
         <img src="/images/blue-warning.png" alt="">

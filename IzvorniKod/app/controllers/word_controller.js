@@ -6,6 +6,9 @@ const wordModel = require('../models/word_model');
 const translate = require('translate-google-api');
 const axios = require('axios');
 const ejs = require('ejs');
+const ElevenLabs = require('elevenlabs-node');
+const fs = require('fs-extra');
+
 
 
 function dashboard (req, res) {
@@ -131,7 +134,9 @@ function nextQuestion(req, res) {
     
 }
 
-function editWord(req, res) {
+
+
+async function editWord(req, res) {
     // check if method is post or get
     if (req.method == "POST") {
         // get id from url
@@ -144,10 +149,47 @@ function editWord(req, res) {
         let foreignDescription = req.body.foreignDescription;
         let nativeWord = req.body.nativeWord;
         let nativeDescription = req.body.nativeDescription;
-        let pronounciation = "aaaaaa";
-        // update word
-        let updateWord = db.prepare(wordModel.updateWord).run({wordId:id, foreignWord:foreignWord, foreignDescription:foreignDescription, nativeWord:nativeWord, nativeDescription:nativeDescription, pronounciation:pronounciation});
+        let newPronunciation = req.body.pronounciation;
+        let pronunciation = word.pronounciation;
+
+        
+
+        if (newPronunciation != pronunciation && pronunciation != "null") {
+            fs.unlinkSync("./public/pronunciation/"+pronunciation);
+        }
+
+        if (newPronunciation != pronunciation && pronunciation == "null") {
+
+            let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
+            let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
+
+            // Prepare options for fetch request
+            const voice = new ElevenLabs({
+                apiKey: "15426f91132af70c80346c69ff31cc5b", // Your API key
+                voiceId: "pNInz6obpgDQGcFmaJgB",             // Default Voice ID
+            });
+
+            let resource = await voice.textToSpeech({
+                // Required Parameters
+                fileName:        pronunciationFilePath,                    // The name of your audio file
+                textInput:       foreignWord,                // The text you wish to convert to speech
+            
+                // Optional Parameters
+                stability:       0.5,                            // The stability for the converted speech
+                similarityBoost: 0.5,                            // The similarity boost for the converted speech
+                modelId:         "eleven_multilingual_v2",   // The ElevenLabs Model ID
+                style:           1,                              // The style exaggeration for the converted speech
+                speakerBoost:    true                            // The speaker boost for the converted speech
+            }).then((res) => {
+                console.log(res);
+            });
+            pronunciation = pronunciationFileName;
+        }
+        // update word in database
+        let updateWord = db.prepare(wordModel.updateWord).run({wordId:id, foreignWord:foreignWord, foreignDescription:foreignDescription, nativeWord:nativeWord, nativeDescription:nativeDescription, pronounciation:pronunciation});
+        //console.log(updateWord);
         res.redirect('/dictionary/dictSearch/'+word.dictionary_id);
+        
         
     }else{
         let id = req.params.id;
@@ -162,17 +204,44 @@ function editWord(req, res) {
 
 }
 
-function addWord(req, res) {
+
+async function addWord(req, res) {
     if (req.method == "POST") {
         // get data from form
         let foreignWord = req.body.foreignWord;
         let foreignDescription = req.body.foreignDescription;
         let nativeWord = req.body.nativeWord;
         let nativeDescription = req.body.nativeDescription;
-        let pronounciation = "aaaaaa";
         let dictionaryId = req.params.id;
-        // insert word into database
-        let word = db.prepare(wordModel.createWord).run({foreignWord:foreignWord, foreignDescription:foreignDescription, nativeWord:nativeWord, nativeDescription:nativeDescription, pronounciation:pronounciation, dictionaryId:dictionaryId});
+        let pronunciationFileName = req.body.pronounciation;
+        if (pronunciationFileName == "") {
+            let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
+            let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
+
+            // Prepare options for fetch request
+            const voice = new ElevenLabs({
+                apiKey: "15426f91132af70c80346c69ff31cc5b", // Your API key
+                voiceId: "pNInz6obpgDQGcFmaJgB",             // Default Voice ID
+            });
+
+            let resource = await voice.textToSpeech({
+                // Required Parameters
+                fileName:        pronunciationFilePath,                    // The name of your audio file
+                textInput:       foreignWord,                // The text you wish to convert to speech
+            
+                // Optional Parameters
+                stability:       0.5,                            // The stability for the converted speech
+                similarityBoost: 0.5,                            // The similarity boost for the converted speech
+                modelId:         "eleven_multilingual_v2",   // The ElevenLabs Model ID
+                style:           1,                              // The style exaggeration for the converted speech
+                speakerBoost:    true                            // The speaker boost for the converted speech
+            }).then((res) => {
+                console.log(res);
+            });
+
+        }
+        // OVDJE MOZE BITI GRESKA, TREBA BITI ERROR HANDLING AKO VEC POSTOJI RIJEC U RIJECNIKU
+        let word = db.prepare(wordModel.createWord).run({foreignWord:foreignWord, foreignDescription:foreignDescription, nativeWord:nativeWord, nativeDescription:nativeDescription, pronounciation:pronunciationFileName, dictionaryId:dictionaryId});
         res.redirect('/dictionary/dictSearch/'+dictionaryId);
         
     }else {
@@ -191,11 +260,15 @@ async function fillWordData(req, res) {
     let id = req.params.id;
     // get dictionary from database
     let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
-
+    
     // get language code
     let languageCode = dictionary.language;
-
+    try {
     var foreignWord =  await translate(word, {to: "en"});
+    }catch (error) {
+        res.status(404).json({text: "Error translation error"});
+        return;
+    }
     try {
         var extendedresult = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+foreignWord[0]);
         // check if error
@@ -204,16 +277,6 @@ async function fillWordData(req, res) {
         return;
     }
 
-    
-    
-    console.log(extendedresult.data[0]);
-    /*var audio = "";
-    for (var i = 0; i < extendedresult.data[0].phonetics.length; i++) {
-        if (extendedresult.data[0].phonetics[i].audio) {
-        audio = extendedresult.data[0].phonetics[i].audio;
-        break;
-        }
-    }*/
     // check if there is an example in body, if not find one
     if (req.body.nativeDescription == "") {
         var example = "";
@@ -229,15 +292,60 @@ async function fillWordData(req, res) {
     }else{
         var example = req.body.nativeDescription;
     }
-    var nativeDescription = await translate(example, {to: "hr"});
+    try {
+        var nativeDescription = await translate(example, {to: "hr"});
+    } catch (error) {
+        res.status(404).json({text: "Error translation error"});
+        return;
+    }
     if (languageCode != "en"){
-        example = await translate(nativeDescription[0], {to: languageCode});
-        foreignWord = await translate(foreignWord[0], {to: languageCode});
+        try {
+            example = await translate(nativeDescription[0], {to: languageCode});
+            foreignWord = await translate(foreignWord[0], {to: languageCode});
+        } catch (error) {
+            res.status(404).json({text: "Error translation error"});
+            return;
+        }
+        
     }
     var wordId = req.body.wordId;
+
+    let pronunciation = req.body.pronounciation;
+    console.log(pronunciation);
+        if (pronunciation == "null" || pronunciation == "" || pronunciation == undefined) {
+
+
+        let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
+        let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
+
+
+
+        // Prepare options for fetch request
+        const voice = new ElevenLabs({
+            apiKey: "15426f91132af70c80346c69ff31cc5b", // Your API key
+            voiceId: "pNInz6obpgDQGcFmaJgB",             // Default Voice ID
+        });
+
+        let resource = await voice.textToSpeech({
+            // Required Parameters
+            fileName:        pronunciationFilePath,                    // The name of your audio file
+            textInput:       foreignWord[0],                // The text you wish to convert to speech
+        
+            // Optional Parameters
+            stability:       0.5,                            // The stability for the converted speech
+            similarityBoost: 0.5,                            // The similarity boost for the converted speech
+            modelId:         "eleven_multilingual_v2",   // The ElevenLabs Model ID
+            style:           1,                              // The style exaggeration for the converted speech
+            speakerBoost:    true                            // The speaker boost for the converted speech
+        }).then((res) => {
+            console.log(res);
+        });
+        pronunciation = pronunciationFileName;
+    }
+
     //console.log(word_id);
     // generate html
-    var html = await ejs.renderFile('views/partials/word.ejs', {word: {id : wordId, nativeWord : word, nativeDescription : nativeDescription, foreignWord : foreignWord[0], foreignDescription : example, pronounciation : ""}, dictionary: dictionary});
+    var html = await ejs.renderFile('views/partials/word.ejs', {word: {id : wordId, nativeWord : word, nativeDescription : nativeDescription, foreignWord : foreignWord[0], foreignDescription : example, pronounciation : pronunciation }, dictionary: dictionary});
     console.log(html);
     res.status(200).send(html);
 
