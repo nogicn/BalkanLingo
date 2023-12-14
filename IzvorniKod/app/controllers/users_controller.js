@@ -33,7 +33,7 @@ function createUser(req, res) {
 function loginUser(req, res) {
     const { email, password } = req.body;
     try {
-        const pass = db.prepare(user.getUserByEmail).get({email:email});
+        var pass = db.prepare(user.getUserByEmail).get({email:email});
         if (!pass) {
             console.log("User not found");
             res.status(404).send("User not found");
