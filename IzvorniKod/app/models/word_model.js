@@ -5,7 +5,7 @@ const createWordTable = `
         foreignDescription TEXT NOT NULL,
         nativeWord TEXT NOT NULL,
         nativeDescription TEXT NOT NULL,
-        pronounciation TEXT NOT NULL,
+        pronunciation TEXT NOT NULL,
         dictionary_id INTEGER NOT NULL,
         FOREIGN KEY (dictionary_id) REFERENCES dictionary(id),
         UNIQUE (foreignWord, foreignDescription, nativeWord, nativeDescription, dictionary_id)
@@ -13,7 +13,7 @@ const createWordTable = `
 `;
 
 const createWord = `
-    INSERT INTO word (foreignWord, foreignDescription, nativeWord, nativeDescription, pronounciation, dictionary_id) VALUES (@foreignWord, @foreignDescription, @nativeWord, @nativeDescription, @pronounciation, @dictionaryId);
+    INSERT INTO word (foreignWord, foreignDescription, nativeWord, nativeDescription, pronunciation, dictionary_id) VALUES (@foreignWord, @foreignDescription, @nativeWord, @nativeDescription, @pronunciation, @dictionaryId);
 `;
 
 const deleteWordById = `
@@ -41,7 +41,7 @@ const getWordById = `
 `;
 
 const updateWord = `
-    UPDATE word SET foreignWord = @foreignWord, foreignDescription = @foreignDescription, nativeWord = @nativeWord, nativeDescription = @nativeDescription, pronounciation = @pronounciation WHERE id = @wordId;
+    UPDATE word SET foreignWord = @foreignWord, foreignDescription = @foreignDescription, nativeWord = @nativeWord, nativeDescription = @nativeDescription, pronunciation = @pronunciation WHERE id = @wordId;
 `;
 
 const searchWordByDictionaryId = `

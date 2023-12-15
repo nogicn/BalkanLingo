@@ -1,7 +1,7 @@
 const createDictionaryTable = `
     CREATE TABLE dictionary (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name INTEGER NOT NULL,
+        name TEXT NOT NULL,
         language TEXT NOT NULL,
         image_link TEXT NOT NULL,
         flag_icon_link TEXT NOT NULL

@@ -16,12 +16,14 @@ router.get('/nextQuestion/:id', checkAuth, wordController.nextQuestion);
 
 router.get('/checkWord/:answer', checkAuth, wordController.checkAnswer);
 
-router.get('/addWord/:id', checkAuth, wordController.addWord);
-router.post('/addWord/:id', checkAuth, wordController.addWord);
+router.get('/addWord/:id',  wordController.addWord);
+router.post('/addWord/:id',  wordController.addWord);
 
-router.post('/fillWordData/:id', checkAuth, wordController.fillWordData);
+router.post('/fillWordData/:id', checkAuth,  wordController.fillWordData);
+router.post('/fillSentenceData/:id', checkAuth, wordController.fillSentenceData);
+router.post('/createPronunciation/:id', checkAuth,  wordController.createPronunciation);
 
-router.get('/editWord/:id', checkAuth, wordController.editWord);
+router.get('/editWord/:id', checkAuth,  wordController.editWord);
 
 router.post('/editWord/:id', checkAuth, wordController.editWord);
 
