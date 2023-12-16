@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <title>Listening Lesson</title>
+        <link rel="stylesheet" href="/css/listenWord.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <% include partials/navbar.ejs %>
+    <div class="main-content">
+        <div class="button-container">
+            <a href="">
+                <img src="/images/orange-home.png" alt="">
+                <p>završi sesiju ucenja</p>
+            </a>
+        </div>
+        <div class="listen-area">
+            <div class="listen-head">
+                <img src="/images/logo.png" alt="">
+                <p>POSLUŠAJ I NAPIŠI RIJEČ</p>
+            </div>
+            <img  class="play" src="/images/orange-add.png" alt="">
+            <input class="input-field" type="text" placeholder="Upiši poslušanu riječ...">
+            <button class="check">PROVJERA</button>
+            <p class="answer">ODGOVOR JE TOČAN</p>
+            <p class="word">POSLUŠANA RIJEČ:ABRAKADABRA</p>
+            <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
+                <a href="">
+                    <img src="/images/orange-home.png" alt="">
+                </a>
+                <a href="">
+                    <img src="/images/orange-next.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="">
+                <img src="/images/orange-next.png" alt="">
+                <p>sljedeće pitanje</p>
+            </a>
+        </div>
+
+    </div>
+    <div class="footer">
+        <div class="footer-left">
+            <div><b>BALKANLIN<span style="color: #FF9F1C;">GO!</span></b> je izrađen u sklopu timskog projekta za kolegij</div>
+            <div>Programsko inženjerstvo. <b>Sva prava pridržana.</b></div>
+        </div>
+        <% include partials/footer.ejs %>
+</body>
+</html>

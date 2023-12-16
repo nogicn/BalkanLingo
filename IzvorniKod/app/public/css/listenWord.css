@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@200&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oswald Regular', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar, .footer {
+    height: 7%; /* 5% for the navbar and 5% for the footer */
+    background-color: #ffffff; /* Adjust the background color as needed */
+    color: #fff; /* Adjust the text color as needed */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .navbar-left, .navbar-right, .footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar img, .footer img {
+    margin: 0 10px;
+  }
+
+
+  .footer-left {
+    font-size: 13px;
+    margin-left: 15px;
+    display: inline-block;
+    color: black;
+  }
+
+  .footer-right svg{
+    margin-bottom: 20px;
+    max-width: 300px;
+    max-height: 60px;
+  }
+
+  /* remove all styles from a tag */
+  a {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+  }
+
+
+  .main-content{
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffebd0;
+  }
+
+  .button-container{
+    flex: 1;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .wide{
+    display: flex;
+  }
+  .button-container a{
+    transition: all 0.2s;
+  }
+  .button-container a p{
+    color: #ff9f1c;
+    font-size: 2rem;
+  }
+  .button-container a img{
+    width: 25%;
+  }
+  .button-container a:hover{
+    filter: brightness(0.95);
+    transform: scale(1.02);
+  }
+
+  .listen-area{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 10%;
+  }
+  .listen-head{
+    width: 80%;
+    height: 40px;
+    border-radius: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+  }
+  .listen-head img{
+    height: 20px;
+  }
+  .listen-head p{
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #000;
+    font-weight: bold;
+  }
+  .play{
+    margin: 20px;
+    transition: all 0.2s;
+  }
+  .play:hover{ /* ovo cisto kako bi izgledalo, triba promini*/
+    filter:invert(0.6);
+  }
+  .input-field{
+
+    background-color: #ff9f1c;
+    border: none;
+    padding: 15px 25px;
+    width: 100%;
+    border-radius: 50px;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .input-field::placeholder{
+    color: #ffffff;
+    font-style: italic;
+  }
+  .input-field:focus{
+    background-color: #ffc374;
+    border: 1px solid #ff9f1c;
+  }
+
+  .check{
+    border: none;
+    padding: 15px 25px;
+    width: 100%;
+    border-radius: 50px;
+    transition: all 0.2s;
+    background-color: #2ec486;
+    color: #ffffff;
+    margin-bottom: 30px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .check:hover{
+    filter: brightness(0.9);
+  }
+  .answer{
+    font-weight: bold;
+    color: #2ec486;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center  ;
+  }
+  .word{
+    font-weight: bold;
+    color: #c27a16;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+
+  }
+  .invisible-buttons{
+    display: none;
+  }
+
+  @media(max-width:1270px){
+    .listen-head{
+        width: 100%;
+    }
+  }
+  @media(max-width:1010px){
+    .main-content .button-container{
+        display: none;
+    }
+    .main-content .invisible-buttons{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60%;
+    }
+    .main-content .invisible-buttons img{
+        width: 60px;
+        margin:  10px;
+        transition: all 0.2s;
+    }
+    .main-content .invisible-buttons a:hover{
+        filter: brightness(0.9);
+    }
+
+    .main-content .listen-area .listen-head{
+        width: 60%;
+    }
+    .main-content .listen-area .input-field{
+        width: 70%;
+    }
+    .main-content .listen-area .check{
+        width: 70%;
+    }
+  }
+  @media(max-width:572px){
+    .main-content .listen-area .listen-head{
+        width: 80%;
+    }
+    .main-content .listen-area .input-field{
+        width: 90%;
+    }
+    .main-content .listen-area .check{
+        width: 90%;
+    }
+  }
