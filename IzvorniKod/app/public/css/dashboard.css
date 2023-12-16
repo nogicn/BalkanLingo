@@ -157,7 +157,7 @@ html, body {
   }
   
 
-  @media (max-width: 550px) {
+  @media (max-width: 730px) {
 
     .main{
       align-items: center;

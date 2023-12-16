@@ -74,6 +74,7 @@ html, body {
     text-align: center;
     transition: all 0.2s;
   }
+
   .button-container a{
     transition: all 0.2s;
   }
@@ -89,7 +90,7 @@ html, body {
     transform: scale(1.02);
   }
 
-  .listen-area{
+  .say-area{
     flex: 1;
     display: flex;
     align-items: center;
@@ -98,7 +99,7 @@ html, body {
     height: 100%;
     margin: 10%;
   }
-  .listen-head{
+  .say-head{
     width: 80%;
     height: 40px;
     border-radius: 50px;
@@ -109,78 +110,67 @@ html, body {
     background-color: #ffffff;
     margin-bottom: 20px;
   }
-  .listen-head img{
+  .say-head img{
     height: 20px;
   }
-  .listen-head p{
+  .say-head p{
     margin-left: 10px;
     margin-right: 10px;
     color: #000;
     font-weight: bold;
   }
-  .play{
+  .say{
     margin: 20px;
     transition: all 0.2s;
   }
-  .play:hover{ /* ovo cisto kako bi izgledalo, triba promini*/
+  .say:hover{ /* ovo cisto kako bi izgledalo, triba promini*/
     filter:invert(0.6);
-  }
-  .input-field{
-
-    background-color: #ff9f1c;
-    border: none;
-    padding: 15px 25px;
-    width: 100%;
-    border-radius: 50px;
-    transition: all 0.2s;
-    margin-bottom: 10px;
-  }
-  .input-field::placeholder{
-    color: #ffffff;
-    font-style: italic;
-  }
-  .input-field:focus{
-    background-color: #ffc374;
-    border: 1px solid #ff9f1c;
-  }
-
-  .check{
-    border: none;
-    padding: 15px 25px;
-    width: 100%;
-    border-radius: 50px;
-    transition: all 0.2s;
-    background-color: #2ec486;
-    color: #ffffff;
-    margin-bottom: 30px;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  .check:hover{
-    filter: brightness(0.9);
-  }
-  .answer{
-    font-weight: bold;
-    color: #2ec486;
-    margin-bottom: 10px;
-    width: 100%;
-    text-align: center  ;
-  }
-  .word{
-    font-weight: bold;
-    color: #c27a16;
-    margin-bottom: 10px;
-    width: 100%;
-    text-align: center;
-
   }
   .invisible-buttons{
     display: none;
   }
+  .big-bold{
+    color: #c27a16;
+    font-weight: bold;
+    margin: 10px;
+  }
+  .phrase{
+    color: #c27a16;
+    margin-bottom: 20px;
+  }
+  .answer-container{
+    display:  flex;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+  }
+  .correct{
+    text-align: center;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: #2ec4b6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px;
+  }
+  .answer-container p{
 
-  @media(max-width:1270px){
-    .listen-head{
+    color: #2ec4b6;
+    font-weight: bold;
+  }
+
+  @media(max-width:1350px){
+    .say-head{
         width: 100%;
+        font-size: 0.9rem;
+    }
+    .answer-container p{
+        text-wrap: nowrap;
     }
   }
   @media(max-width:1010px){
@@ -202,24 +192,16 @@ html, body {
         filter: brightness(0.9);
     }
 
-    .main-content .listen-area .listen-head{
+    .main-content .say-area .say-head{
         width: 60%;
     }
-    .main-content .listen-area .input-field{
-        width: 70%;
-    }
-    .main-content .listen-area .check{
-        width: 70%;
+    .main-content .say-area .answer-container{
+        width: 40%;
     }
   }
   @media(max-width:572px){
-    .main-content .listen-area .listen-head{
+    .main-content .say-area .say-head{
         width: 80%;
     }
-    .main-content .listen-area .input-field{
-        width: 90%;
-    }
-    .main-content .listen-area .check{
-        width: 90%;
-    }
+
   }

@@ -34,6 +34,9 @@ router.get('/learn', checkAuth, function (req, res) {
 router.get('/listen', checkAuth, function (req, res) {
   res.render('listenWord', { title: 'Listening Lesson' });
 });
+router.get('/say', checkAuth, function (req, res) {
+  res.render('sayWord', { title: 'Listening Lesson' });
+});
 
 router.get('/dict', checkAuth, function (req, res) {
     res.render('dictSearch', { title: 'Dictionary' });
