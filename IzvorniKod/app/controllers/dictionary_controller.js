@@ -59,7 +59,7 @@ function removeDictionary(req, res) {
 
 function addDictionary(req, res) {
     if (req.session.is_admin) {
-        res.redirect('/dashboard');
+        res.redirect('/dictionary/adminAddDict');
     }else{
         // get user from db
         const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
@@ -77,10 +77,15 @@ function addDictionaryToUser(req, res) {
     res.redirect('/dashboard');
 }
 
+function adminAddDict(req, res){
+    res.render('dictionaryAddAdmin', { title: 'Add Dictionary' });
+}
+
 module.exports = {
     getAllDictionaries,
     searchDictionary,
     removeDictionary,
     addDict: addDictionary,
-    addDictToUser: addDictionaryToUser
+    addDictToUser: addDictionaryToUser,
+    adminAddDict
 }
