@@ -31,5 +31,6 @@ router.get('/deleteWord/:id', checkAuth, wordController.deleteWord);
 
 router.post('/search/:id', checkAuth, wordController.searchWords);
 
+router.get('/adminAddDict', checkAuth, dictionaryController.adminAddDict);
 
 module.exports = router;
