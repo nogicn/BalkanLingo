@@ -21,11 +21,11 @@
                   <div class="button-container">
                     
                     <% if(is_admin==true) { %>
-                       <button><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+                       <button style="padding: 4px 10px;"><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
+                        <button style="padding: 4px 10px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } else { %>
-                        <button><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+                        <button style="padding: 4px 4px;"><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
+                        <button style="padding: 4px 4px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } %>
                   </div>
                 </div>
