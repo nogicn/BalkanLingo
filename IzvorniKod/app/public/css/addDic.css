@@ -89,6 +89,10 @@ html, body {
     transition: all 0.2s;
   }
 
+  .word-edit-top{
+    width: 80%;
+  }
+
   .home-image:hover{
     filter: brightness(1.05);
 

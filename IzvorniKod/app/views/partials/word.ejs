@@ -41,13 +41,15 @@
     </div>
     <!-- if pronunciation audio exists render it -->
     <% if(word.pronunciation) { %>
-        <audio controls>
+        <div  class="word-edit-container">
+            <label for="" class="word-edit-label word-edit-phrase" style="display: block;">GENERIRAJ IZGOVOR</label>
+        <audio controls style="display: inline-block;">
             <source src="/pronunciation/<%= word.pronunciation %>" type="audio/mpeg">
             Your browser does not support the audio element.
             <input type="hidden" name="pronunciation" value=<%= word.pronunciation %> >
             
         </audio>
-        <div class="img-container">
+        <div class="img-container" style="display: inline-block; vertical-align: super;" >
             <img src="/images/black-add.png" alt="" hx-post="/dictionary/createPronunciation/<%= dictionary.id %>" 
             hx-target="#wordContainer" 
             hx-swap="outerHTML" 
@@ -55,11 +57,12 @@
             hx-include="#data"> 
             
         </div>
+    </div>
     <% } %>
 
     <div class="save-changes-container">
         <button class="save-changes">SPREMI PROMJENE</button>
         <img src="/images/blue-warning.png" alt="">
-        <div id="loading" class="htmx-indicator"></div>
+        <div id="loading" class="htmx-indicator" style="vertical-align: middle; margin-left: 10px;"></div>
     </div>
 </div>
