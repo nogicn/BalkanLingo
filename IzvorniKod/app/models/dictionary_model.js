@@ -2,14 +2,14 @@ const createDictionaryTable = `
     CREATE TABLE dictionary (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        language TEXT NOT NULL,
+        language_id INTEGER NOT NULL,
         image_link TEXT NOT NULL,
-        flag_icon_link TEXT NOT NULL
+        FOREIGN KEY (language_id) REFERENCES language(id)
     );
 `;
 
 const createNewDictionary = `
-    INSERT INTO dictionary (name, language, image_link, flag_icon_link) VALUES (@name, @language, @imageLink, @flagIconLink);
+    INSERT INTO dictionary (name, language_id, image_link) VALUES (@name, @language_id, @imageLink);
 `;
 
 const getDictionariesForUser = `
