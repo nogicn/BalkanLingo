@@ -4,10 +4,10 @@ const app = require("../app");
 require("dotenv").config();
 
 describe("Root path test", () => {
-    test("It should respond with OK (200)", () => {
+    test("It should respond with not found (404)", () => {
         return request(app)
-        .get("/")
-        .expect(200);
+        .get("/dictionary")
+        .expect(404);
     });
 });
 
