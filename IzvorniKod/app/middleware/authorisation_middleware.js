@@ -9,7 +9,7 @@ const checkAuth = (req, res, next) => {
         if (!row) {
             //console.log("User not logged in");
             //res.status(404).send("User not logged in");
-            res.redirect('/');
+            res.status(302).redirect('/login');
         } else {
             //console.log(row);
             if (row.is_admin !== undefined ) 
