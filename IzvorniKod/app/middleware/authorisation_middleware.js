@@ -1,9 +1,10 @@
 const db = require('../database/database');
-const users = require('../models/user_model');
-
+const userModel = require('../models/user_model');
 const checkAuth = (req, res, next) => {
     try {
-        const row = db.prepare(users.getUserByToken).get({token:req.session.token});
+        const row = db.prepare(userModel.getUserByToken).get({token:req.session.token});
+            // PRIVREMENO
+        //const row = db.prepare(userModel.getUserByEmail).get({email:"***REMOVED***"});
         // if user is not logged in and current page is not home page
         //console.log(row);
         if (!row) {

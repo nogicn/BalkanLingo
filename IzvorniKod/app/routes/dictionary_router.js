@@ -15,6 +15,8 @@ router.get('/removeDictionary/:id', checkAuth, dictionaryController.removeDictio
 router.get('/nextQuestion/:id', checkAuth, wordController.nextQuestion);
 
 router.get('/checkWord/:answer', checkAuth, wordController.checkAnswer);
+router.post('/checkWriting/:answer', checkAuth, wordController.checkAnswerWriting);
+router.post('/checkListening/:answer', checkAuth, wordController.checkAnswerListening);
 
 router.get('/addWord/:id', checkAuth, wordController.addWord);
 router.post('/addWord/:id', checkAuth, wordController.addWord);

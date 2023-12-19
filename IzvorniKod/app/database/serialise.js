@@ -6,6 +6,7 @@ const activeQuestionModel = require('../models/active_question_model');
 const languageModel = require('../models/language_model');
 const db = require('./database');
 const axios = require('axios');
+const userWordModel = require('../models/user_word_model');
 
 function migration(){
     
@@ -59,6 +60,8 @@ function migration(){
     db.prepare(dictinoaryUserModel.addDictionaryToUser).run({userId:2, dictionaryId:1});
 
     db.prepare(activeQuestionModel.createActiveQuestionTable).run();
+
+    db.prepare(userWordModel.createUserWordTable).run();
     console.log("Migration complete")
 }
 
