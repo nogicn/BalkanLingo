@@ -9,14 +9,12 @@ var sendEmail = require('../middleware/mail_middleware');
 function createUser(req, res) {
     // check if incoming request is coming from localhost
     const { name, surname, email } = req.body;
-    //console.log(name, surname, email, password);
     try {
         // create random string for password
         const password = Math.random().toString(36).slice(-8);
         //const hash = bcrypt.hashSync(password, salt);
         const result = db.prepare(user.createUser).run({name:name, surname:surname, email:email, password:password});
         if (result.changes !== 0) {
-            console.log(result);
             sendEmail(email, password);
             res.render('resetPassNotif', { title: 'Register' });
         }else{
@@ -35,23 +33,17 @@ function loginUser(req, res) {
     try {
         var pass = db.prepare(user.getUserByEmail).get({email:email});
         if (!pass) {
-            console.log("User not found");
             res.status(404).send("User not found");
         }
         pass = pass.password;
         if(password != pass) {
-            console.log(db.prepare(user.getAllUsers).all());
             const hash = bcrypt.hashSync(password, salt);
-            console.log(hash);
             const row = db.prepare(user.loginEmailPassword).get({email:email, password:hash});
-            console.log(row);
             if (!row) {
-                console.log("User not found");
                 res.status(404).send("User not found");
             } else {
                 req.session.token = null;
                 const token = jwt.sign({'mail':req.body.email}, 'iamaverystrongsecretyesyes?');
-                console.log(token);
                 const update = db.prepare(user.updateTokenByEmail).get({token:token, email:email})
                 if (update.changes !== 0) {
                     req.session.token = token;
@@ -59,7 +51,6 @@ function loginUser(req, res) {
                     req.session.name = update.name;
                     req.session.surname = update.surname;
                     req.session.is_admin = update.is_admin == 1 ? true : false;
-                    console.log(update);
                     //res.json(update);
                     res.redirect('/dashboard');
                 }
@@ -76,7 +67,6 @@ function loginUser(req, res) {
 
 function logoutUser(req, res) {
     let checkToken = db.prepare(user.getUserByToken).get({ token: req.session.token });
-    console.log(checkToken);
 
     if (checkToken.id == undefined) {
         res.status(302).send("Error no token");
@@ -94,7 +84,6 @@ function logoutUser(req, res) {
 
     for (const cookieName in cookies) {
         if (cookies.hasOwnProperty(cookieName)) {
-            console.log(cookieName, cookies[cookieName]);
         // Set each cookie's expiration date to a date in the past
         res.cookie(cookieName, '', { expires: new Date(0), path: '/' });
         }
@@ -106,7 +95,6 @@ function logoutUser(req, res) {
 function getAllUsers(req, res) {
     try {
         const rows = db.prepare(user.getAllUsers).all();
-        console.log(rows);
         result = JSON.stringify(rows);
         res.json(result);
     } catch (err) {
@@ -117,20 +105,16 @@ function getAllUsers(req, res) {
 
 function resetPwd(req, res) {
     const {email} = req.body;
-    console.log(email);
     try {
         const row = db.prepare(user.getUserByEmail).get({email:email});
         if (!row) {
-            console.log("User not found");
             res.status(404).send("User not found");
         } else { 
             // create random string for password
             const password = Math.random().toString(36).slice(-8);
-            console.log(password);
             const result = db.prepare(user.updatePasswordByEmail).run({email:email, password:password});
             if (result.changes !== 0) {
                 sendEmail(email, password);
-                console.log(result);
                 res.render('resetPassNotif', { title: 'Register' });
             }else{
                 res.redirect('/login');
@@ -144,11 +128,9 @@ function resetPwd(req, res) {
 
 function editUser(req, res) {
     const { name, surname } = req.body;
-    console.log(name, surname);
     try {
         const update = db.prepare(user.updateUserByToken).run({name:name, surname:surname, token:req.session.token})
         if (update.changes !== 0) {
-            console.log(update);
             req.session.name = name;
             req.session.surname = surname;
             res.redirect('/user/edit');
@@ -163,11 +145,9 @@ function createPass(req, res) {
     const {email, password, password2} = req.body;
     try {
         if (password != password2) {
-            console.log("Passwords do not match");
             res.status(404).send("Passwords do not match");
         } else { 
             const hash = bcrypt.hashSync(password, salt);
-            console.log(hash);
             const result = db.prepare(user.updatePasswordByEmail).run({email:email, password:hash});
             const row = db.prepare(user.loginEmailPassword).get({email:email, password:hash});
             const token = jwt.sign({'mail':email}, 'iamaverystrongsecretyesyes?');
@@ -178,7 +158,6 @@ function createPass(req, res) {
                     req.session.name = update.name;
                     req.session.surname = update.surname;
                     req.session.is_admin = update.is_admin == 1 ? true : false;
-                    console.log(update);
                     //res.json(update);
                     res.redirect('/dashboard');
                 }

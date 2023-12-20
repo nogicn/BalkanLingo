@@ -15,8 +15,6 @@ function dashboard (req, res) {
     }else {
         dictionaries = db.prepare(dictionaryModel.getDictionariesForUser).all({userId:req.session.user_id});
     }
-    console.log(db.prepare(dictionaryModel.getAllDictionaries).all());
-    console.log(dictionaries);
     res.render('landingPage', { title: 'Express', dictionaries: dictionaries, is_admin: req.session.is_admin });
 }
 

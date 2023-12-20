@@ -15,7 +15,6 @@ function learnSession(req, res) {
 
     // check if user has any user_words
     let user_words = db.prepare(userWordModel.getViableWordsForUserForDictionary).all({userId:req.session.user_id, dictionaryId:req.params.id});
-    //console.log(user_words);
 
     // get dictionary from database
     let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:req.params.id});
@@ -76,12 +75,10 @@ function learnSessionForeignNative(req, res) {
         // get 4 random words from dictionary 
         let words = [];
         let numberOfWords = db.prepare(userWordModel.getViableWordsForUserForDictionary).all({userId:req.session.user_id, dictionaryId:req.params.id});
-        //console.log(numberOfWords);
         if (numberOfWords.length < 4) {
             res.send("Not enough words in dictionary foreign native");
             return;
         }
-        //console.log(numberOfWords);
         for (let i = 0; i < 4; i++) {
             // generate random number between 1 and number of words in dictionary
             let random = Math.floor(Math.random() * numberOfWords.length);
@@ -167,7 +164,6 @@ function learnSessionNativeForeign(req, res) {
             res.send("Not enough words in dictionary native foreign 1");
             return;
         }
-        //console.log(numberOfWords);
         for (let i = 0; i < 4; i++) {
             // generate random number between 1 and number of words in dictionary
             let random = Math.floor(Math.random() * numberOfWords.length);
@@ -292,8 +288,6 @@ function checkAnswer(req, res) {
     let answer = req.params.answer;
     // get active question
     let activeQuestion = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
-    //console.log(activeQuestion);
-    //console.log(db.prepare(activeQuestionModel.getActiveQuestion).all({userId:req.session.user_id}))
     // get dictionary id from active question
     let dictionaryId = db.prepare(wordModel.getWordById).get({wordId:activeQuestion.word_id});
     if (answer == activeQuestion.word_id) {
@@ -309,7 +303,6 @@ function checkAnswerWriting(req, res) {
     var activeQuestion = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
     var answer = req.body.foreignWord;
     var word = db.prepare(wordModel.getWordById).get({wordId:activeQuestion.word_id});
-    console.log("LLLLLLLLLLLLLLLLLLOOOOOOOOOOOOOOOOOGGGGGGGGGGGGGGGG"+word+" "+answer);
     if (word.foreignWord == answer) {
         moveToNextWordCorrect(req, res, activeQuestion);
     }else{
@@ -322,11 +315,9 @@ function checkAnswerListening(req, res) {
     let activeQuestion = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
     // random a number between 0 and 100
     let random = Math.floor(Math.random() * 100);
-    console.log(random);
     if (random > 50) {
         moveToNextWordCorrect(req, res, activeQuestion);
     }else {
-        //console.log("foreign");
         res.send("Your pronounciation bad");
     }
 }
@@ -355,10 +346,8 @@ async function editWord(req, res) {
     if (req.method == "POST") {
         // get id from url
         let id = req.body.id;
-        //console.log(req.body)
         // get word from database
         let word = db.prepare(wordModel.getWordById).get({wordId:id});
-        //console.log(word);
         // get data from form
         let foreignWord = req.body.foreignWord;
         let foreignDescription = req.body.foreignDescription;
@@ -374,7 +363,6 @@ async function editWord(req, res) {
         }
         // update word in database
         let updateWord = db.prepare(wordModel.updateWord).run({wordId:id, foreignWord:foreignWord, foreignDescription:foreignDescription, nativeWord:nativeWord, nativeDescription:nativeDescription, pronunciation:newPronunciation});
-        ////console.log(updateWord);
         res.redirect('/dictionary/dictSearch/'+word.dictionary_id);
         
         
@@ -384,7 +372,6 @@ async function editWord(req, res) {
         let word = db.prepare(wordModel.getWordById).get({wordId:id});
         // get dictionary from database
         let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:word.dictionary_id});
-        ////console.log(word);
         res.render('editWord', { title: 'Edit Word', word: word, dictionary: dictionary});
     }
    
@@ -422,7 +409,6 @@ async function addWord(req, res) {
                 style:           1,                              // The style exaggeration for the converted speech
                 speakerBoost:    true                            // The speaker boost for the converted speech
             }).then((res) => {
-                //console.log(res);
             });
 
         }
@@ -441,7 +427,6 @@ async function addWord(req, res) {
 
 async function createPronunciation(req, res) {
     let word = req.body
-    //console.log(word);
     let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:req.params.id});
     let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
     let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
@@ -464,12 +449,10 @@ async function createPronunciation(req, res) {
         style:           1,                              // The style exaggeration for the converted speech
         speakerBoost:    true                            // The speaker boost for the converted speech
     }).then((res) => {
-        //console.log(res);
     });
     word.pronunciation = pronunciationFileName;
     // generate html
     var html = await ejs.renderFile('views/partials/word.ejs', {word: word, dictionary: dictionary});
-    ////console.log(html);
     res.status(200).send(html);
 }
 
@@ -488,19 +471,15 @@ async function fillSentenceData(req, res) {
     word.pronunciation = req.body.pronunciation;
     word.nativeWord = req.body.nativeWord;
     word.foreignWord = req.body.foreignWord;
-    //console.log(word);
     if (nativeDescription == "" || nativeDescription == undefined || nativeDescription == null) {
         res.status(404).json({text: "Error word empty"});
         return;
     }
     if (nativeDescription != word.nativeDescription){
-        //console.log("creating new description");
         word.nativeDescription = nativeDescription;
-        //console.log(word.nativeDescription);
         try {
             word.foreignDescription = await translate(word.nativeDescription, {to: dictionary.language});
             word.foreignDescription = word.foreignDescription[0]
-            //console.log(word);
         } catch (error) {
             res.status(404).json({text: "Error translation error"});
             return;
@@ -510,7 +489,6 @@ async function fillSentenceData(req, res) {
     }
     // generate html
     var html = await ejs.renderFile('views/partials/word.ejs', {word: word, dictionary: dictionary});
-    ////console.log(html);
     res.status(200).send(html);
     
 }
@@ -518,17 +496,14 @@ async function fillSentenceData(req, res) {
 async function fillWordData(req, res) {
     // get word from body
     let inword = req.body.nativeWord;
-    //console.log(req.body)
     // get dictionary id from url
     let id = req.params.id;
     // get dictionary from database
     let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
     let word = db.prepare(wordModel.getWordById).get({wordId:req.body.id});
-    //console.log(word);
     if (word == undefined) {
         word = {nativeWord : "", nativeDescription : "", foreignWord : "", foreignDescription : "", pronunciation : ""};
     }
-    //console.log(word+" "+inword);
     if (inword == "" || inword == undefined || inword == null) {
         res.status(404).json({text: "Error word empty"});
         return;
@@ -539,13 +514,11 @@ async function fillWordData(req, res) {
     let nativeDescription = req.body.nativeDescription;
     let example = "";
     if (inword != word.nativeWord){
-        //console.log("creating new word");
         word.nativeWord = inword;
         // get language code
         try {
         word.foreignWord =  await translate(inword, {to: "en"});
         word.foreignWord = word.foreignWord[0]
-        //console.log(word.foreignWord);
         }catch (error) {
             res.status(404).json({text: "Error translation error"+error});
             return;
@@ -568,9 +541,7 @@ async function fillWordData(req, res) {
             }
         }
 
-            //console.log("creating new description");
             word.foreignDescription = example;
-            //console.log(word.foreignDescription);
             try {
                 word.nativeDescription = await translate(word.foreignDescription, {to: "hr"});
                 word.nativeDescription = word.nativeDescription[0]
@@ -578,14 +549,12 @@ async function fillWordData(req, res) {
                 res.status(404).json({text: "Error translation error"});
                 return;
             }
-            //console.log(word.nativeDescription);
             if (languageCode != "en"){
                 try {
                     word.foreignWord = await translate(word.foreignWord, {to: languageCode});
                     word.foreignWord = word.foreignWord[0]
                     word.foreignDescription = await translate(word.foreignDescription, {to: languageCode});
                     word.foreignDescription = word.foreignDescription[0]
-                    //console.log(word);
                 } catch (error) {
                     res.status(404).json({text: "Error translation error"});
                     return;
@@ -600,7 +569,6 @@ async function fillWordData(req, res) {
     let pronunciation = req.body.pronunciation;
     
         if (pronunciation == "null" || pronunciation == "" || pronunciation == undefined) {
-            //console.log("creating new pronunciation");
 
         let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
         let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
@@ -625,16 +593,12 @@ async function fillWordData(req, res) {
             style:           1,                              // The style exaggeration for the converted speech
             speakerBoost:    true                            // The speaker boost for the converted speech
         }).then((res) => {
-            //console.log(res);
         });
         word.pronunciation = pronunciationFileName;
     }
 
-    ////console.log(word);
     // generate html
-    //console.log(word);
     var html = await ejs.renderFile('views/partials/word.ejs', {word: word, dictionary: dictionary});
-    ////console.log(html);
     res.status(200).send(html);
 
 }
@@ -655,7 +619,6 @@ async function searchWords(req, res) {
     const id = req.params.id;
     const word = req.body.word;
     const allwords = db.prepare(wordModel.searchWordByDictionaryId).all({dictionaryId:id, word:word});
-    //console.log(allwords);
     const Dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
     var html = await ejs.renderFile('views/partials/wordsList.ejs', { words: allwords });
     res.status(200).send(html);

@@ -6,13 +6,10 @@ const checkAuth = (req, res, next) => {
             // PRIVREMENO
         //const row = db.prepare(userModel.getUserByEmail).get({email:"***REMOVED***"});
         // if user is not logged in and current page is not home page
-        //console.log(row);
         if (!row) {
-            //console.log("User not logged in");
             //res.status(404).send("User not logged in");
             res.status(302).redirect('/login');
         } else {
-            //console.log(row);
             if (row.is_admin !== undefined ) 
                 if (row.is_admin === 1) {
                 req.session.is_admin = true;
