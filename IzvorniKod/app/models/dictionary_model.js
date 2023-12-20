@@ -13,15 +13,23 @@ const createNewDictionary = `
 `;
 
 const getDictionariesForUser = `
-    SELECT dictionary.*
-    FROM dictionary, dictionary_user
-    WHERE dictionary.id = dictionary_user.dictionary_id
+    SELECT dictionary.*, language.flag_icon
+    FROM dictionary
+    LEFT JOIN language ON dictionary.language_id = language.id
+    LEFT JOIN dictionary_user ON dictionary.id = dictionary_user.dictionary_id
+    WHERE dictionary_user.dictionary_id = dictionary.id
     AND dictionary_user.user_id = @userId;
 `;
 
 const getAllDictionaries = `
     SELECT *
     FROM dictionary;
+`;
+
+const getAllDictionariesWithIcons = `
+    SELECT *
+    FROM dictionary 
+    LEFT JOIN language ON dictionary.language_id = language.id;
 `;
 
 const deleteDictionary = `
@@ -52,6 +60,7 @@ module.exports = {
     getAllDictionaries,
     deleteDictionary,
     getDictionariesNotAssignedToUser,
-    getDictionaryById
+    getDictionaryById,
+    getAllDictionariesWithIcons
 
 }

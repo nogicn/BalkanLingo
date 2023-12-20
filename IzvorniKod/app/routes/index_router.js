@@ -14,7 +14,7 @@ router.get('/', function (req, res) {
         }
 });
 
-router.get('/dashboard', checkAuth, wordController.dashboard);
+router.get('/dashboard', checkAuth, dictionaryController.dashboard);
 
 router.get('/register', function (req, res) {
     res.render('register', { title: 'Register' });
@@ -28,7 +28,7 @@ router.get('/user/edit', checkAuth, function (req, res) {
     res.render('profileEdit', { title: 'Edit User', name: req.session.name, surname: req.session.surname });
 });
 
-router.get('/learn', checkAuth, function (req, res) {
+router.get('/learn', function (req, res) {
     res.render('learnSession', { title: 'Learn' });
 });
 router.get('/listen', checkAuth, function (req, res) {

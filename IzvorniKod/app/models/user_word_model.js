@@ -1,15 +1,19 @@
 const createUserWordTable = `
     CREATE TABLE user_word (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         last_answered TEXT, -- ISO 8601 format
         delay INTEGER,
         active INTEGER NOT NULL,
         word_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         FOREIGN KEY (word_id) REFERENCES word(id),
-        FOREIGN KEY (user_id) REFERENCES user(id),
-        INDEX user_id_index (user_id)
+        FOREIGN KEY (user_id) REFERENCES user(id)
+        
     );
+`;
+
+const createUserIndex = `
+    CREATE INDEX user_word_id_index ON user_word (user_id);
 `;
 
 const createUserWord = `
@@ -31,7 +35,7 @@ const getViableWordsForUserForDictionary = `
     AND user_word.user_id = @userId
     AND word.dictionary_id = @dictionaryId
     AND active = 1
-    AND strftime('%s', 'now') - strftime('%s', last_answered) > delay * 24 * 60 * 60;
+    AND strftime('%s', 'now') - strftime('%Y-%m-%d %H:%M:%S', last_answered) > delay * 24 * 60 * 60;
 `;
 
 const setNewDelayForUser = `
@@ -48,11 +52,16 @@ const deactivateWordForUser = `
     AND word_id = @wordId;
 `;
 
+const getUserWordByUserId = `
+    SELECT * FROM user_word WHERE user_id = @userId;
+`;
+
 module.exports = {
     createUserWordTable,
     createUserWord,
     getWordsForUserForDictionary,
     getViableWordsForUserForDictionary,
     setNewDelayForUser,
-    deactivateWordForUser
+    deactivateWordForUser,
+    getUserWordByUserId,
 }

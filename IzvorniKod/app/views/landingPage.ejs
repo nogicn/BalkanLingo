@@ -17,7 +17,7 @@
             <!-- Main content -->
             <% for (let i = 0; i < dictionaries.length; i++) { %>
                 <div class="dictionary" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<%= dictionaries[i].image_link %>');">
-                  <h3 class="dictionary-name"><%= dictionaries[i].flag_icon_link %> <%= dictionaries[i].name %> </h3>
+                  <h3 class="dictionary-name"><%= dictionaries[i].flag_icon %> <%= dictionaries[i].name %> </h3>
                   <div class="button-container">
                     
                     <% if(is_admin==true) { %>

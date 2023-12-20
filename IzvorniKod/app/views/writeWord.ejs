@@ -22,12 +22,18 @@
         </div>
         <div class="listen-area">
             <div class="listen-head">
-                <img src="/images/logo.png" alt="">
-                <p>POSLUŠAJ I NAPIŠI RIJEČ</p>
+                
+                <p>POSLUŠAJ I NAPIŠI RIJEČ <%= word.foreignWord %> </p>
             </div>
-            <img  class="play" src="/images/orange-add.png" alt="">
-            <input class="input-field" type="text" placeholder="Upiši poslušanu riječ...">
-            <button class="check">PROVJERA</button>
+            <form method="POST" action="/dictionary/checkWriting/<%= word.id %>">
+                <audio controls style="display: inline-block;">
+                <source src="/pronunciation/<%= word.pronunciation %>" type="audio/mpeg">
+                Your browser does not support the audio element.
+                <input type="hidden" name="pronunciation" value=<%= word.pronunciation %> >
+            </audio>
+            <input class="input-field" type="text" name="foreignWord" value="" placeholder="Upiši poslušanu riječ...">
+            <button type="submit" class="check">PROVJERA</button>
+            </form>
             <p class="answer">ODGOVOR JE TOČAN</p>
             <p class="word">POSLUŠANA RIJEČ:ABRAKADABRA</p>
             <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
@@ -40,18 +46,13 @@
             </div>
         </div>
         <div class="button-container">
-            <a href="">
+            <a href="/dictionary/nextQuestion/<%= dictionaryId %>">
                 <img src="/images/orange-next.png" alt="">
                 <p>sljedeće pitanje</p>
             </a>
         </div>
 
     </div>
-    <div class="footer">
-        <div class="footer-left">
-            <div><b>BALKANLIN<span style="color: #FF9F1C;">GO!</span></b> je izrađen u sklopu timskog projekta za kolegij</div>
-            <div>Programsko inženjerstvo. <b>Sva prava pridržana.</b></div>
-        </div>
         <% include partials/footer.ejs %>
 </body>
 </html>
