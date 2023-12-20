@@ -52,8 +52,6 @@ function migration(){
     db.prepare(wordModel.createWord).run({foreignWord:"S'il vous plait", foreignDescription:"S'il vous plait help me", nativeWord: "Molim", nativeDescription: "Molim vas pomognite mi",pronunciation:"null", dictionaryId: 3});
     db.prepare(wordModel.createWord).run({foreignWord:"Merci", foreignDescription:"Merci for your help", nativeWord: "Hvala", nativeDescription: "Hvala vam na pomoci",pronunciation:"null", dictionaryId: 3});
 
-    console.log(db.prepare(userModel.getAllUsers).all());
-    console.log(db.prepare(dictionaryModel.getAllDictionaries).all());
     db.prepare(dictinoaryUserModel.createDictionaryUserTable).run();
     db.prepare(dictinoaryUserModel.addDictionaryToUser).run({userId:1, dictionaryId:1});
     db.prepare(dictinoaryUserModel.addDictionaryToUser).run({userId:1, dictionaryId:2});
@@ -62,7 +60,6 @@ function migration(){
     db.prepare(activeQuestionModel.createActiveQuestionTable).run();
 
     db.prepare(userWordModel.createUserWordTable).run();
-    console.log("Migration complete")
 }
 
 
