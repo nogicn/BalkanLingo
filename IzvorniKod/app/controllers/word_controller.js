@@ -7,8 +7,8 @@ const wordModel = require('../models/word_model');
 const translate = require('translate-google-api');
 const axios = require('axios');
 const ejs = require('ejs');
-const ElevenLabs = require('elevenlabs-node');
 const fs = require('fs-extra');
+var createPronunciationFunc = require('../middleware/pronunciation_middleware');
 
 function learnSession(req, res) {
     let active_question = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
@@ -259,7 +259,14 @@ function learnSessionPronunciation(req, res) {
 function moveToNextWordCorrect(req, res, activeQuestion) {
     // get dictionary id from active question and deactivate old word
     let dictionaryId = db.prepare(wordModel.getWordById).get({wordId:activeQuestion.word_id});
-    let userWord = db.prepare(userWordModel.deactivateWordForUser).run({userId:req.session.user_id, wordId:activeQuestion.word_id});
+    //let userWord = db.prepare(userWordModel.deactivateWordForUser).run({userId:req.session.user_id, wordId:activeQuestion.word_id});
+    // get delay for word
+    let delay = db.prepare(userWordModel.getDelayForWordForUser).get({userId:req.session.user_id, wordId:activeQuestion.word_id});
+    // add a delay to the word
+    console.log(delay);
+    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({userId:req.session.user_id, wordId:activeQuestion.word_id, delay:delay.delay+1});
+    // update last answered
+    let updateLastAnswered = db.prepare(userWordModel.updateLastAnswered).run({userId:req.session.user_id, wordId:activeQuestion.word_id, lastAnswered:new Date().toISOString()});
     
     // get random word
     let numberOfWords = db.prepare(userWordModel.getViableWordsForUserForDictionary).all({userId:req.session.user_id, dictionaryId: dictionaryId.dictionary_id});
@@ -288,6 +295,10 @@ function checkAnswer(req, res) {
     let answer = req.params.answer;
     // get active question
     let activeQuestion = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
+    if (activeQuestion === undefined) {
+        res.redirect('/dashboard')
+        return;
+    }
     // get dictionary id from active question
     let dictionaryId = db.prepare(wordModel.getWordById).get({wordId:activeQuestion.word_id});
     if (answer == activeQuestion.word_id) {
@@ -315,7 +326,7 @@ function checkAnswerListening(req, res) {
     let activeQuestion = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
     // random a number between 0 and 100
     let random = Math.floor(Math.random() * 100);
-    if (random > 50) {
+    if (random > 20) {
         moveToNextWordCorrect(req, res, activeQuestion);
     }else {
         res.send("Your pronounciation bad");
@@ -325,18 +336,6 @@ function checkAnswerListening(req, res) {
 
 function nextQuestion(req, res) {
     let increaseActiveQuestionType = db.prepare(activeQuestionModel.increaseActiveQuestionType).run({userId:req.session.user_id});
-    /*let activeQuestion = db.prepare(activeQuestionModel.getActiveQuestion).get({userId:req.session.user_id});
-    let activate = db.prepare(activeQuestionModel.deleteActiveQuestion).run({userId:req.session.user_id});
-    let userWord = db.prepare(userWordModel.deactivateWordForUser).run({userId:req.session.user_id, wordId:activeQuestion.word_id});
-    //let userWord = db.prepare(userWordModel.setNewDelayForUser).run({userId:req.session.user_id, wordId:active_question.word_id, delay:active_question.type});
-    // get random available word
-    let numberOfWords = db.prepare(userWordModel.getViableWordsForUserForDictionary).all({userId:req.session.user_id, dictionaryId:req.params.id});
-    if (numberOfWords.length == 0) {
-        res.send("Not enough words in dictionary next question");
-        return;
-    }
-    let random = Math.floor(Math.random() * numberOfWords.length);*/
-    //activeQuestion = db.prepare(activeQuestionModel.setActiveQuestion).run({userId:req.session.user_id, wordId:numberOfWords[random].id, type:1});
     res.redirect('/learnSession/'+req.params.id);
     
 }
@@ -391,25 +390,7 @@ async function addWord(req, res) {
             let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
             let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
 
-            // Prepare options for fetch request
-            const voice = new ElevenLabs({
-                apiKey: process.env.ELEVEN_VOICE_KEY, // Your API key
-                voiceId: "pNInz6obpgDQGcFmaJgB",             // Default Voice ID
-            });
-
-            let resource = await voice.textToSpeech({
-                // Required Parameters
-                fileName:        pronunciationFilePath,                    // The name of your audio file
-                textInput:       foreignWord,                // The text you wish to convert to speech
-            
-                // Optional Parameters
-                stability:       0.5,                            // The stability for the converted speech
-                similarityBoost: 0.5,                            // The similarity boost for the converted speech
-                modelId:         "eleven_multilingual_v2",   // The ElevenLabs Model ID
-                style:           1,                              // The style exaggeration for the converted speech
-                speakerBoost:    true                            // The speaker boost for the converted speech
-            }).then((res) => {
-            });
+            await createPronunciationFunc(foreignWord, pronunciationFilePath);
 
         }
         // OVDJE MOZE BITI GRESKA, TREBA BITI ERROR HANDLING AKO VEC POSTOJI RIJEC U RIJECNIKU
@@ -431,25 +412,7 @@ async function createPronunciation(req, res) {
     let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
     let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
 
-    // Prepare options for fetch request
-    const voice = new ElevenLabs({
-        apiKey: process.env.ELEVEN_VOICE_KEY, // Your API key
-        voiceId: "pNInz6obpgDQGcFmaJgB",             // Default Voice ID
-    });
-
-    let resource = await voice.textToSpeech({
-        // Required Parameters
-        fileName:        pronunciationFilePath,                    // The name of your audio file
-        textInput:       req.body.foreignWord,                // The text you wish to convert to speech
-    
-        // Optional Parameters
-        stability:       0.5,                            // The stability for the converted speech
-        similarityBoost: 0.5,                            // The similarity boost for the converted speech
-        modelId:         "eleven_multilingual_v2",   // The ElevenLabs Model ID
-        style:           1,                              // The style exaggeration for the converted speech
-        speakerBoost:    true                            // The speaker boost for the converted speech
-    }).then((res) => {
-    });
+    await createPronunciationFunc(word, pronunciationFilePath);
     word.pronunciation = pronunciationFileName;
     // generate html
     var html = await ejs.renderFile('views/partials/word.ejs', {word: word, dictionary: dictionary});
@@ -575,25 +538,7 @@ async function fillWordData(req, res) {
 
 
 
-        // Prepare options for fetch request
-        const voice = new ElevenLabs({
-            apiKey: process.env.ELEVEN_VOICE_KEY, // Your API key
-            voiceId: "pNInz6obpgDQGcFmaJgB",             // Default Voice ID
-        });
-
-        let resource = await voice.textToSpeech({
-            // Required Parameters
-            fileName:        pronunciationFilePath,                    // The name of your audio file
-            textInput:       word.foreignWord,                // The text you wish to convert to speech
-        
-            // Optional Parameters
-            stability:       0.5,                            // The stability for the converted speech
-            similarityBoost: 0.5,                            // The similarity boost for the converted speech
-            modelId:         "eleven_multilingual_v2",   // The ElevenLabs Model ID
-            style:           1,                              // The style exaggeration for the converted speech
-            speakerBoost:    true                            // The speaker boost for the converted speech
-        }).then((res) => {
-        });
+        await createPronunciationFunc(foreignWord, pronunciationFilePath);
         word.pronunciation = pronunciationFileName;
     }
 
