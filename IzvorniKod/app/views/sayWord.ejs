@@ -9,6 +9,7 @@
         <title>Listening Lesson</title>
         <link rel="stylesheet" href="/css/sayWord.css">
         <link rel="stylesheet" href="/css/dashboard.css">
+        
 </head>
 <body>
     <!-- Navbar -->
@@ -24,10 +25,17 @@
             <div class="say-head">
                 <img src="/images/black-talk.png" alt="">
                 <p>PROČITAJ I IZGOVORI RIJEČ</p>
+                
+
             </div>
+            <form method="POST" action="/dictionary/checkListening/<%= word.id %>">
             <p class="big-bold">RIJEČ NA STRANOM JEZIKU</p>
             <p class="phrase">"FRAZA"</p>
             <img  class="say" src="/images/orange-mic.png" alt="">
+            <input hidden type="file" name="pronunciation" id="pronunciation" accept="audio/*">
+            <button id="startRecording">Start Recording</button>
+            <button id="stopRecording">Stop Recording</button>
+            <audio id="audioPlayer" controls></audio>
             <div class="answer-container">
                 <div class="correct">85%</div>
                 <p>ČESTITAMO, VAŠ JE<br>IZGOVOR ODLIČAN.</p>
@@ -40,20 +48,69 @@
                     <img src="/images/orange-next.png" alt="">
                 </a>
             </div>
+            <button type="submit" class="check">PROVJERA</button>
+            </form>
         </div>
         <div class="button-container">
-            <a href="">
+            <a href="/dictionary/nextQuestion/<%= dictionaryId %>">
                 <img src="/images/orange-next.png" alt="">
                 <p>sljedeće pitanje</p>
             </a>
         </div>
 
     </div>
-    <div class="footer">
-        <div class="footer-left">
-            <div><b>BALKANLIN<span style="color: #FF9F1C;">GO!</span></b> je izrađen u sklopu timskog projekta za kolegij</div>
-            <div>Programsko inženjerstvo. <b>Sva prava pridržana.</b></div>
-        </div>
-        <% include partials/footer.ejs %>
+    <% include partials/footer.ejs %>
+    <script>// Get HTML elements
+        const startRecordingButton = document.getElementById('startRecording');
+        const stopRecordingButton = document.getElementById('stopRecording');
+        const playRecordingButton = document.getElementById('playRecording');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioInput = document.getElementById('pronunciation');
+        
+        // Initialize variables
+        let mediaRecorder;
+        let audioChunks = [];
+        
+        // Start recording when the "Start Recording" button is clicked
+        startRecordingButton.addEventListener('click', () => {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = event => {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        audioPlayer.src = audioUrl;
+                        audioPlayer.controls = true;
+                        audioPlayer.style.display = 'block';
+                        audioInput.value = audioBlob; // Set the input field value to the audio blob
+                    };
+                    mediaRecorder.start();
+                })
+                .catch(error => {
+                    console.error('Error accessing the microphone:', error);
+                });
+        });
+        
+        // Stop recording when the "Stop Recording" button is clicked
+        stopRecordingButton.addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                
+
+            }
+        });
+        
+        // Play the recorded audio when the "Play Recording" button is clicked
+        playRecordingButton.addEventListener('click', () => {
+            if (audioPlayer.src) {
+                audioPlayer.play();
+            }
+        });
+        </script>
 </body>
 </html>

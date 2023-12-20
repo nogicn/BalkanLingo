@@ -8,7 +8,7 @@ const sendEmail = (email, password) =>
     secure: false, // false for TLS - as long as you're not using SSL
       auth: {
         user: 'balkanlingo@gmail.com',
-        pass: '***REMOVED***', //ne diraj
+        pass: process.env.GMAIL_KEY //ne diraj
       },
     });
   

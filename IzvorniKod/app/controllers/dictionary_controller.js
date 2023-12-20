@@ -5,10 +5,30 @@ const userModel = require('../models/user_model');
 const wordModel = require('../models/word_model');
 const dictinoaryUserModel = require('../models/dictionary_user_model');
 const activeQuestionModel = require('../models/active_question_model');
+const languageModel = require('../models/language_model');
 const ejs = require('ejs');
 
+function dashboard (req, res) {
+    let dictionaries = [];
+    if (req.session.is_admin) {
+        dictionaries = db.prepare(dictionaryModel.getAllDictionariesWithIcons).all();
+    }else {
+        dictionaries = db.prepare(dictionaryModel.getDictionariesForUser).all({userId:req.session.user_id});
+    }
+    console.log(db.prepare(dictionaryModel.getAllDictionaries).all());
+    console.log(dictionaries);
+    res.render('landingPage', { title: 'Express', dictionaries: dictionaries, is_admin: req.session.is_admin });
+}
+
+
 function getAllDictionaries(req, res) {
-    const dictionaries = db.prepare("SELECT * FROM dictionary").all();
+    let dictionaries = [];
+    if (req.session.is_admin) {
+        res.redirect('/dashboard');
+    }else{
+        dictionaries = db.prepare(dictionaryModel.getDictionariesNotAssignedToUser).all({userId:req.session.user_id});
+    }
+    
     res.render('addDictionary', { title: 'Add Dictionary', dictionaries: dictionaries });
 }
 
@@ -72,8 +92,8 @@ function addDictionary(req, res) {
 
 function addDictionaryToUser(req, res) {
     const id = req.params.id;
-    const user = db.prepare(userModel.getUserByToken).get({token:req.session.token});
-    const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:user.id});
+    
+    const result = db.prepare(dictionaryUserModel.addDictionaryToUser).run({dictionaryId:id, userId:req.session.user_id});
     res.redirect('/dashboard');
 }
 
@@ -87,5 +107,6 @@ module.exports = {
     removeDictionary,
     addDict: addDictionary,
     addDictToUser: addDictionaryToUser,
-    adminAddDict
+    adminAddDict,
+    dashboard
 }

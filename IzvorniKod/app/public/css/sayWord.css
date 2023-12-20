@@ -34,6 +34,21 @@ html, body {
     margin: 0 10px;
   }
 
+  .check{
+    border: none;
+    padding: 15px 25px;
+    width: 100%;
+    border-radius: 50px;
+    transition: all 0.2s;
+    background-color: #2ec486;
+    color: #ffffff;
+    margin-bottom: 30px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .check:hover{
+    filter: brightness(0.9);
+  }
 
   .footer-left {
     font-size: 13px;

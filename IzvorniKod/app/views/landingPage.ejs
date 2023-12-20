@@ -17,15 +17,15 @@
             <!-- Main content -->
             <% for (let i = 0; i < dictionaries.length; i++) { %>
                 <div class="dictionary" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<%= dictionaries[i].image_link %>');">
-                  <h3 class="dictionary-name"><%= dictionaries[i].flag_icon_link %> <%= dictionaries[i].name %> </h3>
+                  <h3 class="dictionary-name"><%= dictionaries[i].flag_icon %> <%= dictionaries[i].name %> </h3>
                   <div class="button-container">
                     
                     <% if(is_admin==true) { %>
-                       <button><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+                       <button style="padding: 4px 10px;"><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
+                        <button style="padding: 4px 10px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } else { %>
-                        <button><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
-                        <button><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+                        <button style="padding: 4px 4px;"><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
+                        <button style="padding: 4px 4px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } %>
                   </div>
                 </div>

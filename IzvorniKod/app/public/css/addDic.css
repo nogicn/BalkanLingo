@@ -89,6 +89,10 @@ html, body {
     transition: all 0.2s;
   }
 
+  .word-edit-top{
+    width: 80%;
+  }
+
   .home-image:hover{
     filter: brightness(1.05);
 
@@ -265,10 +269,9 @@ html, body {
     }
 
     .word-edit-label{
-      margin-right: 60%;
+      margin-right: 0%;
       font: inherit;
     }
-
     .word-edit:focus{
       background-color: #ffcb83;
     }
@@ -393,7 +396,7 @@ html, body {
       left: 90%;
     }
     .word-edit-label{
-      margin-right: 50%;
+      margin-right: 0%;
     }
   }
 
@@ -406,7 +409,7 @@ html, body {
       left: 85%;
     }
     .word-edit-label{
-      margin-right: 40%;
+      margin-right: 0%;
     }
 
     .word-edit::placeholder{
@@ -480,7 +483,7 @@ html, body {
     }
 
     .word-edit-label{
-      margin-right: 20%;
+      margin-right: 0%;
     }
 
     .word-edit::placeholder{

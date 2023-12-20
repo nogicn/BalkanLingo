@@ -139,7 +139,7 @@ html, body {
     align-self: center;
     border: none;
     border-radius: 30px;
-    padding: 4px 10px;
+    padding: 4px 4px;
     background-color: #2EC4b6;
     cursor: pointer;
     transition: all 0.2s;
