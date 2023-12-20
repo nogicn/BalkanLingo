@@ -38,6 +38,10 @@ router.get('/say', checkAuth, function (req, res) {
   res.render('sayWord', { title: 'Listening Lesson' });
 });
 
+router.get('/404', checkAuth, function (req, res) {
+  res.render('forOFor', { title: 'Error 404' });
+});
+
 router.get('/dict', checkAuth, function (req, res) {
     res.render('dictSearch', { title: 'Dictionary' });
 });

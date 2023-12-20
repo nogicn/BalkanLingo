@@ -6,7 +6,7 @@ var dictionaryController = require('../controllers/dictionary_controller');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-        res.render('sayWord', { title: 'Saying' });
+        res.render('forOFor', { title: 'Error' });
 });
 
 
