@@ -21,9 +21,16 @@ const getShorthands = `
     FROM language;
 `;
 
+const getLanguageById = `
+    SELECT *
+    FROM language
+    WHERE id = @id;
+`;
+
 module.exports = {
     createLanguageTable,
     createNewLanguage,
     getAllLanguages,
-    getShorthands
+    getShorthands,
+    getLanguageById
 }

@@ -408,11 +408,12 @@ async function addWord(req, res) {
 
 async function createPronunciation(req, res) {
     let word = req.body
+    console.log(word)
     let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:req.params.id});
     let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
     let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
 
-    await createPronunciationFunc(word, pronunciationFilePath);
+    await createPronunciationFunc(word.foreignWord, pronunciationFilePath);
     word.pronunciation = pronunciationFileName;
     // generate html
     var html = await ejs.renderFile('views/partials/word.ejs', {word: word, dictionary: dictionary});
@@ -455,6 +456,7 @@ async function fillSentenceData(req, res) {
     res.status(200).send(html);
     
 }
+const LanguageModel = require('../models/language_model');
 
 async function fillWordData(req, res) {
     // get word from body
@@ -463,7 +465,10 @@ async function fillWordData(req, res) {
     let id = req.params.id;
     // get dictionary from database
     let dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:id});
+    let language = db.prepare(LanguageModel.getLanguageById).get({id:dictionary.language_id});
     let word = db.prepare(wordModel.getWordById).get({wordId:req.body.id});
+    // add language code to word
+
     if (word == undefined) {
         word = {nativeWord : "", nativeDescription : "", foreignWord : "", foreignDescription : "", pronunciation : ""};
     }
@@ -472,7 +477,7 @@ async function fillWordData(req, res) {
         return;
     }
     
-    let languageCode = dictionary.language;
+    let languageCode = language.shorthand;
     let extendedresult = "";
     let nativeDescription = req.body.nativeDescription;
     let example = "";
@@ -504,44 +509,42 @@ async function fillWordData(req, res) {
             }
         }
 
-            word.foreignDescription = example;
+        word.foreignDescription = example;
+        try {
+            word.nativeDescription = await translate(word.foreignDescription, {to: "hr"});
+            word.nativeDescription = word.nativeDescription[0]
+        } catch (error) {
+            res.status(404).json({text: "Error translation error"});
+            return;
+        }
+        if (languageCode != "en"){
             try {
-                word.nativeDescription = await translate(word.foreignDescription, {to: "hr"});
-                word.nativeDescription = word.nativeDescription[0]
+                word.foreignWord = await translate(word.foreignWord, {to: languageCode});
+                word.foreignWord = word.foreignWord[0]
+                word.foreignDescription = await translate(word.foreignDescription, {to: languageCode});
+                word.foreignDescription = word.foreignDescription[0]
             } catch (error) {
                 res.status(404).json({text: "Error translation error"});
                 return;
             }
-            if (languageCode != "en"){
-                try {
-                    word.foreignWord = await translate(word.foreignWord, {to: languageCode});
-                    word.foreignWord = word.foreignWord[0]
-                    word.foreignDescription = await translate(word.foreignDescription, {to: languageCode});
-                    word.foreignDescription = word.foreignDescription[0]
-                } catch (error) {
-                    res.status(404).json({text: "Error translation error"});
-                    return;
-                }
-            }
-            
-        
         }
+    }
     
     
-
     let pronunciation = req.body.pronunciation;
     
-        if (pronunciation == "null" || pronunciation == "" || pronunciation == undefined) {
+    console.log(word.foreignWord + " " + pronunciation)
+    if (pronunciation == "null" || pronunciation == "" || pronunciation == undefined || word?.foreignWord) {
 
         let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
         let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
-
-
-
-        await createPronunciationFunc(foreignWord, pronunciationFilePath);
+        console.log(word)
+        await createPronunciationFunc(word.foreignWord, pronunciationFilePath);
+        console.log(pronunciationFileName);
         word.pronunciation = pronunciationFileName;
     }
-
+    
+    console.log(word)
     // generate html
     var html = await ejs.renderFile('views/partials/word.ejs', {word: word, dictionary: dictionary});
     res.status(200).send(html);

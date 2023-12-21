@@ -10,7 +10,7 @@ const createPronunciationFunc = async (word, pronunciationFilePath) => {
    let resource = await voice.textToSpeech({
        // Required Parameters
        fileName:        pronunciationFilePath,                    // The name of your audio file
-       textInput:       word.foreignWord,                // The text you wish to convert to speech
+       textInput:       word,                // The text you wish to convert to speech
    
        // Optional Parameters
        stability:       0.5,                            // The stability for the converted speech
