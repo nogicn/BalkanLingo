@@ -8,7 +8,7 @@ const checkAuth = (req, res, next) => {
         // if user is not logged in and current page is not home page
         if (!row) {
             //res.status(404).send("User not logged in");
-            res.status(302).redirect('/login');
+            res.render('forOFor', { status:404, errorText: "Korisnik nije ulogiran", link: "/login" });
         } else {
             if (row.is_admin !== undefined ) 
                 if (row.is_admin === 1) {

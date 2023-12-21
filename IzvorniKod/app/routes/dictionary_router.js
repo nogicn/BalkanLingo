@@ -4,7 +4,7 @@ var dictionaryController = require('../controllers/dictionary_controller');
 const checkAuth = require('../middleware/authorisation_middleware');
 const wordController = require('../controllers/word_controller');
 
-router.get('/addDictionary', checkAuth, dictionaryController.getAllDictionaries);
+router.get('/addDictionary', checkAuth, dictionaryController.addDict);
 
 router.get('/addDictionaryToUser/:id', checkAuth, dictionaryController.addDictToUser);
 
@@ -34,5 +34,9 @@ router.get('/deleteWord/:id', checkAuth, wordController.deleteWord);
 router.post('/search/:id', checkAuth, wordController.searchWords);
 
 router.get('/adminAddDict', checkAuth, dictionaryController.adminAddDict);
+
+router.get('/adminEditDict/:id', checkAuth, dictionaryController.adminAddDict);
+
+router.post('/adminSaveDict', checkAuth, dictionaryController.adminSaveDict);
 
 module.exports = router;

@@ -21,7 +21,8 @@
                   <div class="button-container">
                     
                     <% if(is_admin==true) { %>
-                       <button style="padding: 4px 10px;"><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI</b></a></button>
+                        <button style="padding: 4px 10px;"><a href="dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI RIJEČI</b></a></button>
+                        <button style="padding: 4px 10px;"><a href="dictionary/adminEditDict/<%= dictionaries[i].id %>"><b>UREDI RJEČNIK</b></a></button>
                         <button style="padding: 4px 10px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } else { %>
                         <button style="padding: 4px 4px;"><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
@@ -31,12 +32,12 @@
                 </div>
               <% } %>
             
-              <a href="/dictionary/addDictionary" style="all: unset;">
                 <div class="add-dictionary">
+                    <a href="/dictionary/addDictionary" style="all: unset;">
                     <div class="add-button"><img src="/images/orange-add.png" alt=""></div>
                     <p>DODAJ NOVI<br>RJEČNIK</p>
+                    </a>
                 </div>
-            </a>
             
         </div>
         <hr>
