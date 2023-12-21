@@ -24,14 +24,14 @@
         <div class="listen-area">
             <div class="listen-head">
                 <img src="/images/black-listen.png" alt="">
-                <p>POSLUŠAJ I NAPIŠI RIJEČ <%= word.foreignWord %> </p>
+                <p>POSLUŠAJ I NAPIŠI RIJEČ </p>
                 
             </div>
             
             <form method="POST" action="/dictionary/checkWriting/<%= word.id %>">
-                <img  class="play" src="/images/orange-play.png" alt="">
+                <img id="playButton" class="play" src="/images/orange-play.png" alt="">
                 <audio hidden style="display: inline-block;" id="audioElement">
-                    <source src="/pronunciation/<%= word.pronunciation %>" id="playButton" type="audio/mpeg">
+                    <source src="/pronunciation/<%= word.pronunciation %>"  type="audio/mpeg">
                     Your browser does not support the audio element.
                     <input type="hidden" name="pronunciation" value=<%= word.pronunciation %> >
                 </audio>

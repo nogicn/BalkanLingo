@@ -26,3 +26,12 @@ describe("Edit user test", () => {
         .expect(302);
     });
 });
+
+describe ("Reset password test", () => {
+    it("It should redirect to login page (302)", () => {
+        return request(app)
+        .get("/user/resetPassword")
+        .expect(302);
+    }
+    );
+});

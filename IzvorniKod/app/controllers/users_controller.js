@@ -60,7 +60,8 @@ async function loginUser(req, res) {
           req.session.surname = update.surname;
           req.session.is_admin = update.is_admin == 1 ? true : false;
           //res.json(update);
-          dictionaryController.dashboard(req, res);
+          //dictionaryController.dashboard(req, res);
+          res.redirect("/dashboard");
         }
       }
     } else {

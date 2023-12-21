@@ -32,11 +32,9 @@
             <form method="POST" action="/dictionary/checkListening/<%= word.id %>">
             <p class="big-bold"><%= word.foreignWord %></p>
             <p class="phrase"><%= word.foreignDescription %></p>
-            <img  class="say" src="/images/orange-mic.png" alt="">
+            <img  class="say" src="/images/orange-mic.png" alt="" id="recordButton">
             <input hidden type="file" name="pronunciation" id="pronunciation" accept="audio/*">
-            <!--<button id="startRecording">Start Recording</button>
-            <button id="stopRecording">Stop Recording</button>-->
-            <audio hidden id="audioPlayer" controls></audio>
+            <audio  id="audioPlayer" controls></audio>
             <!--<div class="answer-container">
                 <div class="correct">85%</div>
                 <p>ČESTITAMO, VAŠ JE<br>IZGOVOR ODLIČAN.</p>
@@ -56,57 +54,51 @@
 
     </div>
     <% include partials/footer.ejs %>
-    <script>// Get HTML elements
-        const startRecordingButton = document.getElementById('startRecording');
-        const stopRecordingButton = document.getElementById('stopRecording');
-        const playRecordingButton = document.getElementById('playRecording');
+    <script>
+        const recordButton = document.getElementById('recordButton');
         const audioPlayer = document.getElementById('audioPlayer');
-        const audioInput = document.getElementById('pronunciation');
+        const audioInput = document.getElementById('audioInput');
         
-        // Initialize variables
         let mediaRecorder;
         let audioChunks = [];
+        let isRecording = false;
         
-        // Start recording when the "Start Recording" button is clicked
-        startRecordingButton.addEventListener('click', () => {
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    mediaRecorder = new MediaRecorder(stream);
-                    mediaRecorder.ondataavailable = event => {
-                        if (event.data.size > 0) {
-                            audioChunks.push(event.data);
-                        }
-                    };
-                    mediaRecorder.onstop = () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        audioPlayer.src = audioUrl;
-                        audioPlayer.controls = true;
-                        audioPlayer.style.display = 'block';
-                        audioInput.value = audioBlob; // Set the input field value to the audio blob
-                    };
-                    mediaRecorder.start();
-                })
-                .catch(error => {
-                    console.error('Error accessing the microphone:', error);
-                });
-        });
-        
-        // Stop recording when the "Stop Recording" button is clicked
-        stopRecordingButton.addEventListener('click', () => {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
-                
-
+        recordButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (!isRecording) {
+                // Start recording
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.ondataavailable = event => {
+                            if (event.data.size > 0) {
+                                audioChunks.push(event.data);
+                            }
+                        };
+                        mediaRecorder.onstop = () => {
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            audioPlayer.src = audioUrl;
+                            audioPlayer.style.display = 'block';
+                            audioInput.value = audioBlob; // Set the input field value to the audio blob
+                        };
+                        mediaRecorder.start();
+                        isRecording = true;
+                        recordButton.textContent = 'Stop Recording';
+                    })
+                    .catch(error => {
+                        console.error('Error accessing the microphone:', error);
+                    });
+            } else {
+                // Stop recording
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    recordButton.textContent = 'Start Recording';
+                }
             }
         });
-        
-        // Play the recorded audio when the "Play Recording" button is clicked
-        playRecordingButton.addEventListener('click', () => {
-            if (audioPlayer.src) {
-                audioPlayer.play();
-            }
-        });
-        </script>
+    </script>
 </body>
 </html>
