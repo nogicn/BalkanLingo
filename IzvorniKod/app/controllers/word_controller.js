@@ -392,7 +392,9 @@ function moveToNextWordCorrect(req, res, activeQuestion) {
       dictionaryId: dictionaryId.dictionary_id,
     });
   if (numberOfWords.length == 0) {
-    res.send("Not enough words in dictionary check answer");
+    //res.send("Not enough words in dictionary check answer");
+    res.render('forOFor', { status:"", errorText: "Naučene su sve riječi za sad", link: "/dashboard" });
+
     return;
   }
   let random = Math.floor(Math.random() * numberOfWords.length);
@@ -597,7 +599,7 @@ async function createPronunciation(req, res) {
     ".mp3";
   let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
 
-  await createPronunciationFunc(word, pronunciationFilePath);
+  await createPronunciationFunc(word.foreignWord, pronunciationFilePath);
   word.pronunciation = pronunciationFileName;
   // generate html
   var html = await ejs.renderFile("views/partials/word.ejs", {

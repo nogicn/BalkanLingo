@@ -14,10 +14,10 @@
     <!-- Navbar -->
     <% include partials/navbar.ejs %>
     <div class="main-content">
-        <h1>404</h1>
+        <h1><%= status %></h1>
         <img src="/images/orange-user.png" alt="">
-        <p>Došlo je do "errorText".<br>Oprostite na neugodnosti.</p>
-        <a href="/dashboard">Povratak na početnu stranicu</a>
+        <p><%= errorText %>.</p>
+        <a href="<%= link %>">Povratak</a>
     </div>
     <div class="footer">
         <div class="footer-left">
