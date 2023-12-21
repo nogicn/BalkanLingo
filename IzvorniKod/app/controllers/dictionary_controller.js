@@ -96,7 +96,32 @@ function addDictionaryToUser(req, res) {
 }
 
 function adminAddDict(req, res){
-    res.render('dictionaryAddAdmin', { title: 'Add Dictionary' });
+    if(req.params.id === undefined){
+        res.render('dictionaryAddAdmin', { title: 'Add Dictionary', dictionary: {id:undefined, name:"", language_id:1, image_link:""} });
+    }
+    try {
+        const dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:req.params.id});
+        res.render('dictionaryAddAdmin', { title: 'Edit Dictionary', dictionary: dictionary });
+    } catch (error) {
+        res.send(error);
+        return;
+    }
+}
+
+function adminSaveDict(req, res){
+    try {
+        //hoce li ID biti ime rjecnika ili posebno da moze duplikat ime imati? za check prije updatea.
+        const dictionary = db.prepare(dictionaryModel.getDictionaryById).get({id:req.body.id});
+        if (dictionary === undefined) {
+            let res = db.prepare(dictionaryModel.createNewDictionary).run({name:req.body.name, language_id:1, imageLink:req.body.image_link});
+        }else{
+            let res = db.prepare(dictionaryModel.updateDictionary).run({name:req.body.description, language_id:1, imageLink:req.body.image_link, id:req.body.id});
+        }
+    } catch (error) {
+        res.send(error);
+        return;
+    }
+    res.redirect('/dashboard');
 }
 
 module.exports = {
@@ -106,5 +131,6 @@ module.exports = {
     addDict: addDictionary,
     addDictToUser: addDictionaryToUser,
     adminAddDict,
+    adminSaveDict,
     dashboard
 }

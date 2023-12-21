@@ -53,6 +53,12 @@ const getDictionaryById = `
     WHERE id = @id;
 `;
 
+const updateDictionary = `
+    UPDATE dictionary
+    SET name = @name, language_id = @language_id, image_link = @image_link
+    WHERE id = @id;
+`;
+
 module.exports = {
     createDictionaryTable,
     createNewDictionary,
@@ -61,6 +67,7 @@ module.exports = {
     deleteDictionary,
     getDictionariesNotAssignedToUser,
     getDictionaryById,
-    getAllDictionariesWithIcons
+    getAllDictionariesWithIcons,
+    updateDictionary
 
 }
