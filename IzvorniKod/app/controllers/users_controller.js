@@ -2,7 +2,8 @@ const user = require("../models/user_model");
 const db = require("../database/database");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const salt = bcrypt.genSaltSync(10);
+const saltRounds = 10;
+const dictionaryController = require("../controllers/dictionary_controller");
 var sendEmail = require("../middleware/mail_middleware");
 
 // create a new user
@@ -29,7 +30,7 @@ function createUser(req, res) {
 }
 
 // login a user
-function loginUser(req, res) {
+async function loginUser(req, res) {
   const { email, password } = req.body;
   try {
     var pass = db.prepare(user.getUserByEmail).get({ email: email });
@@ -38,11 +39,10 @@ function loginUser(req, res) {
     }
     pass = pass.password;
     if (password != pass) {
-      const hash = bcrypt.hashSync(password, salt);
-      const row = db
-        .prepare(user.loginEmailPassword)
-        .get({ email: email, password: hash });
-      if (!row) {
+      const hash = await bcrypt.compare(password, pass)
+      console.log(hash);
+      
+      if (!hash) {
         res.status(404).send("User not found");
       } else {
         req.session.token = null;
@@ -60,7 +60,7 @@ function loginUser(req, res) {
           req.session.surname = update.surname;
           req.session.is_admin = update.is_admin == 1 ? true : false;
           //res.json(update);
-          res.redirect("/dashboard");
+          dictionaryController.dashboard(req, res);
         }
       }
     } else {
@@ -156,13 +156,15 @@ function editUser(req, res) {
   }
 }
 
-function createPass(req, res) {
+async function createPass(req, res) {
   const { email, password, password2 } = req.body;
   try {
     if (password != password2) {
       res.status(404).send("Passwords do not match");
     } else {
-      const hash = bcrypt.hashSync(password, salt);
+      //console.log(salt);
+      const hash = await bcrypt.hash(password, saltRounds)
+      console.log(hash);
       const result = db
         .prepare(user.updatePasswordByEmail)
         .run({ email: email, password: hash });

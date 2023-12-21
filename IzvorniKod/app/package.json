@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest"
+    "test": "jest user.test.js",
+    "testAdmin": "TEST=true TESTMAIL=***REMOVED*** jest dictionary.test.js",
+    "testUser": "TEST=true TESTMAIL=***REMOVED*** jest"
   },
   "dependencies": {
     "axios": "^1.6.2",

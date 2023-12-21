@@ -36,7 +36,9 @@ app.use('/user', usersRouter);
 app.use('/dictionary', dictionaryRouter);
 app.use('/martin', martinRouter);
 
-migration.migration();
+if (process.env.MIGRATE === 'true') {
+  migration.migration();
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
