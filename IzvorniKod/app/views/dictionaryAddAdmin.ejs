@@ -22,22 +22,22 @@
 
                 <form class="word-edit-top" action="/dictionary/adminSaveDict" method="POST">
                     <input type="hidden" name="id" value="<%= dictionary.id %>">
-                    <div class="word-edit-container">
+                   <!-- <div class="word-edit-container">
                         <label for="name" class="word-edit-label ">IME</label>
                         <input class="word-edit" type="text" id="name" name="name" placeholder='"ENGLESKI"' 
                         <% if(dictionary){ %>
                             value="<%= dictionary.languageName %>"
                         <% } %>
                         >
-                    </div>
-                    <div class="word-edit-container">
+                    </div>-->
+                    <!--<div class="word-edit-container">
                         <label for="shortName" class="word-edit-label ">KRATICA</label>
                         <input class="word-edit" type="text" id="shortName" name="shorthand" placeholder='"EN"'
                         <% if(dictionary){ %>
                             value="<%= dictionary.shorthand %>"
                         <% } %>
                         >
-                    </div>
+                    </div>-->
                     <div class="word-edit-container">
                         <label for="mainPage" class="word-edit-label ">NASLOVNICA</label>
                         <input class="word-edit" type="text" id="mainPage" name="image_link" placeholder='"https://www..."'
@@ -46,13 +46,21 @@
                         <% } %>
                         >
                     </div>
-                    <div class="word-edit-container">
+                   <!-- <div class="word-edit-container">
                         <label for="icon" class="word-edit-label ">IKONA</label>
                         <input class="word-edit" type="text" id="name" name="flagIcon" placeholder='":FLAG_GB:"'
                         <% if(dictionary){ %>
                             value="<%= dictionary.flagIcon %>"
                         <% } %>
                         >
+                    </div>-->
+                    <div class="word-edit-container">
+                        <label for="description" class="word-edit-label">Jezik</label>
+                        <select name="language_id" id="">
+                        <% for (let i = 0; i < languages.length; i++) { %>
+                            <option value="<%= languages[i].id %>" <% if (languages[i].id == dictionary.language_id) { %> selected <% } %>><%= languages[i].name %></option>
+                        <% } %>
+                    </select>
                     </div>
                     <div class="word-edit-container">
                         <label for="description" class="word-edit-label">OPIS</label>

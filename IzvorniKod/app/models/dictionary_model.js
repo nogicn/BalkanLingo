@@ -27,7 +27,7 @@ const getAllDictionaries = `
 `;
 
 const getAllDictionariesWithIcons = `
-    SELECT *
+    SELECT dictionary.*, language.name AS language_name, language.flag_icon
     FROM dictionary 
     LEFT JOIN language ON dictionary.language_id = language.id;
 `;
@@ -55,7 +55,7 @@ const getDictionaryById = `
 
 const updateDictionary = `
     UPDATE dictionary
-    SET name = @name, language_id = @language_id, image_link = @image_link
+    SET name = @name, language_id = @language_id, image_link = @imageLink
     WHERE id = @id;
 `;
 

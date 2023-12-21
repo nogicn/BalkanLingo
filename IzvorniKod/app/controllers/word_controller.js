@@ -536,9 +536,7 @@ async function fillWordData(req, res) {
         let pronunciationFileName = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) +".mp3";
         let pronunciationFilePath = "./public/pronunciation/" + pronunciationFileName;
 
-
-
-        await createPronunciationFunc(foreignWord, pronunciationFilePath);
+        await createPronunciationFunc(word.foreignWord, pronunciationFilePath);
         word.pronunciation = pronunciationFileName;
     }
 
