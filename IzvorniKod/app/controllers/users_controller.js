@@ -25,7 +25,8 @@ function createUser(req, res) {
     }
   } catch (err) {
     console.error(err);
-    res.status(404).send("User not created " + err.message);
+    res.status(404);
+    res.render("forOFor", {status: 500, errorText: "Greška pri kreiranju korisnika!", link: "/login"});
   }
 }
 
@@ -35,7 +36,8 @@ async function loginUser(req, res) {
   try {
     var pass = db.prepare(user.getUserByEmail).get({ email: email });
     if (!pass) {
-      res.status(404).send("User not found");
+      res.status(404);
+      res.render("forOFor", { status: 404, errorText: "Greška kod prijave korisnika!", link: "/login" })
     }
     pass = pass.password;
     if (password != pass) {
@@ -43,7 +45,9 @@ async function loginUser(req, res) {
       console.log(hash);
       
       if (!hash) {
-        res.status(404).send("User not found");
+        res.status(404);
+        res.render("forOFor", { status: 404, errorText: "Greška kod prijave korisnika!", link: "/login" })
+
       } else {
         req.session.token = null;
         const token = jwt.sign(
@@ -69,7 +73,8 @@ async function loginUser(req, res) {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error: " + err.message);
+    res.status(500);
+    res.render("forOFor", {status: 500, errorText: "Greška pri prijavi korisnika!", link: "/login"});
   }
 }
 
@@ -79,7 +84,8 @@ function logoutUser(req, res) {
     .get({ token: req.session.token });
 
   if (checkToken.id == undefined) {
-    res.status(302).send("Error no token");
+    res.status(302);
+    res.render("forOFor", {status: 302, errorText: "Error no token!", link: "/login"});
     return;
   }
 
@@ -88,7 +94,8 @@ function logoutUser(req, res) {
     .run({ token: null, email: req.session.email });
 
   if (update.changes == 0) {
-    res.status(302).send("Error");
+    res.status(302);
+    res.render("forOFor", {status: 302, errorText: "Greška!", link: "/login"});
     return;
   }
 
@@ -120,7 +127,8 @@ function resetPwd(req, res) {
   try {
     const row = db.prepare(user.getUserByEmail).get({ email: email });
     if (!row) {
-      res.status(404).send("User not found");
+      res.status(404);
+      res.render("forOFor", {status: 404, errorText: "Korisnik nije pronađen!", link: "/login"});
     } else {
       // create random string for password
       const password = Math.random().toString(36).slice(-8);
@@ -136,7 +144,9 @@ function resetPwd(req, res) {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error: " + err.message);
+    res.status(500);
+    res.render("forOFor", {status: 500, errorText: "Greška pri promjeni lozinke!", link: "/login"});
+
   }
 }
 
@@ -153,7 +163,8 @@ function editUser(req, res) {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error: " + err.message);
+    res.status(500);
+    res.render("forOFor", {status: 500, errorText: "Greška!", link: "/login"});
   }
 }
 
@@ -161,7 +172,9 @@ async function createPass(req, res) {
   const { email, password, password2 } = req.body;
   try {
     if (password != password2) {
-      res.status(404).send("Passwords do not match");
+      res.status(404);
+      res.render("forOFor", {status: 404, errorText: "Lozinke se ne podudaraju!", link: "/login"});
+
     } else {
       //console.log(salt);
       const hash = await bcrypt.hash(password, saltRounds)
@@ -188,7 +201,9 @@ async function createPass(req, res) {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error: " + err.message);
+    res.status(500);
+    res.render("forOFor", {status: 500, errorText: "Greška!", link: "/login"});
+
   }
 }
 

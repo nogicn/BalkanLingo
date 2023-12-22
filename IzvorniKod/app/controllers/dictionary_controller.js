@@ -86,7 +86,8 @@ function removeDictionary(req, res) {
       res.redirect("/dashboard");
     } catch (err) {
       console.error(err);
-      res.status(500).send("Internal Server Error: " + err.message);
+      res.status(500);
+      res.render("forOFor", { status: 500, errorText: "Greška kod brisanja rječnika", link: "/dashboard" });
       return;
     }
   } else {
@@ -102,7 +103,8 @@ function removeDictionary(req, res) {
       res.redirect("/dashboard");
     } catch (err) {
       console.error(err);
-      res.status(500).send("Internal Server Error: " + err.message);
+      res.status(500);
+      res.render("forOFor", { status: 500, errorText: "Greška kod brisanja rječnika", link: "/dashboard" });
       return;
     }
   }
@@ -157,7 +159,7 @@ function adminAddDict(req, res) {
       languages: languages,
     });
   } catch (error) {
-    res.send(error);
+      res.render("forOFor", { status: 500, errorText: "Greška u dodavanju rječnika!", link: "/dashboard" });
     return;
   }
 }
@@ -187,7 +189,7 @@ function adminSaveDict(req, res) {
         });
     }
   } catch (error) {
-    res.send(error + " ");
+      res.render("forOFor", { status: 500, errorText: "Greška kod spremanja rječnika!", link: "/dashboard" })
     return;
   }
   res.redirect("/dashboard");

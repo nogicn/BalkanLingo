@@ -355,7 +355,7 @@ function moveToNextWordCorrect(req, res) {
   let activeQuestion = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
-    
+
   // get dictionary id from active question and deactivate old word
   let dictionaryId = db
     .prepare(wordModel.getWordById)
@@ -443,15 +443,24 @@ function checkAnswer(req, res) {
     moveToNextWordCorrect(req, res, activeQuestion);
   } else {
     //reset delay
-    let userWord = db
-      .prepare(userWordModel.setNewDelayForUser)
-      .run({
-        userId: req.session.user_id,
-        wordId: activeQuestion.word_id,
-        delay: 0,
+    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
+      userId: req.session.user_id,
+      wordId: activeQuestion.word_id,
+      delay: 0,
+    });
+    if (userWord.changes == 0) {
+      res.render("forOFor", {
+        status: 404,
+        errorText: "Greska postavljanja odgode",
+        link: "/dashboard",
       });
+    }
     // send error
-    res.render ("forOFor", { status: 404, errorText: "Krivi odgovor", link: "/learnSession/" + dictionaryId.dictionary_id});
+    res.render("forOFor", {
+      status: 404,
+      errorText: "Krivi odgovor",
+      link: "/learnSession/" + dictionaryId.dictionary_id,
+    });
   }
 }
 
@@ -467,13 +476,18 @@ function checkAnswerWriting(req, res) {
     moveToNextWordCorrect(req, res, activeQuestion);
   } else {
     //reset delay
-    let userWord = db
-      .prepare(userWordModel.setNewDelayForUser)
-      .run({
-        userId: req.session.user_id,
-        wordId: activeQuestion.word_id,
-        delay: 0,
+    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
+      userId: req.session.user_id,
+      wordId: activeQuestion.word_id,
+      delay: 0,
+    });
+    if (userWord.changes == 0) {
+      res.render("forOFor", {
+        status: 404,
+        errorText: "Greska postavljanja odgode",
+        link: "/dashboard",
       });
+    }
     // send error
     res.send("Wrong answer");
   }
@@ -489,87 +503,105 @@ function checkAnswerListening(req, res) {
     moveToNextWordCorrect(req, res, activeQuestion);
   } else {
     //reset delay
-    let userWord = db
-      .prepare(userWordModel.setNewDelayForUser)
-      .run({
-        userId: req.session.user_id,
-        wordId: activeQuestion.word_id,
-        delay: 0,
+    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
+      userId: req.session.user_id,
+      wordId: activeQuestion.word_id,
+      delay: 0,
+    });
+    if (userWord.changes == 0) {
+      res.render("forOFor", {
+        status: 404,
+        errorText: "Greska postavljanja odgode",
+        link: "/dashboard",
       });
+    }
     res.send("Your pronounciation bad");
   }
 }
 
 function nextQuestion(req, res) {
   let activeQuestion = db
-      .prepare(activeQuestionModel.getActiveQuestion)
-      .get({ userId: req.session.user_id });
-    // get dictionary id from active question and deactivate old word
-    let dictionaryId = db
-      .prepare(wordModel.getWordById)
-      .get({ wordId: activeQuestion.word_id });
-    //let userWord = db.prepare(userWordModel.deactivateWordForUser).run({userId:req.session.user_id, wordId:activeQuestion.word_id});
-    // get delay for word
-    let delay = db
-      .prepare(userWordModel.getDelayForWordForUser)
-      .get({ userId: req.session.user_id, wordId: activeQuestion.word_id });
-    // add a delay to the word
-    console.log(delay);
-    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
-      userId: req.session.user_id,
-      wordId: activeQuestion.word_id,
-      delay: 0,
+    .prepare(activeQuestionModel.getActiveQuestion)
+    .get({ userId: req.session.user_id });
+  // get dictionary id from active question and deactivate old word
+  let dictionaryId = db
+    .prepare(wordModel.getWordById)
+    .get({ wordId: activeQuestion.word_id });
+  //let userWord = db.prepare(userWordModel.deactivateWordForUser).run({userId:req.session.user_id, wordId:activeQuestion.word_id});
+  // get delay for word
+  let delay = db
+    .prepare(userWordModel.getDelayForWordForUser)
+    .get({ userId: req.session.user_id, wordId: activeQuestion.word_id });
+  // add a delay to the word
+  console.log(delay);
+  let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
+    userId: req.session.user_id,
+    wordId: activeQuestion.word_id,
+    delay: 0,
+  });
+  // update last answered
+  let updateLastAnswered = db.prepare(userWordModel.updateLastAnswered).run({
+    userId: req.session.user_id,
+    wordId: activeQuestion.word_id,
+    lastAnswered: new Date().toISOString(),
+  });
+  if (updateLastAnswered.changes == 0) {
+    res.render("forOFor", {
+      status: 404,
+      errorText: "Greska kod postavljanja zadnjeg odgovora",
+      link: "/dashboard",
     });
-    // update last answered
-    let updateLastAnswered = db.prepare(userWordModel.updateLastAnswered).run({
+  }
+  // get random word
+  let numberOfWords = db
+    .prepare(userWordModel.getViableWordsForUserForDictionary)
+    .all({
       userId: req.session.user_id,
-      wordId: activeQuestion.word_id,
-      lastAnswered: new Date().toISOString(),
+      dictionaryId: dictionaryId.dictionary_id,
     });
-  
-    // get random word
-    let numberOfWords = db
-      .prepare(userWordModel.getViableWordsForUserForDictionary)
-      .all({
-        userId: req.session.user_id,
-        dictionaryId: dictionaryId.dictionary_id,
-      });
-    if (numberOfWords.length == 0) {
-      //res.send("Not enough words in dictionary check answer");
-      res.render("forOFor", {
-        status: "",
-        errorText: "Naučene su sve riječi za sad",
-        link: "/dashboard",
-      });
-  
-      return;
-    }
-    let random = Math.floor(Math.random() * numberOfWords.length);
-  
-    let active_question = db
-      .prepare(activeQuestionModel.getActiveQuestion)
-      .get({ userId: req.session.user_id });
-  
-    // delete active question
-    db.prepare(activeQuestionModel.deleteActiveQuestion).run({
+  if (numberOfWords.length == 0) {
+    //res.send("Not enough words in dictionary check answer");
+    res.render("forOFor", {
+      status: "",
+      errorText: "Naučene su sve riječi za sad",
+      link: "/dashboard",
+    });
+
+    return;
+  }
+  let random = Math.floor(Math.random() * numberOfWords.length);
+
+  let active_question = db
+    .prepare(activeQuestionModel.getActiveQuestion)
+    .get({ userId: req.session.user_id });
+
+  // delete active question
+  db.prepare(activeQuestionModel.deleteActiveQuestion).run({
+    userId: req.session.user_id,
+  });
+  // set new active question
+
+  let activeQuestionNew = db
+    .prepare(activeQuestionModel.setActiveQuestion)
+    .run({
       userId: req.session.user_id,
+      wordId: numberOfWords[random].id,
+      type: active_question.type,
     });
-    // set new active question
-  
-    let activeQuestionNew = db
-      .prepare(activeQuestionModel.setActiveQuestion)
-      .run({
-        userId: req.session.user_id,
-        wordId: numberOfWords[random].id,
-        type: active_question.type,
-      });
-    // increase ActiveQuestionType
-  
-    increaseActiveQuestionType = db
-      .prepare(activeQuestionModel.increaseActiveQuestionType)
-      .run({ userId: req.session.user_id });
-    req.params.id = dictionaryId.dictionary_id;
-    res.redirect("/learnSession/" + req.params.id);
+  if (activeQuestionNew.changes == 0) {
+    res.render("forOFor", {
+      status: 404,
+      errorText: "Greska kod postavljanja nove aktivne riječi",
+      link: "/dashboard",
+    });
+  }
+  // increase ActiveQuestionType
+
+  increaseActiveQuestionType = db
+    .prepare(activeQuestionModel.increaseActiveQuestionType)
+    .run({ userId: req.session.user_id });
+  req.params.id = dictionaryId.dictionary_id;
+  res.redirect("/learnSession/" + req.params.id);
 }
 
 async function editWord(req, res) {
@@ -604,6 +636,13 @@ async function editWord(req, res) {
       nativeDescription: nativeDescription,
       pronunciation: newPronunciation,
     });
+    if (updateWord.changes == 0) {
+      res.render("forOFor", {
+        status: 404,
+        errorText: "Greska kod spremanja riječi",
+        link: "/dashboard",
+      });
+    }
     res.redirect("/dictionary/dictSearch/" + word.dictionary_id);
   } else {
     let id = req.params.id;
@@ -650,6 +689,13 @@ async function addWord(req, res) {
       pronunciation: pronunciationFileName,
       dictionaryId: dictionaryId,
     });
+    if (word.changes == 0) {
+      res.render("forOFor", {
+        status: 404,
+        errorText: "Greska kod stvaranja riječi",
+        link: "/dashboard",
+      });
+    }
     res.redirect("/dictionary/dictSearch/" + dictionaryId);
   } else {
     let id = req.params.id;
@@ -869,6 +915,13 @@ function deleteWord(req, res) {
     .prepare(activeQuestionModel.deleteActiveQuestionWordId)
     .run({ wordId: id });
   // delete word
+  if (activeQuestion.changes == 0) {
+    res.render("forOFor", {
+      status: 404,
+      errorText: "Greska kod brisanja aktivne riječi",
+      link: "/dashboard",
+    });
+  }
   let word = db.prepare(wordModel.deleteWordById).run({ wordId: id });
   res.redirect("/dictionary/dictSearch/" + wordDictionaryId.dictionary_id);
 }
