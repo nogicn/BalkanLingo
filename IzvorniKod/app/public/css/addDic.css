@@ -102,7 +102,21 @@ html, body {
     width: 300px;
     margin-top: 30px;
   }
+/* Style the select element */
+.select {
+  width: 90%; /* Adjust as needed */
+  padding: 8px; /* Adjust as needed */
+  border: 1px solid #ccc; /* Adjust as needed */
+  border-radius: 50px; /* Adjust as needed */
+  box-sizing: border-box;
+  background-color: #ffb145;
+  height: 50px;
+}
 
+/* Style selected option */
+.select option[selected] {
+  background-color: #e0e0e0; /* Adjust as needed */
+}
   .language-add{
     height: 50px;
     width: 100%;

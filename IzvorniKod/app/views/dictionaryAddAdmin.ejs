@@ -57,7 +57,7 @@
                     </div>-->
                     <div class="word-edit-container">
                         <label for="description" class="word-edit-label">Jezik</label>
-                        <select name="language_id" id="">
+                        <select name="language_id" id="" class="select">
                         <% for (let i = 0; i < languages.length; i++) { %>
                             <option value="<%= languages[i].id %>" <% if (languages[i].id == dictionary.language_id) { %> selected <% } %>><%= languages[i].name %></option>
                         <% } %>
