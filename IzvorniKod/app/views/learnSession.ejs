@@ -14,6 +14,12 @@
         <!-- Navbar -->
         <% include partials/navbar.ejs %>
         <div class="main">
+            <div class="button-container">
+                <a href="">
+                    <img src="/images/orange-home.png" alt="">
+                    <p>završi sesiju ucenja</p>
+                </a>
+            </div>
             <div class="learn-session">
                 <div class="session-title">
                     <img src="/images/black-multiple-choice.png" alt="">
@@ -33,7 +39,15 @@
                     </a>
                     <% } %>
                 </div>
-                <% include partials/navigation.ejs %>
+                <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
+                    <% include partials/navigation.ejs %>
+                </div>
+            </div>
+            <div class="button-container">
+                <a href="/dictionary/nextQuestion/<%= dictionaryId %>">
+                    <img src="/images/orange-next.png" alt="">
+                    <p>sljedeće pitanje</p>
+                </a>
             </div>
         </div>
         <hr>
