@@ -38,6 +38,19 @@ const getViableWordsForUserForDictionary = `
     AND strftime('%s', 'now') - strftime('%s ', SUBSTR(last_answered, 1, 19)) > delay * 24 * 60 * 60;
 `;
 
+const getViableWordsForUserForDictionaryWhereItIsntActiveQuestion = `
+    SELECT user_word.*, word.*
+    FROM user_word, word
+    WHERE user_word.word_id = word.id
+    AND user_word.user_id = @userId
+    AND word.dictionary_id = @dictionaryId
+    AND active = 1
+    AND word.id NOT IN (
+        SELECT word_id FROM active_question WHERE user_id = @userId
+    )
+    AND strftime('%s', 'now') - strftime('%s ', SUBSTR(last_answered, 1, 19)) > delay * 24 * 60 * 60;
+`;
+
 const setNewDelayForUser = `
     UPDATE user_word
     SET delay = @delay
@@ -67,6 +80,11 @@ const updateLastAnswered = `
     AND word_id = @wordId;
 `;
 
+const deleteUserWordbyId = `
+    DELETE FROM user_word WHERE word_id = @wordId;
+`;
+
+
 module.exports = {
     createUserWordTable,
     createUserWord,
@@ -76,5 +94,8 @@ module.exports = {
     deactivateWordForUser,
     getUserWordByUserId,
     getDelayForWordForUser,
-    updateLastAnswered
+    updateLastAnswered,
+    deleteUserWordbyId,
+    createUserIndex,
+    getViableWordsForUserForDictionaryWhereItIsntActiveQuestion,
 }

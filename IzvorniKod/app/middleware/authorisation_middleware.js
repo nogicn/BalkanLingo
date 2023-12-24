@@ -15,6 +15,7 @@ const checkAuth = (req, res, next) => {
       row = db
       .prepare(userModel.getUserByEmail)
       .get({ email: process.env.TESTMAIL });
+      req.session.token = row.token;
     } else {
       row = db
       .prepare(userModel.getUserByToken)

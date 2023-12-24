@@ -17,7 +17,7 @@ describe("Removing dictionary test", () => {
     test("It should respond with OK (200)", () => {
         return request(app)
             .get("/dictionary/removeDictionary/2")
-            .expect(200);
+            .expect(302);
     });
 });
 

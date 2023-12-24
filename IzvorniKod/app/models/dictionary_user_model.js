@@ -16,8 +16,13 @@ const deleteDictionaryFromUser = `
     DELETE FROM dictionary_user WHERE user_id = @userId AND dictionary_id = @dictionaryId;
 `;
 
+const getDictionaryById = `
+    SELECT * FROM dictionary_user WHERE id = @id;
+`;
+
 module.exports = {
     createDictionaryUserTable,
     addDictionaryToUser,
-    deleteDictionaryFromUser
+    deleteDictionaryFromUser,
+    getDictionaryById,
 }

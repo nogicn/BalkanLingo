@@ -82,6 +82,7 @@ function learnSession(req, res) {
 }
 
 function learnSessionForeignNative(req, res) {
+  console.log("foreign native");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -93,6 +94,7 @@ function learnSessionForeignNative(req, res) {
     let numberOfWords = db
       .prepare(userWordModel.getViableWordsForUserForDictionary)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
+    console.log(numberOfWords); 
     if (numberOfWords.length < 4) {
       res.send("Not enough words in dictionary foreign native");
       return;
@@ -145,7 +147,7 @@ function learnSessionForeignNative(req, res) {
       .get({ wordId: active_question.word_id });
     words.push(activeWord);
     let numberOfWords = db
-      .prepare(userWordModel.getViableWordsForUserForDictionary)
+      .prepare(userWordModel.getViableWordsForUserForDictionaryWhereItIsntActiveQuestion)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     if (numberOfWords.length < 3) {
       res.send("Not enough words in dictionary foreign native");
@@ -187,6 +189,7 @@ function learnSessionForeignNative(req, res) {
 }
 
 function learnSessionNativeForeign(req, res) {
+  console.log("native foreign");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -239,7 +242,7 @@ function learnSessionNativeForeign(req, res) {
       .get({ wordId: active_question.word_id });
     words.push(activeWord);
     let numberOfWords = db
-      .prepare(userWordModel.getViableWordsForUserForDictionary)
+      .prepare(userWordModel.getViableWordsForUserForDictionaryWhereItIsntActiveQuestion)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     if (numberOfWords.length < 3) {
       res.send("Not enough words in dictionary native foreign 2");
@@ -248,6 +251,7 @@ function learnSessionNativeForeign(req, res) {
     for (let i = 0; i < 3; i++) {
       let random = Math.floor(Math.random() * numberOfWords.length);
       let duplicate = false;
+      
       for (let j = 0; j < words.length; j++) {
         if (words[j].id == numberOfWords[random].id) {
           duplicate = true;
@@ -272,6 +276,7 @@ function learnSessionNativeForeign(req, res) {
 }
 
 function learnSessionWriting(req, res) {
+  console.log("writing");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -313,6 +318,7 @@ function learnSessionWriting(req, res) {
 }
 
 function learnSessionPronunciation(req, res) {
+  console.log("pronunciation");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -472,7 +478,8 @@ function checkAnswerWriting(req, res) {
   var word = db
     .prepare(wordModel.getWordById)
     .get({ wordId: activeQuestion.word_id });
-  if (word.foreignWord == answer) {
+  // convert both to lowercase and compare
+  if (answer.toLowerCase() == word.foreignWord.toLowerCase()) {
     moveToNextWordCorrect(req, res, activeQuestion);
   } else {
     //reset delay
@@ -914,14 +921,8 @@ function deleteWord(req, res) {
   let activeQuestion = db
     .prepare(activeQuestionModel.deleteActiveQuestionWordId)
     .run({ wordId: id });
-  // delete word
-  if (activeQuestion.changes == 0) {
-    res.render("forOFor", {
-      status: 404,
-      errorText: "Greska kod brisanja aktivne riječi",
-      link: "/dashboard",
-    });
-  }
+    console.log(activeQuestion)
+  let userword = db.prepare(userWordModel.deleteUserWordbyId).run({ wordId: id });
   let word = db.prepare(wordModel.deleteWordById).run({ wordId: id });
   res.redirect("/dictionary/dictSearch/" + wordDictionaryId.dictionary_id);
 }
