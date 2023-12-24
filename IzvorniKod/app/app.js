@@ -42,7 +42,7 @@ if (process.env.MIGRATE === 'true') {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.render("forOFor", {
+  res.status(404).render("forOFor", {
     status: 404,
     errorText: "Stranica ne postoji",
     link: "/",
