@@ -5,7 +5,7 @@ const checkAuth = (req, res, next) => {
     let row = "";
     if (process.env.TEST === "true") {
       if (process.env.TESTMAIL === undefined) {
-        res.render("forOFor", {
+        res.status(403).render("forOFor", {
           status: 403,
           errorText: "Korisnik nije ulogiran",
           link: "/login",
@@ -15,6 +15,7 @@ const checkAuth = (req, res, next) => {
       row = db
       .prepare(userModel.getUserByEmail)
       .get({ email: process.env.TESTMAIL });
+      req.session.token = row.token;
     } else {
       row = db
       .prepare(userModel.getUserByToken)
@@ -22,7 +23,7 @@ const checkAuth = (req, res, next) => {
     }
     if (!row) {
       //res.status(404).send("User not logged in");
-      res.render("forOFor", {
+      res.status(403).render("forOFor", {
         status: 403,
         errorText: "Korisnik nije ulogiran",
         link: "/login",

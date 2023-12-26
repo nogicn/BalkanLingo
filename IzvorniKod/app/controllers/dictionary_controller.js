@@ -132,6 +132,15 @@ function addDictionary(req, res) {
 
 function addDictionaryToUser(req, res) {
   const id = req.params.id;
+  // check if dictionary already assigned to user
+  const check = db
+    .prepare(dictionaryUserModel.getDictionaryById)
+    .get({ id: id });
+  if (check !== undefined) {
+    res.status(400);
+    res.render("forOFor", { status: 400, errorText: "Rječnik je već dodan", link: "/dashboard" });
+    return;
+  }
 
   const result = db
     .prepare(dictionaryUserModel.addDictionaryToUser)

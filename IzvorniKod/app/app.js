@@ -7,6 +7,7 @@ var http = require('http');
 const bodyParser = require('body-parser');
 var session = require('express-session');
 var dotenv = require('dotenv');
+const checkAuth = require('./middleware/authorisation_middleware');
 dotenv.config();
 
 
@@ -33,7 +34,7 @@ app.use(session({secret: "omgthissecretkeyissosecure"}));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
-app.use('/dictionary', dictionaryRouter);
+app.use('/dictionary', checkAuth, dictionaryRouter);
 app.use('/martin', martinRouter);
 
 if (process.env.MIGRATE === 'true') {
@@ -42,7 +43,7 @@ if (process.env.MIGRATE === 'true') {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.render("forOFor", {
+  res.status(404).render("forOFor", {
     status: 404,
     errorText: "Stranica ne postoji",
     link: "/",

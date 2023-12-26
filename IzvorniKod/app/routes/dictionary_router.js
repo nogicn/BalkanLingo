@@ -1,42 +1,42 @@
 var express = require('express');
 var router = express.Router();
 var dictionaryController = require('../controllers/dictionary_controller');
-const checkAuth = require('../middleware/authorisation_middleware');
+const checkAdmin = require('../middleware/admin_authorisation_middleware');
 const wordController = require('../controllers/word_controller');
 
-router.get('/addDictionary', checkAuth, dictionaryController.addDict);
+router.get('/addDictionary',  dictionaryController.addDict);
 
-router.get('/addDictionaryToUser/:id', checkAuth, dictionaryController.addDictToUser);
+router.get('/addDictionaryToUser/:id',  dictionaryController.addDictToUser);
 
-router.get('/dictSearch/:id', checkAuth, dictionaryController.searchDictionary);
+router.get('/dictSearch/:id', checkAdmin,  dictionaryController.searchDictionary);
 
-router.get('/removeDictionary/:id', checkAuth, dictionaryController.removeDictionary);
+router.get('/removeDictionary/:id',  dictionaryController.removeDictionary);
 
-router.get('/nextQuestion/:id', checkAuth, wordController.nextQuestion);
+router.get('/nextQuestion/:id',  wordController.nextQuestion);
 
-router.get('/checkWord/:answer', checkAuth, wordController.checkAnswer);
-router.post('/checkWriting/:answer', checkAuth, wordController.checkAnswerWriting);
-router.post('/checkListening/:answer', checkAuth, wordController.checkAnswerListening);
+router.get('/checkWord/:answer',  wordController.checkAnswer);
+router.post('/checkWriting/:answer',  wordController.checkAnswerWriting);
+router.post('/checkListening/:answer',  wordController.checkAnswerListening);
 
-router.get('/addWord/:id', checkAuth, wordController.addWord);
-router.post('/addWord/:id', checkAuth, wordController.addWord);
+router.get('/addWord/:id', checkAdmin, wordController.addWord);
+router.post('/addWord/:id', checkAdmin,  wordController.addWord);
 
-router.post('/fillWordData/:id', checkAuth,  wordController.fillWordData);
-router.post('/fillSentenceData/:id', checkAuth, wordController.fillSentenceData);
-router.post('/createPronunciation/:id', checkAuth,  wordController.createPronunciation);
+router.post('/fillWordData/:id', checkAdmin,  wordController.fillWordData);
+router.post('/fillSentenceData/:id', checkAdmin, wordController.fillSentenceData);
+router.post('/createPronunciation/:id', checkAdmin,  wordController.createPronunciation);
 
-router.get('/editWord/:id', checkAuth,  wordController.editWord);
+router.get('/editWord/:id', checkAdmin,  wordController.editWord);
 
-router.post('/editWord/:id', checkAuth, wordController.editWord);
+router.post('/editWord/:id', checkAdmin,  wordController.editWord);
 
-router.get('/deleteWord/:id', checkAuth, wordController.deleteWord);
+router.get('/deleteWord/:id', checkAdmin,  wordController.deleteWord);
 
-router.post('/search/:id', checkAuth, wordController.searchWords);
+router.post('/search/:id', checkAdmin,  wordController.searchWords);
 
-router.get('/adminAddDict', checkAuth, dictionaryController.adminAddDict);
+router.get('/adminAddDict', checkAdmin,  dictionaryController.adminAddDict);
 
-router.get('/adminEditDict/:id', checkAuth, dictionaryController.adminAddDict);
+router.get('/adminEditDict/:id', checkAdmin,  dictionaryController.adminAddDict);
 
-router.post('/adminSaveDict', checkAuth, dictionaryController.adminSaveDict);
+router.post('/adminSaveDict', checkAdmin,  dictionaryController.adminSaveDict);
 
 module.exports = router;

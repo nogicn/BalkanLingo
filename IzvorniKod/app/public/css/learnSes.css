@@ -160,7 +160,7 @@ html, body {
     font-weight: bold;
     text-align: center;    /* Center the content within each grid item */
     padding: 10px;
-    height: 30vh;
+    height:24vh;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
@@ -260,6 +260,10 @@ html, body {
   }
     .session-title{
         font-size: 0.8rem;
+    }
+
+    .kahoot-card{
+      height: 20vh;
     }
 
   }
