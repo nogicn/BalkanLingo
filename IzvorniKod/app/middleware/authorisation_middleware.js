@@ -15,7 +15,7 @@ const checkAuth = (req, res, next) => {
       row = db
       .prepare(userModel.getUserByEmail)
       .get({ email: process.env.TESTMAIL });
-      req.session.token = row.token;
+      
     } else {
       row = db
       .prepare(userModel.getUserByToken)
@@ -29,6 +29,7 @@ const checkAuth = (req, res, next) => {
         link: "/login",
       });
     } else {
+      req.session.token = row.token;
       if (row.is_admin !== undefined)
       if (row.is_admin === 1) {
         req.session.is_admin = true;
@@ -41,7 +42,7 @@ const checkAuth = (req, res, next) => {
     }
   } catch (err) {
     console.error(err);
-    res.render("forOFor", {
+    res.status(500).render("forOFor", {
       status: 500,
       errorText: "Internal Server Error: " + err.message,
       link: "/login",
