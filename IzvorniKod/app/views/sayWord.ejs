@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <link rel="stylesheet" href="/css/sayWord.css">
         <link rel="stylesheet" href="/css/dashboard.css">
+        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -28,24 +29,21 @@
                 
 
             </div>
-            <form method="POST" action="/dictionary/checkListening/<%= word.id %>">
+            <form id="formData">
             <p class="big-bold"><%= word.foreignWord %></p>
             <p class="phrase"><%= word.foreignDescription %></p>
             <img  class="say" src="/images/orange-mic.png" alt="" id="recordButton">
             <input hidden type="file" name="pronunciation" id="pronunciation" accept="audio/*">
             <audio  id="audioPlayer" controls></audio>
-            <!--<div class="answer-container">
-                <div class="correct">85%</div>
-                <p>ČESTITAMO, VAŠ JE<br>IZGOVOR ODLIČAN.</p>
-            </div>-->
+            <div id="answer"></div>
             <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
                 <% include partials/navigation.ejs %>
             </div>
-            <button type="submit" class="check">PROVJERA</button>
+            <div hx-post="/dictionary/checkListening/<%= word.id %>" hx-target="#answer" hx-include="#formData" hx-trigger="click" class="check">PROVJERA</div>
             </form>
         </div>
         <div class="button-container">
-            <a href="/dictionary/nextQuestion/<%= dictionaryId %>" style="opacity:0">
+            <a href="/learnSession/<%= dictionaryId %>" style="opacity:0">
                 <img src="/images/orange-next.png" alt="">
                 <p>sljedeće pitanje</p>
             </a>

@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <link rel="stylesheet" href="/css/listenWord.css">
         <link rel="stylesheet" href="/css/dashboard.css">
+        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -28,7 +29,7 @@
                 
             </div>
             
-            <form method="POST" action="/dictionary/checkWriting/<%= word.id %>">
+            <div id="formData">
                 <img id="playButton" class="play" src="/images/orange-play.png" alt="">
                 <audio hidden style="display: inline-block;" id="audioElement">
                     <source src="/pronunciation/<%= word.pronunciation %>"  type="audio/mpeg">
@@ -36,16 +37,17 @@
                     <input type="hidden" name="pronunciation" value=<%= word.pronunciation %> >
                 </audio>
             <input class="input-field" type="text" name="foreignWord" value="" placeholder="Upiši poslušanu riječ...">
-            <button type="submit" class="check">PROVJERA</button>
-            </form>
-            <!--  <p class="answer">ODGOVOR JE TOČAN</p>
-            <p class="word">POSLUŠANA RIJEČ:ABRAKADABRA</p>-->
+            <div hx-post="/dictionary/checkWriting/<%= word.id %>" hx-target="#answer" hx-include="#formData" hx-trigger="click" class="check">PROVJERA</div>
+            </div>
+            <div id="answer">
+
+            </div>
             <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
                 <% include partials/navigation.ejs %>
             </div>
         </div>
         <div class="button-container">
-            <a href="/dictionary/nextQuestion/<%= dictionaryId %>" style="opacity:0">
+            <a href="/learnSession/<%= dictionaryId %>" style="opacity:0">
                 <img src="/images/orange-next.png" alt="">
                 <p>sljedeće pitanje</p>
             </a>

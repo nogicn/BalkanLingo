@@ -9,6 +9,7 @@ const axios = require("axios");
 const ejs = require("ejs");
 const fs = require("fs-extra");
 var createPronunciationFunc = require("../middleware/pronunciation_middleware");
+const LanguageModel = require("../models/language_model");
 
 function learnSession(req, res) {
   let active_question = db
@@ -426,119 +427,11 @@ function moveToNextWordCorrect(req, res) {
   increaseActiveQuestionType = db
     .prepare(activeQuestionModel.increaseActiveQuestionType)
     .run({ userId: req.session.user_id });
-  req.params.id = dictionaryId.dictionary_id;
-  res.redirect("/learnSession/" + req.params.id);
+  //req.params.id = dictionaryId.dictionary_id;
+  //res.redirect("/learnSession/" + req.params.id);
 }
 
-async function checkAnswer(req, res) {
-  // get andwer from url
-  let answer = req.params.answer;
-  // get active question
-  let activeQuestion = db
-    .prepare(activeQuestionModel.getActiveQuestion)
-    .get({ userId: req.session.user_id });
-  if (activeQuestion === undefined) {
-    res.redirect("/dashboard");
-    return;
-  }
-  let word = db
-    .prepare(wordModel.getWordById)
-    .get({ wordId: activeQuestion.word_id });
-
-  // get dictionary id from active question
-  let dictionaryId = db
-    .prepare(wordModel.getWordById)
-    .get({ wordId: activeQuestion.word_id });
-  if (answer == activeQuestion.word_id) {
-    //moveToNextWordCorrect(req, res, activeQuestion);
-    var html = await ejs.renderFile("views/partials/word.ejs", {
-      word: word,
-      correct: true,
-    });
-    res.send(html);
-  } else {
-    //reset delay
-    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
-      userId: req.session.user_id,
-      wordId: activeQuestion.word_id,
-      delay: 0,
-    });
-    let word = db
-      .prepare(wordModel.getWordById)
-      .get({ wordId: answer });
-    if (userWord.changes == 0) {
-      res.render("forOFor", {
-        status: 404,
-        errorText: "Greska postavljanja odgode",
-        link: "/dashboard",
-      });
-    }
-    // send error
-    var html = await ejs.renderFile("views/partials/word.ejs", {
-      word: word,
-      correct: false,
-    });
-    res.send(html);
-  }
-}
-
-function checkAnswerWriting(req, res) {
-  var activeQuestion = db
-    .prepare(activeQuestionModel.getActiveQuestion)
-    .get({ userId: req.session.user_id });
-  var answer = req.body.foreignWord;
-  var word = db
-    .prepare(wordModel.getWordById)
-    .get({ wordId: activeQuestion.word_id });
-  // convert both to lowercase and compare
-  if (answer.toLowerCase() == word.foreignWord.toLowerCase()) {
-    moveToNextWordCorrect(req, res, activeQuestion);
-  } else {
-    //reset delay
-    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
-      userId: req.session.user_id,
-      wordId: activeQuestion.word_id,
-      delay: 0,
-    });
-    if (userWord.changes == 0) {
-      res.render("forOFor", {
-        status: 404,
-        errorText: "Greska postavljanja odgode",
-        link: "/dashboard",
-      });
-    }
-    // send error
-    res.send("Wrong answer");
-  }
-}
-
-function checkAnswerListening(req, res) {
-  let activeQuestion = db
-    .prepare(activeQuestionModel.getActiveQuestion)
-    .get({ userId: req.session.user_id });
-  // random a number between 0 and 100
-  let random = Math.floor(Math.random() * 100);
-  if (random > 20) {
-    moveToNextWordCorrect(req, res, activeQuestion);
-  } else {
-    //reset delay
-    let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
-      userId: req.session.user_id,
-      wordId: activeQuestion.word_id,
-      delay: 0,
-    });
-    if (userWord.changes == 0) {
-      res.render("forOFor", {
-        status: 404,
-        errorText: "Greska postavljanja odgode",
-        link: "/dashboard",
-      });
-    }
-    res.send("Your pronounciation bad");
-  }
-}
-
-function nextQuestion(req, res) {
+function moveToNextQuestion(req, res) {
   let activeQuestion = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -619,8 +512,109 @@ function nextQuestion(req, res) {
   increaseActiveQuestionType = db
     .prepare(activeQuestionModel.increaseActiveQuestionType)
     .run({ userId: req.session.user_id });
-  req.params.id = dictionaryId.dictionary_id;
-  res.redirect("/learnSession/" + req.params.id);
+}
+
+async function checkAnswer(req, res) {
+  // get andwer from url
+  let answer = req.params.answer;
+  // get active question
+  let activeQuestion = db
+    .prepare(activeQuestionModel.getActiveQuestion)
+    .get({ userId: req.session.user_id });
+  if (activeQuestion === undefined) {
+    res.redirect("/dashboard");
+    return;
+  }
+  let word = db
+    .prepare(wordModel.getWordById)
+    .get({ wordId: activeQuestion.word_id });
+  // get dictionary id from active question
+  let dictionaryId = db
+    .prepare(wordModel.getWordById)
+    .get({ wordId: activeQuestion.word_id });
+  if (answer == activeQuestion.word_id) {
+    moveToNextWordCorrect(req, res, activeQuestion);
+    var html = await ejs.renderFile("views/partials/word.ejs", {
+      word: word,
+      correct: true,
+    });
+    res.send(html);
+  } else {
+    // get word from database
+    let word = db
+      .prepare(wordModel.getWordById)
+      .get({ wordId: answer });
+      
+      let type = db
+      .prepare(activeQuestionModel.getActiveQuestion)
+      .get({ userId: req.session.user_id });
+      if(type.type == 1){
+        // swap foreign and native word and both descriptions
+      
+        let temp = word.foreignWord;
+        word.foreignWord = word.nativeWord;
+        word.nativeWord = temp;
+        temp = word.foreignDescription;
+        word.foreignDescription = word.nativeDescription;
+        word.nativeDescription = temp;
+      }
+      
+    moveToNextQuestion(req, res, activeQuestion);
+    // check type of active question
+    var html = await ejs.renderFile("views/partials/word.ejs", {
+      word: word,
+      correct: false,
+    });
+    res.send(html);
+  }
+}
+
+async function checkAnswerWriting(req, res) {
+  var activeQuestion = db
+    .prepare(activeQuestionModel.getActiveQuestion)
+    .get({ userId: req.session.user_id });
+  var answer = req.body.foreignWord;
+  var word = db
+    .prepare(wordModel.getWordById)
+    .get({ wordId: activeQuestion.word_id });
+  console.log(word)
+  // convert both to lowercase and compare
+  if (answer.toLowerCase() == word.foreignWord.toLowerCase()) {
+    moveToNextWordCorrect(req, res, activeQuestion);
+    let html = await ejs.renderFile("views/partials/writeWordAnswer.ejs", {
+      word: word,
+      correct: true,
+    });
+    res.send(html)
+  } else {
+    moveToNextQuestion(req, res, activeQuestion);
+    let html = await ejs.renderFile("views/partials/writeWordAnswer.ejs", {
+      word: word,
+      correct: false,
+    });
+    res.send(html);
+  }
+}
+
+async function checkAnswerListening(req, res) {
+  let activeQuestion = db
+    .prepare(activeQuestionModel.getActiveQuestion)
+    .get({ userId: req.session.user_id });
+  // random a number between 0 and 100
+  let random = Math.floor(Math.random() * 100);
+  if (random > 50) {
+    moveToNextWordCorrect(req, res, activeQuestion);
+    let html = await ejs.renderFile("views/partials/sayWordAnswer.ejs", {
+        answerPercentage: random,
+    });
+    res.send(html);
+  } else {
+    moveToNextQuestion(req, res, activeQuestion);
+    let html = await ejs.renderFile("views/partials/sayWordAnswer.ejs", {
+        answerPercentage: random,
+    });
+    res.send(html);
+  }
 }
 
 async function editWord(req, res) {
@@ -808,7 +802,7 @@ async function fillSentenceData(req, res) {
   });
   res.status(200).send(html);
 }
-const LanguageModel = require("../models/language_model");
+
 
 async function fillWordData(req, res) {
   // get word from body
@@ -957,7 +951,6 @@ async function searchWords(req, res) {
 module.exports = {
   learnSession,
   checkAnswer,
-  nextQuestion,
   editWord,
   deleteWord,
   addWord,

@@ -12,7 +12,7 @@ router.get('/dictSearch/:id', checkAdmin,  dictionaryController.searchDictionary
 
 router.get('/removeDictionary/:id',  dictionaryController.removeDictionary);
 
-router.get('/nextQuestion/:id',  wordController.nextQuestion);
+
 
 router.post('/checkWord/:answer',  wordController.checkAnswer);
 router.post('/checkWriting/:answer',  wordController.checkAnswerWriting);

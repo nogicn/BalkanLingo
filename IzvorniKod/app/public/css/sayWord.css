@@ -216,6 +216,38 @@ html, body {
     color: #ffffff;
     margin: 10px;
   }
+
+  .partiallycorrect{
+    text-align: center;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: #ff9f1c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px;
+  }
+
+  .incorrect{
+    text-align: center;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: #f83200;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px;
+  }
+
+
   .answer-container p{
 
     color: #2ec4b6;
