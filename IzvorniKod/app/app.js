@@ -16,7 +16,6 @@ var indexRouter = require('./routes/index_router');
 var usersRouter = require('./routes/users_router');
 var dictionaryRouter = require('./routes/dictionary_router');
 const migration = require('./database/serialise');
-var martinRouter = require('./routes/martin.js');
 
 var app = express();
 
@@ -35,7 +34,6 @@ app.use(session({secret: "omgthissecretkeyissosecure"}));
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/dictionary', checkAuth, dictionaryRouter);
-app.use('/martin', martinRouter);
 
 if (process.env.MIGRATE === 'true') {
   migration.migration();

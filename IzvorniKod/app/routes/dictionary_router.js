@@ -39,11 +39,11 @@ router.get('/adminEditDict/:id', checkAdmin,  dictionaryController.adminAddDict)
 
 router.post('/adminSaveDict', checkAdmin,  dictionaryController.adminSaveDict);
 
-router.get('/adminLocales',  dictionaryController.adminLocales);
+router.get('/adminLocales', checkAdmin, dictionaryController.adminLocales);
 
-router.get('/editLocale/:id',  dictionaryController.editLocale);
-router.get('/deleteLocale/:id',  dictionaryController.deleteLocale);
-router.get('/addLocale',  dictionaryController.addLocale);
-router.post('/saveLocale',  dictionaryController.saveLocale);
+router.get('/editLocale/:id', checkAdmin, dictionaryController.editLocale);
+router.get('/deleteLocale/:id', checkAdmin, dictionaryController.deleteLocale);
+router.get('/addLocale', checkAdmin, dictionaryController.addLocale);
+router.post('/saveLocale', checkAdmin, dictionaryController.saveLocale);
 
 module.exports = router;
