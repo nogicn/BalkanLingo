@@ -65,9 +65,4 @@ router.get('/profileEdit', checkAuth, function (req, res) {
 router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
-
-
-
-
-
 module.exports = router;

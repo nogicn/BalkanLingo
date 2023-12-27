@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const dictionaryController = require("../controllers/dictionary_controller");
+const ejs = require("ejs");
 var sendEmail = require("../middleware/mail_middleware");
 
 // create a new user
@@ -122,6 +123,51 @@ function getAllUsers(req, res) {
   }
 }
 
+async function setAdmin(req, res) {
+  const id = req.params.id;
+  try {
+    let a = db.prepare(user.getUserById).get({ id: id });
+    console.log(a);
+    if (a.is_admin == 1) {
+
+    }
+    let result = db.prepare(user.setAdminByEmail).get({ email: a.email });
+    if (result.changes !== 0) {
+      let html = await ejs.renderFile('views/partials/userRow.ejs', { users: result }); 
+      res.send(html)
+    } else {
+      
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+    res.render("forOFor", {status: 500, errorText: "Greška!", link: "/login"});
+  }
+}
+
+function searchUsers(req, res) {
+  const { name, surname, email } = req.body;
+  try {
+    
+    const rows = db.prepare(user.getAllUsers).all();
+    res.render("userSearch", { title: "Search users", users: rows });    
+  } catch (err) {
+    res.status(404)
+    res.render("forOFor", {status: 404, errorText: "Greška! Korisnik nije pronađen." + err, link: "/dashboard"})
+  }
+}
+
+async function listUsers(req, res) {
+  if (req.headers['hx-request'] == 'true') {
+    const rows = db.prepare(user.getUserLikeEmail).all({ email: req.body.email + '%' });
+    let html = await ejs.renderFile(
+      "views/partials/userList.ejs",
+      { users: rows }
+    );
+    res.send(html);
+  }
+}
+
 function resetPwd(req, res) {
   const { email } = req.body;
   try {
@@ -216,4 +262,7 @@ module.exports = {
   resetPwd,
   editUser,
   createPass,
+  searchUsers,
+  listUsers,
+  setAdmin
 };

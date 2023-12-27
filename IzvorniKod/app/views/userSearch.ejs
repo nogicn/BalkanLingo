@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>BalkanLingo</title>
+        <link rel="stylesheet" href="/css/addDic.css">
+        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
+        <div class="main">
+            <div class="flex-container">
+                <input class="word-search" type="text" placeholder="Pretrazi korisnike..."  name="email"
+                hx-post="/user/getUsers" 
+                hx-trigger="input changed delay:100ms, search" 
+                hx-target="#words"
+                hx-swap="outerHTML"
+                hx-indicator="#loading">
+                <br>
+                <% include partials/userList.ejs %>
+                <a href="/"><img class="home-image" src="/images/orange-home.png" alt=""></a>
+            </div>
+        </div>
+        <hr>
+        <!-- Footer -->
+        <% include partials/footer.ejs %>
+    </body>
+</html>

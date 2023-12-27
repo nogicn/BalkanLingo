@@ -51,6 +51,14 @@ const updateUserByToken = `
     UPDATE user SET name = @name, surname = @surname WHERE token = @token RETURNING *;
 `;
 
+const setAdminByEmail = `
+    UPDATE user SET is_admin = not is_admin WHERE email = @email RETURNING *;
+`;
+
+const getUserLikeEmail = 'SELECT * FROM user WHERE email LIKE @email';
+
+const getUserById = 'SELECT * FROM user WHERE id = @id';
+
 module.exports = {
     createUserTable,
     createUser,
@@ -62,5 +70,8 @@ module.exports = {
     updateTokenByEmail,
     updateTokenById,
     updatePasswordByEmail,
-    updateUserByToken
+    updateUserByToken,
+    getUserLikeEmail,
+    setAdminByEmail,
+    getUserById
 };

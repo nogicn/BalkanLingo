@@ -20,4 +20,11 @@ router.post('/reset', user_controller.resetPwd);
 
 router.post('/createPass', user_controller.createPass);
 
+router.get('/getUsers', user_controller.searchUsers);
+
+router.post('/getUsers', user_controller.listUsers);
+
+router.post('/setAdmin/:id', user_controller.setAdmin);
+
+
 module.exports = router;
