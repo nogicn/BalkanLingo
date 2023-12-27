@@ -1,6 +1,25 @@
-<input type="checkbox" name="users" <% if(users.is_admin) { %>
-    checked <% } %> 
-    hx-post="/user/setAdmin/<%= users.id %>" 
-    hx-trigger="click" 
-    hx-target="this"
-    hx-swap="outerHTML">
+<% if(users.is_admin) { %>
+    <img
+      class="add-button"
+      src="/images/black-remove.png"
+      alt=""
+      type="checkbox"
+      name="users"
+      hx-post="/user/setAdmin/<%= users.id %>"
+      hx-trigger="click"
+      hx-target="this"
+      hx-swap="outerHTML"
+    />
+    <% } else{ %>
+    <img
+      class="add-button"
+      src="/images/black-add.png"
+      alt=""
+      type="checkbox"
+      name="users"
+      hx-post="/user/setAdmin/<%= users.id %>"
+      hx-trigger="click"
+      hx-target="this"
+      hx-swap="outerHTML"
+    />
+    <% } %>

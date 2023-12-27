@@ -2,12 +2,33 @@
   <% for (let i = 0; i < users.length; i++) { %>
   <div class="word-add">
     <div class="actual-word"><%= users[i].email %></div>
-    <input type="checkbox" name="users" <% if(users[i].is_admin) { %>
-    checked <% } %> 
-    hx-post="/user/setAdmin/<%= users[i].id %>" 
-    hx-trigger="click" 
-    hx-target="this"
-    hx-swap="outerHTML">
+    <div class="word-buttons">
+        <% if(users[i].is_admin) { %>
+        <img
+          class="add-button"
+          src="/images/black-remove.png"
+          alt=""
+          type="checkbox"
+          name="users"
+          hx-post="/user/setAdmin/<%= users[i].id %>"
+          hx-trigger="click"
+          hx-target="this"
+          hx-swap="outerHTML"
+        />
+        <% } else{ %>
+        <img
+          class="add-button"
+          src="/images/black-add.png"
+          alt=""
+          type="checkbox"
+          name="users"
+          hx-post="/user/setAdmin/<%= users[i].id %>"
+          hx-trigger="click"
+          hx-target="this"
+          hx-swap="outerHTML"
+        />
+        <% } %>
+    </div>
   </div>
   <% } %>
 </div>

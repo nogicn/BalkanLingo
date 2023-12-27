@@ -3,6 +3,10 @@
         <a href="/dashboard"><img src="/images/logoM.png" alt=""></a>
     </div>
     <div class="navbar-right">
+        <% if(typeof isAdmin!== 'undefined')if(isAdmin) { %>
+            <a href="/dictionary/adminLocales"><img src="/images/black-globe.png" alt=""></a>
+            <a href="/user/getUsers"><img src="/images/black-multiple-choice.png" alt=""></a>
+        <% } %>
         <a href="/user/edit"><img src="/images/orange-user.png" alt=""></a>
         <a href="/user/logout"><img src="/images/orange-logout.png" alt=""></a>
     </div>

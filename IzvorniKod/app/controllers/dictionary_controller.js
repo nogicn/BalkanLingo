@@ -204,6 +204,45 @@ function adminSaveDict(req, res) {
   res.redirect("/dashboard");
 }
 
+function adminLocales(req, res) {
+  let languages = db.prepare(languageModel.getAllLanguages).all();
+  res.render("dictionaryLocales", { title: "Admin Locales", languages: languages });
+}
+
+function editLocale(req, res) {
+  const id = req.params.id;
+  const language = db.prepare(languageModel.getLanguageById).get({ id: id });
+  res.render("localeAddAdmin", { title: "Edit Locale", locale: language });
+}
+
+function deleteLocale(req, res) {
+  const id = req.params.id;
+  const language = db.prepare(languageModel.deleteLanguageById).run({ id: id });
+  res.redirect("/dictionary/adminLocales");
+}
+
+function saveLocale(req, res) {
+  // get data from body
+  const { name, shorthand, flagIcon, id } = req.body;
+  // check if id is undefined
+  if (id === undefined || id === "" || id === null) {
+    // create new language
+    const result = db
+      .prepare(languageModel.createNewLanguage)
+      .run({ name: name, shorthand: shorthand, flagIcon: flagIcon });
+  } else {
+    // update language
+    const result = db
+      .prepare(languageModel.updateLanguage)
+      .run({ name: name, shorthand: shorthand, flagIcon: flagIcon, id: id });
+  }
+  res.redirect("/dictionary/adminLocales");
+}
+
+function addLocale(req, res) {
+  res.render("localeAddAdmin", { title: "Admin Locales", locale: undefined });
+}
+
 module.exports = {
   getAllDictionaries,
   searchDictionary,
@@ -213,4 +252,9 @@ module.exports = {
   adminAddDict,
   adminSaveDict,
   dashboard,
+  adminLocales,
+  editLocale,
+  deleteLocale,
+  addLocale,
+  saveLocale,
 };

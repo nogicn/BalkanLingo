@@ -27,10 +27,25 @@ const getLanguageById = `
     WHERE id = @id;
 `;
 
+const deleteLanguageById = `
+    DELETE FROM language
+    WHERE id = @id;
+`;
+
+const updateLanguage = `
+    UPDATE language
+    SET name = @name,
+        shorthand = @shorthand,
+        flag_icon = @flagIcon
+    WHERE id = @id;
+`;
+
 module.exports = {
     createLanguageTable,
     createNewLanguage,
     getAllLanguages,
     getShorthands,
-    getLanguageById
+    getLanguageById,
+    deleteLanguageById,
+    updateLanguage,
 }

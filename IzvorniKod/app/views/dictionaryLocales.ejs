@@ -10,16 +10,22 @@
         <title>BalkanLingo</title>
         <link rel="stylesheet" href="/css/addDic.css">
         <script src="https://unpkg.com/htmx.org@1.9.9"></script>
-        <link rel="stylesheet" href="/css/loader.css">
     </head>
     <body>
         <!-- Navbar -->
         <% include partials/navbar.ejs %>
-        <form action="/dictionary/addWord/<%= dictionary.id %>" method="POST" style=" all: unset;" >
         <div class="main">
-            <% include partials/wordsEdit.ejs %>
+            <div class="flex-container">
+                <h2 class="language-title">Jezici</h2>
+                <br>
+                <div class="img-container">
+                    <a href="/dictionary/addLocale/"><img src="/images/black-add.png" alt=""> </a>
+                </div>
+               
+                <% include partials/locales.ejs %>
+                <a href="/"><img class="home-image" src="/images/orange-home.png" alt=""></a>
+            </div>
         </div>
-    </form>
         <hr>
         <!-- Footer -->
         <% include partials/footer.ejs %>

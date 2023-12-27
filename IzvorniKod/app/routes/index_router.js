@@ -25,7 +25,7 @@ router.get('/login', function (req, res) {
 });
 
 router.get('/user/edit', checkAuth, function (req, res) {
-    res.render('profileEdit', { title: 'Edit User', name: req.session.name, surname: req.session.surname });
+    res.render('profileEdit', { title: 'Edit User', name: req.session.name, surname: req.session.surname, isAdmin: req.session.is_admin });
 });
 
 router.get('/learn', function (req, res) {

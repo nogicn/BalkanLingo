@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>BalkanLingo</title>
+        <link rel="stylesheet" href="/css/addDic.css">
+    </head>
+    <body>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
+        <hr>
+        <div class="main">
+            <div class="flex-container profile-container">
+                <h2 class="language-title">UREĐIVANJE RJEČNIKA</h2>
+                <br>
+
+                <!--defenirati u BP sve sto nam treba za rjecnik pa fixati u value poljima-->
+
+                <form class="word-edit-top" action="/dictionary/saveLocale" method="POST">
+                    <input type="hidden" name="id" value="<% if(locale){%> <%= locale.id %> <% } %>">
+                    <div class="word-edit-container">
+                        <label for="name" class="word-edit-label ">IME</label>
+                        <input class="word-edit" type="text" id="name" name="name" placeholder='"ENGLESKI"' 
+                        <% if(locale){ %>
+                            value="<%= locale.name %>"
+                        <% } %>
+                        >
+                    </div>
+                    <div class="word-edit-container">
+                        <label for="shortName" class="word-edit-label ">KRATICA</label>
+                        <input class="word-edit" type="text" id="shortName" name="shorthand" placeholder='"EN"'
+                        <% if(locale){ %>
+                            value="<%= locale.shorthand %>"
+                        <% } %>
+                        >
+                    </div>
+                    
+                    <div class="word-edit-container">
+                        <label for="flagIcon" class="word-edit-label ">IKONA</label>
+                        <input class="word-edit" type="text" id="flagIcon" name="flagIcon" placeholder='"🇬🇧"'
+                        <% if(locale){ %>
+                            value="<%= locale.flag_icon %>"
+                        <% } %>
+                        >
+                    </div>
+                    
+                    <div class="save-changes-container">
+                        <button class="save-changes" type="submit">SPREMI PROMJENE</button>
+                        <img src="/images/blue-warning.png" alt="">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <% include partials/footer.ejs %>
+    </body>
+</html>

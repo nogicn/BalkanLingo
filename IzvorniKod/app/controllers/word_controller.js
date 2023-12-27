@@ -97,8 +97,11 @@ function learnSessionForeignNative(req, res) {
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     console.log(numberOfWords); 
     if (numberOfWords.length < 4) {
-      res.send("Not enough words in dictionary foreign native");
-      return;
+      res.render("forOFor", {
+        status: "",
+        errorText: "Naučene su sve riječi za danas",
+        link: "/dashboard",
+      });
     }
     for (let i = 0; i < 4; i++) {
       // generate random number between 1 and number of words in dictionary
@@ -151,8 +154,11 @@ function learnSessionForeignNative(req, res) {
       .prepare(userWordModel.getViableWordsForUserForDictionaryWhereItIsntActiveQuestion)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     if (numberOfWords.length < 3) {
-      res.send("Not enough words in dictionary foreign native");
-      return;
+      res.render("forOFor", {
+        status: "",
+        errorText: "Naučene su sve riječi za danas",
+        link: "/dashboard",
+      });
     }
     for (let i = 0; i < 3; i++) {
       let random = Math.floor(Math.random() * numberOfWords.length);
@@ -202,7 +208,12 @@ function learnSessionNativeForeign(req, res) {
       .prepare(userWordModel.getViableWordsForUserForDictionary)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     if (numberOfWords.length < 4) {
-      res.send("Not enough words in dictionary native foreign 1");
+      //res.send("Not enough words in dictionary native foreign 1");
+      res.render("forOFor", {
+        status: "",
+        errorText: "Naučene su sve riječi za danas",
+        link: "/dashboard",
+      });
       return;
     }
     for (let i = 0; i < 4; i++) {
@@ -246,8 +257,11 @@ function learnSessionNativeForeign(req, res) {
       .prepare(userWordModel.getViableWordsForUserForDictionaryWhereItIsntActiveQuestion)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     if (numberOfWords.length < 3) {
-      res.send("Not enough words in dictionary native foreign 2");
-      return;
+      res.render("forOFor", {
+        status: "",
+        errorText: "Naučene su sve riječi za danas",
+        link: "/dashboard",
+      });
     }
     for (let i = 0; i < 3; i++) {
       let random = Math.floor(Math.random() * numberOfWords.length);
@@ -287,8 +301,11 @@ function learnSessionWriting(req, res) {
       .prepare(userWordModel.getViableWordsForUserForDictionary)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
     if (numberOfWords.length < 2) {
-      res.send("Not enough words in dictionary writing");
-      return;
+      res.render("forOFor", {
+        status: "",
+        errorText: "Naučene su sve riječi za danas",
+        link: "/dashboard",
+      });
     }
     let random = Math.floor(Math.random() * numberOfWords.length);
     let activeQuestion = db.prepare(activeQuestionModel.setActiveQuestion).run({
@@ -532,9 +549,22 @@ async function checkAnswer(req, res) {
   let dictionaryId = db
     .prepare(wordModel.getWordById)
     .get({ wordId: activeQuestion.word_id });
-  if (answer == activeQuestion.word_id) {
+    if (answer == activeQuestion.word_id) {
+    let type = db
+      .prepare(activeQuestionModel.getActiveQuestion)
+      .get({ userId: req.session.user_id });
+    if(type.type == 1){
+      // swap foreign and native word and both descriptions
+    
+      let temp = word.foreignWord;
+      word.foreignWord = word.nativeWord;
+      word.nativeWord = temp;
+      temp = word.foreignDescription;
+      word.foreignDescription = word.nativeDescription;
+      word.nativeDescription = temp;
+    }
     moveToNextWordCorrect(req, res, activeQuestion);
-    var html = await ejs.renderFile("views/partials/word.ejs", {
+    var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
       word: word,
       correct: true,
     });
@@ -561,7 +591,7 @@ async function checkAnswer(req, res) {
       
     moveToNextQuestion(req, res, activeQuestion);
     // check type of active question
-    var html = await ejs.renderFile("views/partials/word.ejs", {
+    var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
       word: word,
       correct: false,
     });
@@ -745,7 +775,7 @@ async function createPronunciation(req, res) {
   await createPronunciationFunc(word.foreignWord, pronunciationFilePath);
   word.pronunciation = pronunciationFileName;
   // generate html
-  var html = await ejs.renderFile("views/partials/word.ejs", {
+  var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
     word: word,
     dictionary: dictionary,
   });
@@ -796,7 +826,7 @@ async function fillSentenceData(req, res) {
     }
   }
   // generate html
-  var html = await ejs.renderFile("views/partials/word.ejs", {
+  var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
     word: word,
     dictionary: dictionary,
   });
@@ -911,7 +941,7 @@ async function fillWordData(req, res) {
   }
 
   // generate html
-  var html = await ejs.renderFile("views/partials/word.ejs", {
+  var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
     word: word,
     dictionary: dictionary,
   });
