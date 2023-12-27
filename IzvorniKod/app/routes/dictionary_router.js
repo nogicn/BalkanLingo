@@ -14,7 +14,7 @@ router.get('/removeDictionary/:id',  dictionaryController.removeDictionary);
 
 router.get('/nextQuestion/:id',  wordController.nextQuestion);
 
-router.get('/checkWord/:answer',  wordController.checkAnswer);
+router.post('/checkWord/:answer',  wordController.checkAnswer);
 router.post('/checkWriting/:answer',  wordController.checkAnswerWriting);
 router.post('/checkListening/:answer',  wordController.checkAnswerListening);
 

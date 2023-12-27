@@ -430,7 +430,7 @@ function moveToNextWordCorrect(req, res) {
   res.redirect("/learnSession/" + req.params.id);
 }
 
-function checkAnswer(req, res) {
+async function checkAnswer(req, res) {
   // get andwer from url
   let answer = req.params.answer;
   // get active question
@@ -441,12 +441,21 @@ function checkAnswer(req, res) {
     res.redirect("/dashboard");
     return;
   }
+  let word = db
+    .prepare(wordModel.getWordById)
+    .get({ wordId: activeQuestion.word_id });
+
   // get dictionary id from active question
   let dictionaryId = db
     .prepare(wordModel.getWordById)
     .get({ wordId: activeQuestion.word_id });
   if (answer == activeQuestion.word_id) {
-    moveToNextWordCorrect(req, res, activeQuestion);
+    //moveToNextWordCorrect(req, res, activeQuestion);
+    var html = await ejs.renderFile("views/partials/word.ejs", {
+      word: word,
+      correct: true,
+    });
+    res.send(html);
   } else {
     //reset delay
     let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
@@ -454,6 +463,9 @@ function checkAnswer(req, res) {
       wordId: activeQuestion.word_id,
       delay: 0,
     });
+    let word = db
+      .prepare(wordModel.getWordById)
+      .get({ wordId: answer });
     if (userWord.changes == 0) {
       res.render("forOFor", {
         status: 404,
@@ -462,11 +474,11 @@ function checkAnswer(req, res) {
       });
     }
     // send error
-    res.render("forOFor", {
-      status: 404,
-      errorText: "Krivi odgovor",
-      link: "/learnSession/" + dictionaryId.dictionary_id,
+    var html = await ejs.renderFile("views/partials/word.ejs", {
+      word: word,
+      correct: false,
     });
+    res.send(html);
   }
 }
 

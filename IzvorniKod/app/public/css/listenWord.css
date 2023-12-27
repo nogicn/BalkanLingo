@@ -54,7 +54,50 @@ html, body {
     color: inherit;
     background-color: transparent;
   }
+  .return-home p{
+    color: #ff9f1c;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+  }
 
+  .return-home a{
+    text-decoration: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .next-question a{
+    text-decoration: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .return-home:hover{
+    filter: brightness(1.06);
+    transform: scale(1.05);
+  }
+
+
+  .next-question p{
+    color: #ff9f1c;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .next-question:hover{
+    filter: brightness(1.06);
+    transform: scale(1.05);
+  }
+
+  .invisible-buttons{
+    display: none;
+  }
 
   .main-content{
     display: flex;

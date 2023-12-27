@@ -10,14 +10,13 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <link rel="stylesheet" href="/css/sayWord.css">
         <link rel="stylesheet" href="/css/dashboard.css">
-        
 </head>
 <body>
     <!-- Navbar -->
     <% include partials/navbar.ejs %>
     <div class="main-content">
         <div class="button-container">
-            <a href="">
+            <a href="/dashboard" style="opacity:0">
                 <img src="/images/orange-home.png" alt="">
                 <p>završi sesiju ucenja</p>
             </a>
@@ -46,11 +45,12 @@
             </form>
         </div>
         <div class="button-container">
-            <a href="/dictionary/nextQuestion/<%= dictionaryId %>">
+            <a href="/dictionary/nextQuestion/<%= dictionaryId %>" style="opacity:0">
                 <img src="/images/orange-next.png" alt="">
                 <p>sljedeće pitanje</p>
             </a>
         </div>
+    </div>
 
     </div>
     <% include partials/footer.ejs %>
@@ -98,6 +98,41 @@
                     recordButton.textContent = 'Start Recording';
                 }
             }
+        });
+    </script>
+    <script>
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            // Select all 'div' elements
+            var divs = document.querySelectorAll('div');
+        
+            // Loop through each 'div' and remove the 'hx-post' attribute
+            divs.forEach(function(div) {
+                 if (div.hasAttribute('hx-post')) {
+                div.removeAttribute('hx-post');
+                div.removeAttribute('hx-target');
+                div.removeAttribute('hx-trigger');
+                // add atrribute to div
+                div.setAttribute('hx-disable', '')
+                 }
+            });
+
+            // Select all 'a' elements 
+            var as = document.querySelectorAll('a');
+
+            // Loop through each 'a' and set their opacity to 1
+            as.forEach(function(a) {
+                a.style.opacity = 1;
+                
+            });
+
+            // select next question div
+            var nextQuestionDiv = document.querySelector('.next-question a');
+            // select return home div
+            var returnHomeDiv = document.querySelector('.return-home a');
+            // select invisible buttons div
+            nextQuestionDiv.style.display = 'flex';
+            returnHomeDiv.style.display = 'flex';
+        
         });
     </script>
 </body>
