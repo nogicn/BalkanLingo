@@ -9,6 +9,7 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <title>BalkanLingo</title>
         <link rel="stylesheet" href="/css/dashboard.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
     </head>
     <body>
@@ -25,10 +26,10 @@
                         <button style="padding: 4px 10px; width: 100%;"><a href="/learnSession/<%= dictionaries[i].id %>"><b>TEST</b></a></button>
                         <button style="padding: 4px 10px; width: 100%;"><a href="/dictionary/dictSearch/<%= dictionaries[i].id %>"><b>UREDI RIJEČI</b></a></button>
                         <button style="padding: 4px 10px; width: 100%;"><a href="/dictionary/adminEditDict/<%= dictionaries[i].id %>"><b>POSTAVKE</b></a></button>
-                        <button style="padding: 4px 10px; width: 100%;"><a href="/dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+                       <!-- <button style="padding: 4px 10px; width: 100%;"><a href="/dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>-->
                     <% } else { %>
                         <button style="padding: 4px 4px;"><a href="/learnSession/<%= dictionaries[i].id %>"><b>ODABERI</b></a></button>
-                        <button style="padding: 4px 4px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
+                        <button id="obrisi" style="padding: 4px 4px;"><a href="dictionary/removeDictionary/<%= dictionaries[i].id %>"><b>OBRIŠI</b></a></button>
                     <% } %>
                   </div>
                 </div>
@@ -45,5 +46,32 @@
         <hr>
         <!-- Footer -->
         <% include partials/footer.ejs %>
+        <script>
+            // Select the button using its class name
+            const deleteButton = document.querySelector("#obrisi");
+
+
+            deleteButton.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            // Retrieve the href attribute of the a in the button
+            const deleteUrl = deleteButton.querySelector("a").getAttribute("href");
+
+            Swal.fire({
+            title: "Obriši?",
+            text: `Jeste li sigurni da želite obrisati rječnik?`,
+            showCancelButton: true,
+            heightAuto: false,
+            confirmButtonColor: '#2ec4b6',
+            cancelButtonText: 'Odustani',
+            confirmButtonText: 'Obriši',
+            }).then(function(result) {
+            if(result.isConfirmed) {
+                // Redirect to the URL on confirmation
+                window.location.href = deleteUrl;
+            }
+            });
+        });
+        </script>
     </body>
 </html>
