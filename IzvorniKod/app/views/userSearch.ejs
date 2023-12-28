@@ -16,6 +16,7 @@
         <% include partials/navbar.ejs %>
         <div class="main">
             <div class="flex-container">
+                <h2 class="language-title">Uređivanje administratora</h2>
                 <input class="word-search" type="text" placeholder="Pretrazi korisnike..."  name="email"
                 hx-post="/user/getUsers" 
                 hx-trigger="input changed delay:100ms, search" 
