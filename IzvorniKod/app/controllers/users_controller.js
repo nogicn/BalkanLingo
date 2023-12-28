@@ -127,17 +127,17 @@ async function setAdmin(req, res) {
   const id = req.params.id;
   try {
     let a = db.prepare(user.getUserById).get({ id: id });
-    console.log(a);
-    if (a.is_admin == 1) {
 
-    }
+    // check if the current user is admin
+    if (a.token !== req.session.token) {
     let result = db.prepare(user.setAdminByEmail).get({ email: a.email });
     if (result.changes !== 0) {
       let html = await ejs.renderFile('views/partials/userRow.ejs', { users: result }); 
       res.send(html)
-    } else {
-      
     }
+  }else{
+    res.status(404).send("You can't change your own admin status!")
+  }
   } catch (err) {
     console.error(err);
     res.status(500);

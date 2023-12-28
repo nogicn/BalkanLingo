@@ -9,6 +9,7 @@
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <title>BalkanLingo</title>
         <link rel="stylesheet" href="/css/addDic.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body>
         <!-- Navbar -->
@@ -75,10 +76,39 @@
                         <button class="save-changes" type="submit">SPREMI PROMJENE</button>
                         <img src="/images/blue-warning.png" alt="">
                     </div>
+                    
                 </form>
+                <div class="save-changes-container">
+                    <button class="delete-dictionary" href="/dictionary/removeDictionary/<%= dictionary.id %>">OBRIŠI RJEČNIK</button>
+                </div>
             </div>
         </div>
         <hr>
         <% include partials/footer.ejs %>
+        <script>
+            // Select the button using its class name
+            const deleteButton = document.querySelector('.delete-dictionary');
+
+
+            deleteButton.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            // Retrieve the href attribute of the button
+            const deleteUrl = deleteButton.getAttribute('href');
+
+            Swal.fire({
+            title: "Obriši?",
+            text: `Jeste li sigurni da želite obrisati rječnik?`,
+            showCancelButton: true,
+            heightAuto: false,
+            confirmButtonColor: '#2ec4b6',
+            }).then(function(result) {
+            if(result.isConfirmed) {
+                // Redirect to the URL on confirmation
+                window.location.href = deleteUrl;
+            }
+            });
+        });
+        </script>
     </body>
 </html>

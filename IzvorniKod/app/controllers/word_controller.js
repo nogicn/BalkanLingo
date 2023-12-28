@@ -92,22 +92,24 @@ function learnSessionForeignNative(req, res) {
   if (active_question === undefined) {
     // get 4 random words from dictionary
     let words = [];
+
     let numberOfWords = db
       .prepare(userWordModel.getViableWordsForUserForDictionary)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
-    console.log(numberOfWords); 
     if (numberOfWords.length < 4) {
       res.render("forOFor", {
         status: "",
         errorText: "Naučene su sve riječi za danas",
         link: "/dashboard",
       });
+      return;
     }
     for (let i = 0; i < 4; i++) {
       // generate random number between 1 and number of words in dictionary
       let random = Math.floor(Math.random() * numberOfWords.length);
       let duplicate = false;
       for (let j = 0; j < words.length; j++) {
+        
         if (words[j].id == numberOfWords[random].id) {
           duplicate = true;
           break;
@@ -153,12 +155,14 @@ function learnSessionForeignNative(req, res) {
     let numberOfWords = db
       .prepare(userWordModel.getViableWordsForUserForDictionaryWhereItIsntActiveQuestion)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
+    console.log(numberOfWords.length)
     if (numberOfWords.length < 3) {
       res.render("forOFor", {
         status: "",
         errorText: "Naučene su sve riječi za danas",
         link: "/dashboard",
       });
+      return;
     }
     for (let i = 0; i < 3; i++) {
       let random = Math.floor(Math.random() * numberOfWords.length);
@@ -192,6 +196,7 @@ function learnSessionForeignNative(req, res) {
       dictionaryId: req.params.id,
       next: 2,
     });
+    return;
   }
 }
 
@@ -262,6 +267,7 @@ function learnSessionNativeForeign(req, res) {
         errorText: "Naučene su sve riječi za danas",
         link: "/dashboard",
       });
+      return;
     }
     for (let i = 0; i < 3; i++) {
       let random = Math.floor(Math.random() * numberOfWords.length);
@@ -287,6 +293,7 @@ function learnSessionNativeForeign(req, res) {
       dictionaryId: req.params.id,
       next: 3,
     });
+    return;
   }
 }
 
@@ -723,7 +730,7 @@ async function addWord(req, res) {
 
       await createPronunciationFunc(foreignWord, pronunciationFilePath);
     }
-    // OVDJE MOZE BITI GRESKA, TREBA BITI ERROR HANDLING AKO VEC POSTOJI RIJEC U RIJECNIKU
+    
     let word = db.prepare(wordModel.createWord).run({
       foreignWord: foreignWord,
       foreignDescription: foreignDescription,
@@ -793,6 +800,9 @@ async function fillSentenceData(req, res) {
     .get({ id: id });
   // get word from database
   let word = db.prepare(wordModel.getWordById).get({ wordId: req.body.id });
+  let dictionaryLanguage = db
+    .prepare(LanguageModel.getLanguageById)
+    .get({ id: dictionary.language_id });
   if (word == undefined) {
     word = {
       nativeWord: "",
@@ -817,7 +827,7 @@ async function fillSentenceData(req, res) {
     word.nativeDescription = nativeDescription;
     try {
       word.foreignDescription = await translate(word.nativeDescription, {
-        to: dictionary.language,
+        to: dictionaryLanguage.shorthand,
       });
       word.foreignDescription = word.foreignDescription[0];
     } catch (error) {
@@ -844,6 +854,9 @@ async function fillWordData(req, res) {
     .prepare(dictionaryModel.getDictionaryById)
     .get({ id: id });
   let word = db.prepare(wordModel.getWordById).get({ wordId: req.body.id });
+  let dictionaryLanguage = db
+    .prepare(LanguageModel.getLanguageById)
+    .get({ id: dictionary.language_id });
   if (word == undefined) {
     word = {
       nativeWord: "",
@@ -904,14 +917,14 @@ async function fillWordData(req, res) {
       res.status(404).json({ text: "Error translation error" });
       return;
     }
-    if (languageCode != "en") {
+    if (dictionaryLanguage.shorthand != "en") {
       try {
         word.foreignWord = await translate(word.foreignWord, {
-          to: languageCode,
+          to: dictionaryLanguage.shorthand,
         });
         word.foreignWord = word.foreignWord[0];
         word.foreignDescription = await translate(word.foreignDescription, {
-          to: languageCode,
+          to: dictionaryLanguage.shorthand,
         });
         word.foreignDescription = word.foreignDescription[0];
       } catch (error) {

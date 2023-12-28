@@ -167,6 +167,7 @@ function adminAddDict(req, res) {
       dictionary: dictionary,
       languages: languages,
     });
+    return;
   } catch (error) {
       res.render("forOFor", { status: 500, errorText: "Greška u dodavanju rječnika!", link: "/dashboard" });
     return;
@@ -229,7 +230,7 @@ function saveLocale(req, res) {
     // create new language
     const result = db
       .prepare(languageModel.createNewLanguage)
-      .run({ name: name, shorthand: shorthand, flagIcon: flagIcon });
+      .run({ name: name, shorthand: shorthand.toLowerCase(), flagIcon: flagIcon });
   } else {
     // update language
     const result = db
