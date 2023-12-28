@@ -76,6 +76,7 @@ html, body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    text-align: center;
   }
 
   .return-home:hover{
@@ -220,10 +221,22 @@ html, body {
   .invisible-buttons{
     display: none;
   }
+  #formData{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100% ;
+  }
+  #formData .check{
+    text-align: center;
+  }
 
   @media(max-width:1270px){
     .listen-head{
         width: 100%;
+    }
+    #formData{
+      width: 80%;
     }
   }
   @media(max-width:1010px){
@@ -233,7 +246,7 @@ html, body {
     .main-content .invisible-buttons{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         width: 60%;
     }
     .main-content .invisible-buttons img{
@@ -247,6 +260,7 @@ html, body {
 
     .main-content .listen-area .listen-head{
         width: 60%;
+        font-size: 0.8rem;
     }
     .main-content .listen-area .input-field{
         width: 70%;

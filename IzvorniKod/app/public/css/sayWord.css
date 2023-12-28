@@ -82,6 +82,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   .next-question a{
@@ -91,6 +92,7 @@ html, body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    text-align: center;
   }
 
   .return-home:hover{
@@ -155,10 +157,10 @@ html, body {
     justify-content: center;
     flex-direction: column;
     height: 100%;
-    margin: 10%;
+    margin: 2%;
   }
   .say-head{
-    width: 80%;
+    width: 100%;
     height: 40px;
     border-radius: 50px;
     padding: 10px;
@@ -253,6 +255,28 @@ html, body {
     color: #2ec4b6;
     font-weight: bold;
   }
+  #formData{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100% ;
+  }
+  #formData audio{
+    width: 90%;
+  }
+  #formData .check{
+    text-align: center;
+    margin: 10px;
+    margin-top: 20px;
+    width: 60%;
+  }
+  #answer{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 42.4px;
+  }
 
   @media(max-width:1350px){
     .say-head{
@@ -264,13 +288,22 @@ html, body {
     }
   }
   @media(max-width:1010px){
+    #formData{
+      width: 80%;
+    }
+    #formData .check{
+      width: 30%;
+    }
+    .main-content .say-area .say-head{
+      width: 50%;
+    }
     .main-content .button-container{
         display: none;
     }
     .main-content .invisible-buttons{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         width: 60%;
     }
     .main-content .invisible-buttons img{
@@ -292,6 +325,9 @@ html, body {
   @media(max-width:572px){
     .main-content .say-area .say-head{
         width: 80%;
+    }
+    #formData .check{
+      width: 50%;
     }
 
   }

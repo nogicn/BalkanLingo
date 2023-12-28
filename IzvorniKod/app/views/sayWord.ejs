@@ -36,11 +36,11 @@
             <input hidden type="file" name="pronunciation" id="pronunciation" accept="audio/*">
             <audio  id="audioPlayer" controls></audio>
             <div id="answer"></div>
+            <div hx-post="/dictionary/checkListening/<%= word.id %>" hx-target="#answer" hx-include="#formData" hx-trigger="click" class="check">PROVJERA</div>
+            </form>
             <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
                 <% include partials/navigation.ejs %>
             </div>
-            <div hx-post="/dictionary/checkListening/<%= word.id %>" hx-target="#answer" hx-include="#formData" hx-trigger="click" class="check">PROVJERA</div>
-            </form>
         </div>
         <div class="button-container">
             <a href="/learnSession/<%= dictionaryId %>" style="opacity:0">
