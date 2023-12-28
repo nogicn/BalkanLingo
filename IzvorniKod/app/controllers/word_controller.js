@@ -564,7 +564,7 @@ async function checkAnswer(req, res) {
       word.nativeDescription = temp;
     }
     moveToNextWordCorrect(req, res, activeQuestion);
-    var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
+    var html = await ejs.renderFile("views/partials/word.ejs", {
       word: word,
       correct: true,
     });
@@ -591,7 +591,7 @@ async function checkAnswer(req, res) {
       
     moveToNextQuestion(req, res, activeQuestion);
     // check type of active question
-    var html = await ejs.renderFile("views/partials/wordsEdit.ejs", {
+    var html = await ejs.renderFile("views/partials/word.ejs", {
       word: word,
       correct: false,
     });
