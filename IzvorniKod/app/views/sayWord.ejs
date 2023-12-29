@@ -29,15 +29,15 @@
                 
 
             </div>
-            <form id="formData">
+            <div id="formData">
             <p class="big-bold"><%= word.foreignWord %></p>
             <p class="phrase"><%= word.foreignDescription %></p>
             <img  class="say" src="/images/orange-mic.png" alt="" id="recordButton">
-            <input hidden type="file" name="pronunciation" id="pronunciation" accept="audio/*">
+            <input hidden type="file" name="pronunciation" id="audioInput" accept="audio/*">
             <audio  id="audioPlayer" controls></audio>
-            <div id="answer"></div>
             <div hx-post="/dictionary/checkListening/<%= word.id %>" hx-target="#answer" hx-include="#formData" hx-trigger="click" class="check">PROVJERA</div>
-            </form>
+            <div id="answer"></div>
+            </div>
             <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
                 <% include partials/navigation.ejs %>
             </div>
@@ -79,7 +79,11 @@
                             const audioUrl = URL.createObjectURL(audioBlob);
                             audioPlayer.src = audioUrl;
                             audioPlayer.style.display = 'block';
-                            audioInput.value = audioBlob; // Set the input field value to the audio blob
+
+                            // Create FormData and append the audio blob
+                            const formData = new FormData();
+                            formData.append('pronunciation', audioBlob, 'recording.wav');
+                            
                         };
                         mediaRecorder.start();
                         isRecording = true;
@@ -132,6 +136,27 @@
             returnHomeDiv.style.display = 'flex';
         
         });
+    </script>
+    <script>
+        document.body.addEventListener('htmx:beforeRequest', function(event) {
+       
+
+            // Add your condition to decide when to prevent the request
+            if (shouldPreventRequest(event.detail)) {
+                event.preventDefault();
+                console.log('HTMX Request Prevented');
+                // append div to answer with error message
+                var answerDiv = document.getElementById('answer');
+                answerDiv.innerHTML = '<div class="answer"> <p class="answer" style="color: red">PRVO SNIMITE RIJEČ</p> </div>';
+            }
+        });
+
+        function shouldPreventRequest(detail) {
+            if (!audioChunks || audioChunks.length == 0) {
+                return true;
+            }
+            return false;
+        }
     </script>
 </body>
 </html>
