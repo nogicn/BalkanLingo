@@ -27,11 +27,12 @@ function learnSession(req, res) {
     .get({ id: req.params.id });
   //check if active word dict is same as dictionary
 
-  if (user_words.length == 0) {
-    // get all words for this dictionary
+    
     let words = db
-      .prepare(wordModel.getWordByDictionaryId)
-      .all({ dictionaryId: req.params.id });
+      .prepare(wordModel.getAllWordsNotInUserWord)
+      .all({ userId: req.session.user_id });
+      // get all words for this dictionary that are not in user_words
+
     // create user_word for all words
     for (let i = 0; i < words.length; i++) {
       let date = new Date();
@@ -44,7 +45,7 @@ function learnSession(req, res) {
         userId: req.session.user_id,
       });
     }
-  }
+  
 
   // check if active question word is from this dictionary
 

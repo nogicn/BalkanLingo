@@ -38,6 +38,7 @@ const getViableWordsForUserForDictionary = `
     AND strftime('%s', 'now') - strftime('%s ', SUBSTR(last_answered, 1, 19)) > delay * 24 * 60 * 60;
 `;
 
+
 const getViableWordsForUserForDictionaryWhereItIsntActiveQuestion = `
     SELECT user_word.*, word.*
     FROM user_word, word
@@ -98,4 +99,5 @@ module.exports = {
     deleteUserWordbyId,
     createUserIndex,
     getViableWordsForUserForDictionaryWhereItIsntActiveQuestion,
+    
 }

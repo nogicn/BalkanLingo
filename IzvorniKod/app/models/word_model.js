@@ -48,6 +48,10 @@ const searchWordByDictionaryId = `
     SELECT * FROM word WHERE dictionary_id = @dictionaryId AND (foreignWord LIKE '%' || @word || '%' OR nativeWord LIKE '%' || @word || '%');
 `;
 
+const getAllWordsNotInUserWord = `
+    SELECT * FROM word WHERE id NOT IN (SELECT word_id FROM user_word WHERE user_id = @userId);
+`;
+
 module.exports = {
     createWordTable,
     createWord,
@@ -58,5 +62,6 @@ module.exports = {
     getAllWords,
     getWordById,
     updateWord,
-    searchWordByDictionaryId
+    searchWordByDictionaryId,
+    getAllWordsNotInUserWord,
 }
