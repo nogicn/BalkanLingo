@@ -2,12 +2,40 @@
 		
 		
 		\section{Korištene tehnologije i alati}
-		
-			\textbf{\textit{dio 2. revizije}}
 			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
-			
-			
+		\subsection*{Komunikacija}
+			Tijekom razvoja projekta koristili smo mnoge tehnologije kako bi olakšali i ubrzali komunikaciju. Većina interne projektne komunikacije odvijala se unutar privatnog servera u aplikaciji \textbf{\href{https://discord.com/}{Discord}}, dok je ostatak komunikacije bio preko \textbf{\href{https://www.microsoft.com/hr-hr/microsoft-teams/download-app}{MS Teams-a}}.
+			Discord je aplikacija koja omogućava brzo postavljanje kanala za razgovor i brzo odvajanje logičkih jedinica projekta (front-end, back-end, dokumentacija).
+			Za komunikaciju o projektu, zadatcima i projektnim obavijestima s asistenticom koristili smo \href{https://www.microsoft.com/hr-hr/microsoft-teams/download-app}{MS Teams}.
+
+
+		\subsection*{Dokumentacija i verziranje aplikacije}
+			Dokumentacija je napisana u sustavu \textbf{LaTeX}. \href{https://www.latex-project.org/}{LaTeX} je jezik koji omogućuje lagano pisanje dokumentacije kao i mogućnost brze iteracije i izmjena podataka. Za izradu grafova u projektu koristili smo \href{https://www.visual-paradigm.com/}{Visual Paradigm}. Verziranje aplikacije je bitan dio u procesu razvijanja aplikacije jer omogućava nadgledanje koji dio koda je kada dodan i mogućnost vraćanja u prošlost ako neki dio koda ne radi u budućnosti. Za verziranje koda koristili smo \textbf{\href{https://git-scm.com/}{Git}}, a za spremanje tih promjena koristili smo udaljeni repozitorij na \textbf{\href{https://github.com/}{GitHub-u}}.
+
+		\subsection*{Aplikacija}
+			Aplikacija je napisana u \textbf{\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript}{JavaScript-u}} koristeći \textbf{\href{https://nodejs.org/en}{Node.js}} i \textbf{\href{https://www.npmjs.com/package/better-sqlite3}{SQLITE3}} bazu podataka. Node je okruženje za izvršavanje JavaScripta na bilo kojoj platformi izvan preglednika te se koristi kao backend server. Naša aplikacija nema odvojen front-end i back-end jer svu logiku izvršavamo na backendu u Node-u. Na backendu koristimo i \textbf{\href{https://expressjs.com/}{Express}} radni okvir koji nam olakšava pisanje logike HTTP zahtjeva. Za stvaranje HTML-a koji se onda šalje korisniku koristimo \href{https://ejs.co/}{ejs} šablonski jezik. Za SQLITE implementaciju koristimo \textbf{\href{https://www.npmjs.com/package/better-sqlite3}{better-sqlite3}} biblioteku koja nam omogućava brzo i jednostavno stvaranje baze podataka kao i bolje debugiranje problema oko upita.
+
+		\subsection*{Razvojno okruženje}
+			Za razvojno okruženje koristili smo \textbf{\href{https://code.visualstudio.com/}{Visual Studio Code}}. Visual Studio Code je besplatni izvorni kod editor koji je razvila tvrtka Microsoft. Za stiliziranje koda koristili smo \textbf{\href{https://prettier.io/}{Prettier}}. Prettier je alat koji nam omogućava da kod bude stilski konzistentan i da se ne moramo brinuti o stilu koda.
+
+		\subsection*{Korisni linkovi}
+			\begin{itemize}
+				\item Discord: \url{https://discord.com/}
+				\item Microsoft Teams: \url{https://www.microsoft.com/hr-hr/microsoft-teams/download-app}
+				\item LaTeX: \url{https://www.latex-project.org/}
+				\item Visual Paradigm: \url{https://www.visual-paradigm.com/}
+				\item Git: \url{https://git-scm.com/}
+				\item GitHub: \url{https://github.com/}
+				\item JavaScript: \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript}
+				\item Node.js: \url{https://nodejs.org/en}
+				\item Express: \url{https://expressjs.com/}
+				\item EJS: \url{https://ejs.co/}
+				\item Visual Studio Code: \url{https://code.visualstudio.com/}
+				\item Prettier: \url{https://prettier.io/}
+				\item Better SQLite3: \url{https://www.npmjs.com/package/better-sqlite3}
+			\end{itemize}
+
+				
 			\eject 
 		
 	
@@ -47,12 +75,133 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+		\subsection*{Instaliranje nodejs-a i npm-a}
+		\begin{enumerate}
+			\item Preuzmite nodejs instalaciju s \textbf{\href{https://nodejs.org/en/download/}{službene stranice}}.
+			\item Pokrenite instalaciju.
+			\item Provjerite je li nodejs uspješno instaliran:
+			\begin{verbatim}
+				node -v
+			\end{verbatim}
+			\item Provjerite je li npm uspješno instaliran:
+			\begin{verbatim}
+				npm -v
+			\end{verbatim}
+		\end{enumerate}
+
+		\subsection*{Ručno Instaliranje}
+		Za ručno pokretanje aplikacije potrebna je Node.js verzija 20 ili novija.
+		\begin{enumerate}
+			\item Promijenite direktorij u mapu "app":
+			\begin{verbatim}
+				dir IzvorniKod/app 
+			\end{verbatim}
+			\item Instalirajte projektne module:
+			\begin{verbatim}
+				npm install
+			\end{verbatim}
+			\item Pokrenite aplikaciju:
+			\begin{verbatim}
+				npm run start
+			\end{verbatim}
+			Aplikacija se pokreće na portu 3000.
+		\end{enumerate}
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
-			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
-			
-			
-			\eject 
+		\subsection*{Instaliranje Docker-a}
+		\begin{enumerate}
+			\item Preuzmite Docker instalaciju s \textbf{\href{https://docs.docker.com/get-docker/}{službene stranice}}.
+			\item Pokrenite instalaciju.
+			\item Provjerite je li Docker uspješno instaliran:
+			\begin{verbatim}
+				docker -v
+			\end{verbatim}
+		\end{enumerate}
+
+		\subsection*{Postavljanje Docker-a}
+		Za pokretanje aplikacije pomoću Docker-a:
+		\begin{enumerate}
+			\item Promijenite direktorij u mapu "IzvorniKod":
+			\begin{verbatim}
+				cd IzvorniKod
+			\end{verbatim}
+			\item Izgradite Docker sliku pod nazivom "balkan-lingo":
+			\begin{verbatim}
+				docker build -t balkan-lingo .
+			\end{verbatim}
+			\item Pokrenite Docker kontejner i mapirajte port 3000 iz kontejnera na vaš poslužiteljski port:
+			\begin{verbatim}
+				docker run -p 3000:3000 balkan-lingo
+			\end{verbatim}
+			Za pokretanje kontejnera u pozadini koristite:
+			\begin{verbatim}
+				docker run -d -p 3000:3000 balkan-lingo
+			\end{verbatim}
+		\end{enumerate}
+		
+		\subsection*{Zaustavljanje Docker Kontejnera}
+		Za zaustavljanje Docker kontejnera:
+		\begin{enumerate}
+			\item Navedite sve pokrenute kontejnere:
+			\begin{verbatim}
+				docker ps -a
+			\end{verbatim}
+			\item Zaustavite kontejner koristeći njegov CONTAINER\_ID:
+			\begin{verbatim}
+				docker stop <CONTAINER_ID>
+			\end{verbatim}
+			Zamijenite \texttt{<CONTAINER\_ID>} s stvarnim ID-om kontejnera koji želite zaustaviti.
+		\end{enumerate}
+
+		\subsection*{Brisanje Docker Kontejnera}
+		Za brisanje Docker kontejnera:
+		\begin{enumerate}
+			\item Navedite sve pokrenute kontejnere:
+			\begin{verbatim}
+				docker ps -a
+			\end{verbatim}
+			\item Obrišite kontejner koristeći njegov CONTAINER\_ID:
+			\begin{verbatim}
+				docker rm <CONTAINER_ID>
+			\end{verbatim}
+			Zamijenite \texttt{<CONTAINER\_ID>} s stvarnim ID-om kontejnera koji želite obrisati.
+		\end{enumerate}
+
+		\subsection*{Brisanje Docker Slike}
+		Za brisanje Docker slike:
+		\begin{enumerate}
+			\item Navedite sve Docker slike:
+			\begin{verbatim}
+				docker images
+			\end{verbatim}
+			\item Obrišite sliku koristeći njegov IMAGE\_ID:
+			\begin{verbatim}
+				docker rmi <IMAGE_ID>
+			\end{verbatim}
+			Zamijenite \texttt{<IMAGE\_ID>} s stvarnim ID-om slike koju želite obrisati.
+		\end{enumerate}
+
+		\subsection*{Upravlanje bazom podataka}
+			Starna baza podataka je već generirana i nalazi se u mapi \texttt{IzvorniKod/app/db}.
+			Dakle nije potrebno ručno kreirati bazu podataka.
+			U slučaju da želite jednu od operacija na bazi podataka, potrebno je zamijeniti vrijednost u .env datoteci.
+
+			Ovo su sve moguće opcije za .env datoteku:
+			MIGRATE=
+			\begin{itemize}
+				\item \texttt{true} - briše trenutnu bazu podataka i stvara novu \textbf{praznu} bazu podataka
+				\item \texttt{reset} - briše trenutnu bazu podataka i učitava startnu bazu podataka sa startnim podacima
+				\item \texttt{test} - koristi se kod pokretanja testova 
+			\end{itemize}
+	
+		\subsection*{Vrijednosti .env datoteke}
+			Ovdje su navedene sve mogućnosti za .env datoteku, za brzi setup aplikacije pogledajte \texttt{.env.example} datoteku.
+			\begin{itemize}
+				\item \texttt{ELEVEN\_VOICE\_KEY} - ključ za Eleven Voice API
+				\item \texttt{GMAIL\_KEY} - ključ za Gmail API
+				\item \texttt{MIGRATE} - vrijednost za upravljanje bazom podataka
+				\item \texttt{TEST} - vrijednost za upravljanje testovima, \textbf{treba ostati false}
+				\item \texttt{TESTMAIL} - email za testiranje, \textbf{uvijek mora biti prazno}.
+				\item \texttt{PORT} - port na kojem će se pokrenuti aplikacija
+			\end{itemize}
+		
+		\eject
