@@ -1,9 +1,18 @@
 \chapter{Zaključak i budući rad}
 		
-		\textbf{\textit{dio 2. revizije}}\\
+		BalkanLingo je rezultat rada na zadatku koji smo dobili na predmetu Programiranje i programsko inženjerstvo.Cilj zadatka je bio napraviti rješenje koje omogućava korisnicima da uče strane jezike na zabavan i interaktivan način. Uz to, zadatak je postavljen tako da nas vodi kroz sve dijelove razvijanja softvera i upozna s problemima koji se mogu javiti.
+		\\
+		\\
+		Projekt se odvijao u dvije faze. Prva faza je većinom bila posvećena upoznavanju s novim tehnologijama koje ćemo koristiti i izradi prototipa, a druga faza je bila posvećena izradi konačnog proizvoda.
+		U nastavku ćemo opisati što smo sve napravili u svakoj fazi i što smo naučili iz toga.
+	   	\\
+		\\
+		\textbf{U prvoj fazi} smo se upoznavali s tehnologijama koje ćemo koristiti, izradi osnovnog prototipa i upoznavanja novih članova. Brzo smo shvatili da su svi članovi tima upoznati s radnim okruženjem Express i ejs jezikom te da će nam to dozvoliti  da brzo stvorimo prototip. Imali smo puno sreće oko podijele na frontend, backend, bazu podataka, dizajn i dokumentaciju jer smo imali točan omjer ljudi za svaki dio što nam je pomoglo da se lakše organiziramo tko će koji dio aplikacije raditi i da svi radimo podjednako. Odlučili smo da će sve interakcije sa serverom vraćati HTML kao odgovor. To je bila jako dobra odluka koja nam je dozvolila da brzo napredujemo i napravimo više za prototip nego je bilo traženo jer nismo uveli dupliciranje logike za predstavljanje rezultata (npr,React ili Vue). Jedini nedostatak ovog pristupa je da se web stranica svaki put osvježi kod promjena, ali taj problem je riješen za bitne dijelove aplikacije u drugoj fazi. Izbor baze podataka je bio dosta jednostavan. SQLITE je savršena baza za prototip jer nije potrebno se baviti postavljanjem neke baze podataka na svim našim računalima kao i sinkronizacije stanja baze. Za korištenje SQLITE-a smo originalno mislili koristiti npm paket sqlite3, ali zbog raznih problema i teškog debugiranja, odlučili smo koristiti paket better-sqlite3. Za dokumentiranje projekta smo koristili LaTeX i VisualParadigm. Svi članovi su radili svoje dijelove dokumentacije i međusobno ispravljali kada je bilo potrebno. Voditelj projekta je inzistirao da napravimo dobar kostur za prototip jer da će nam to omogućiti da rano nađemo probleme u tehnologijama te da ćemo kasnije moći jako brzo dodavati funkcionalnosti. 
+		\\
+
 		
-		 \textit{U ovom poglavlju potrebno je napisati osvrt na vrijeme izrade projektnog zadatka, koji su tehnički izazovi prepoznati, jesu li riješeni ili kako bi mogli biti riješeni, koja su znanja stečena pri izradi projekta, koja bi znanja bila posebno potrebna za brže i kvalitetnije ostvarenje projekta i koje bi bile perspektive za nastavak rada u projektnoj grupi.}
-		
-		 \textit{Potrebno je točno popisati funkcionalnosti koje nisu implementirane u ostvarenoj aplikaciji.}
-		
-		\eject 
+		\textbf{U drugoj fazi} smo se većinom bavili implementacijom svih funkcionalnosti projekta. Nismo imali potrebu mijenjati ijednu tehnologiju. SQLITE je dovoljno performantan za naše potrebe i rad s njim je jednostavan i dovoljno brz bez sinkronizacijskih problema. Kada bi neki član tima dohvatio nove promjene u bazi, nova baza i njen izgled je bio isto dohvaćen. Dodali smo samo jednu novu tehnologiju koja se zove HTMX. To je biblioteka koja nam je omogućila da dodamo komplicirane interakcije klijenta i servera bez pisanja dodatnog JavaScript koda. Koristimo ju za ubacivanje novih vrijednosti kod automatskog stvaranja riječi, pretraživanja rječnika/riječi te kod prijelaska između načina učenja. U ovoj fazi smo radili intenzivnije nego u prvoj fazi jer je bilo više zahtjevnog programiranja. Brzina kojom smo dodavali stvari u projekt nas je iznenadila te smo jako sretni odabirom naših tehnologija i odlukom da napravimo kvalitetan kostur projekta u prvoj fazi. Kada je bazni dio projekta bio snažno definiran smo dodali i prve testove koje koristimo za provjeru jačine osiguranosti pojedinih ruta jer smo primijetili da često zaboravljamo vratiti provjere autentičnosti na bitne administratorske rute. Kasnije smo dodali i testove koji su gledali jesu li se potrebni objekti pojavili u bazama podataka i jesu li dobre vrijednosti dohvaćene. Dokumentacija u drugoj fazi ima manje stvari za napraviti ali je i dalje uzela dobar dio vremena rada jer je bilo potrebno raditi manje modifikacije u cijeloj dokumentaciji zbog raznih manjih izmjena.
+		\\
+		\\
+	   \indent Naš projekt ima sve potrebne funkcionalnosti zadatka. Svi članovi tima su zadovoljni s rezultatom projekta i drago nam je da smo sudjelovali u ovakvom projektu. Naučili smo puno novih tehnologija i procesa s kojima se prije nismo susretali te smo usvojili puno znanja i vještina koje će nam dobro doći na našim budućim poslovima! 
+		 \eject 

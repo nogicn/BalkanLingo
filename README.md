@@ -1,9 +1,9 @@
 # Available Accounts
 - **Admin Account**
-  - Email: admin@gmail.com
+  - Email: ***REMOVED***
   - Password: 123
 - **User Account**
-  - Email: user@gmail.com
+  - Email: ***REMOVED***
   - Password: 123
 
 # Adding users
@@ -18,7 +18,7 @@
 - You are redirected to "Prijavi se" and log in
 
 # Publicly Accessible Website
-- The website is publicly accessible at: [138.201.184.55:3000](http://138.201.184.55:3000)
+- The website is publicly accessible at: [balkanlingo.online](https://balkanlingo.online)
 
 # Manual Setup
 To run the application manually, you'll need Node.js version 20 or higher.
