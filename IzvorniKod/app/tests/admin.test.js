@@ -1,7 +1,12 @@
 const request = require("supertest");
+const path = require('path')
+//overrode the .env file for testing purposes
+require("dotenv").config(
+    {
+        path: path.resolve(__dirname, "../.env.test.admin")
+    }
+);
 const app = require("../app");
-
-require("dotenv").config();
 
 describe("Dictionary root path test", () => {
     test("It should respond with not found (404)", () => {
@@ -38,7 +43,7 @@ describe("Adding word to dictionary test (GET)", () => {
 describe("Editing word test (GET)", () => {
     test("It should respond with OK (200)", () => {
         return request(app)
-        .get("/dictionary/editWord/1")
+        .get("/dictionary/editWord/2")
         .expect(200);
     });
 });
@@ -50,3 +55,4 @@ describe("Admin adding dictionary test", () => {
         .expect(200);
     });
 });
+

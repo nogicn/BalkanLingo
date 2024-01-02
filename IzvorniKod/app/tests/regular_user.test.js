@@ -1,7 +1,12 @@
 const request = require("supertest");
+const path = require('path')
+//overrode the .env file for testing purposes
+require("dotenv").config(
+    {
+        path: path.resolve(__dirname, "../.env.test.user")
+    }
+);
 const app = require("../app");
-
-require("dotenv").config();
 
 // Actions that require regular user authentication
 

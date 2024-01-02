@@ -1,9 +1,12 @@
 const request = require("supertest");
+const path = require('path')
+//overrode the .env file for testing purposes
+require("dotenv").config(
+    {
+        path: path.resolve(__dirname, "../.env.test.guest")
+    }
+);
 const app = require("../app");
-
-require("dotenv").config();
-
-// Actions that don't require authentication
 
 describe("Root path test", () => {
     test("It should respond with OK (200)", () => {

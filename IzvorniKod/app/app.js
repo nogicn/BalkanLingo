@@ -6,9 +6,7 @@ var logger = require('morgan');
 var http = require('http');
 const bodyParser = require('body-parser');
 var session = require('express-session');
-var dotenv = require('dotenv');
 const checkAuth = require('./middleware/authorisation_middleware');
-dotenv.config();
 
 
 
