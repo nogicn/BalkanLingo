@@ -62,6 +62,7 @@ Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugr
     \item word
     \item active\_question
     \item user\_word
+    \item language
 \end{itemize}
 
 \subsection{Opis tablica}
@@ -87,7 +88,7 @@ is\_admin & INTEGER & Označava je li korisnik administrator (1/0). \\ \hline
 token & VARCHAR & Token koji se koristi za autentifikaciju korisnika. \\ \hline
 \end{longtblr}
 
-Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language).
+Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language\_id).
 
 \begin{longtblr}[
     label=none,
@@ -100,9 +101,8 @@ Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik i
 \hline \SetCell[c=3]{c}{\textbf{dictionary}} \\ \hline[3pt]
 \SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator rječnika. \\ \hline
 name & VARCHAR & Naziv rječnika. \\ \hline
-language & VARCHAR & Jezik rječnika. \\ \hline
+language\_id & VARCHAR & Referenca na jezik rječnika. \\ \hline
 image\_link & VARCHAR & Link na sliku koja predstavlja rječnik. \\ \hline
-flag\_icon\_link & VARCHAR & Link zastave jezika rječnika ili oznaka u UTF-8. \\ \hline
 \end{longtblr}
 
 Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje rječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
@@ -178,6 +178,23 @@ word\_id & INTEGER & Referenca riječi. \\ \hline
 last\_answered & VARCHAR & Datum kad je korisnik zadnji put točno odgovorio na riječ. \\ \hline
 delay & INTEGER & Vremenski odmak za iduće pojavljivanje riječi. \\ \hline
 active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \hline
+\end{longtblr}
+
+Tablica \textbf{"language"} sadrži podatke o jeziku koji se riječnikom uči. Svaki zapis u tablici ima jedinstveni identifikator (id), naziv jezika (name), skraćenicu jezika (shorthand), te ikonicu (flag\_icon).
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{language}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+name & VARCHAR & Ime jezika. \\ \hline
+shorthand & VARCHAR & Skraćenica jezika. \\ \hline
+flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
 \end{longtblr}
 
 					
