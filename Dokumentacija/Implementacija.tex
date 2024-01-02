@@ -10,7 +10,7 @@
 
 
 		\subsection*{Dokumentacija i verziranje aplikacije}
-			Dokumentacija je napisana u sustavu \textbf{LaTeX}. \href{https://www.latex-project.org/}{LaTeX} je jezik koji omogućuje lagano pisanje dokumentacije kao i mogućnost brze iteracije i izmjena podataka. Za izradu grafova u projektu koristili smo \href{https://www.visual-paradigm.com/}{Visual Paradigm}. Verziranje aplikacije je bitan dio u procesu razvijanja aplikacije jer omogućava nadgledanje koji dio koda je kada dodan i mogućnost vraćanja u prošlost ako neki dio koda ne radi u budućnosti. Za verziranje koda koristili smo \textbf{\href{https://git-scm.com/}{Git}}, a za spremanje tih promjena koristili smo udaljeni repozitorij na \textbf{\href{https://github.com/}{GitHub-u}}.
+			Dokumentacija je napisana u sustavu \textbf{\href{https://www.latex-project.org/}{LaTeX}}. {LaTeX} je jezik koji omogućuje lagano pisanje dokumentacije kao i mogućnost brze iteracije i izmjena podataka. Za izradu grafova u projektu koristili smo \textbf{\href{https://www.visual-paradigm.com/}{Visual Paradigm}} i \textbf{\href{https://www.lucidchart.com/pages/}{Lucidchart}}. Verziranje aplikacije je bitan dio u procesu razvijanja aplikacije jer omogućava nadgledanje koji dio koda je kada dodan i mogućnost vraćanja u prošlost ako neki dio koda ne radi u budućnosti. Za verziranje koda koristili smo \textbf{\href{https://git-scm.com/}{Git}}, a za spremanje tih promjena koristili smo udaljeni repozitorij na \textbf{\href{https://github.com/}{GitHub-u}}.
 
 		\subsection*{Aplikacija}
 			Aplikacija je napisana u \textbf{\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript}{JavaScript-u}} koristeći \textbf{\href{https://nodejs.org/en}{Node.js}} i \textbf{\href{https://www.npmjs.com/package/better-sqlite3}{SQLITE3}} bazu podataka. Node je okruženje za izvršavanje JavaScripta na bilo kojoj platformi izvan preglednika te se koristi kao backend server. Naša aplikacija nema odvojen front-end i back-end jer svu logiku izvršavamo na backendu u Node-u. Na backendu koristimo i \textbf{\href{https://expressjs.com/}{Express}} radni okvir koji nam olakšava pisanje logike HTTP zahtjeva. Za stvaranje HTML-a koji se onda šalje korisniku koristimo \href{https://ejs.co/}{ejs} šablonski jezik. Za SQLITE implementaciju koristimo \textbf{\href{https://www.npmjs.com/package/better-sqlite3}{better-sqlite3}} biblioteku koja nam omogućava brzo i jednostavno stvaranje baze podataka kao i bolje debugiranje problema oko upita.
@@ -24,6 +24,7 @@
 				\item Microsoft Teams: \url{https://www.microsoft.com/hr-hr/microsoft-teams/download-app}
 				\item LaTeX: \url{https://www.latex-project.org/}
 				\item Visual Paradigm: \url{https://www.visual-paradigm.com/}
+				\item Lucidchart: \url{https://www.lucidchart.com/pages/}
 				\item Git: \url{https://git-scm.com/}
 				\item GitHub: \url{https://github.com/}
 				\item JavaScript: \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript}
@@ -225,7 +226,7 @@
 		\begin{enumerate}
 			\item Promijenite direktorij u mapu "IzvorniKod":
 			\begin{verbatim}
-				cd IzvorniKod
+				dir IzvorniKod
 			\end{verbatim}
 			\item Izgradite Docker sliku pod nazivom "balkan-lingo":
 			\begin{verbatim}
