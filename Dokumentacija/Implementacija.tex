@@ -40,11 +40,17 @@
 		
 	
 		\section{Ispitivanje programskog rješenja}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
-	
+
+			Testiranje koda ključan je korak u razvoju web aplikacije iz nekoliko razloga:
+			\begin{itemize}
+				\item Omogućava identifikaciju i ispravljanje grešaka prije nego što aplikacija dosegne korisnike.
+				\item Osiguravamo da je aplikacija pouzdana, te radi dosljedno i bez neočekivanih ponašanja.
+				\item Otkrivanjem i rješavanjem problema u ranim fazama razvoja, smanjujemo troškove održavanja i podrške nakon implementacije.
+			\end{itemize}
+
+			Za automatsko testiranje naše aplikacije koristili smo supertest.
+			Supertest je biblioteka za testiranje HTTP/HTTPS za Node.js koja nam omogućava simulaciju HTTP zahtjeva i provjeru odgovora.
+			Ovaj alat koristimo kako bismo automatizirali proces testiranja naše web aplikacije.
 			
 			\subsection{Ispitivanje komponenti}
 			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
@@ -53,14 +59,111 @@
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+			U cilju osiguranja sigurnosti, pravilnog funkcioniranja i pristupačnosti specifičnih sadržaja, 
+			implementirali smo tri odvojena seta testova prilagođena različitim korisničkim ulogama: gostima, korisnicima i administratorima.
+			U nastavku je prikazano par primjeraka iz svakog seta.
+
+			\subsubsection{Testovi za goste}
+			Testovi za goste provjeravaju da gosti mogu pristupiti svim javnim stranicama aplikacije, dok im je pristup ostalim stranicama onemogućen.
+
+			Ispitni slučaj \textbf{Root path test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da gost može pristupiti početnoj stranici aplikacije.
+				\item \textbf{Ulaz:} GET zahtjev za početnu stranicu.
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/guest_root_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za goste.}
+					\label{fig:testovi_gosti_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{Edit user test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da gost ne smije pristupiti stranici za uređivanje korisnika.
+				\item \textbf{Ulaz:} GET zahtjev za /user/edit
+				\item \textbf{Očekivani rezultat:} Statusni kod 403.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/guest_edit_profile_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za goste.}
+					\label{fig:testovi_gosti_slika}
+				\end{figure}
+			\end{itemize}
+			
+			\subsubsection{Testovi za korisnike}
+			Testovi za korisnike provjeravaju da korisnici mogu pristupiti svim javnim stranicama aplikacije,
+			kao i stranicama koje su namijenjene samo korisnicima,
+			dok im je zabranjen pristup stranicama namijenjenim administratorima.
+
+			Ispitni slučaj \textbf{Adding dictionary test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da koristnik može dodati novi rječnik.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/addDictionary
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/user_add_dictionary_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za korisnika.}
+					\label{fig:testovi_korisnik_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{Editing word test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da gost ne smije promijeniti detalje riječi u riječniku.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/editWord/1
+				\item \textbf{Očekivani rezultat:} Statusni kod 403.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/user_edit_word_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za korisnika.}
+					\label{fig:testovi_korisnik_slika}
+				\end{figure}
+			\end{itemize}
+
+			\subsubsection{Testovi za administratore}
+			Testovi za administratore provjeravaju da administratori mogu pristupiti svim stranicama aplikacije.
+
+			Ispitni slučaj \textbf{Editing word test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da administrator može promijeniti detalje riječi u riječniku.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/editWord/1
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/admin_edit_word_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za admina.}
+					\label{fig:testovi_admin_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{Admin adding dictionary test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da admin može stvoriti novi rječnik.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/addAdminDict
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/admin_add_dictionary_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za admina.}
+					\label{fig:testovi_admin_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{Dictionary root path test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da se ne može pristupiti korjenskom direktoriju rječnika.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary
+				\item \textbf{Očekivani rezultat:} Statusni kod 404.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/admin_404_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje sustava za admina.}
+					\label{fig:testovi_admin_slika}
+				\end{figure}
+			\end{itemize}
 			
 			\eject 
 		
