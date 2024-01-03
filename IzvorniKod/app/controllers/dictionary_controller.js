@@ -19,7 +19,7 @@ function dashboard(req, res) {
       .prepare(dictionaryModel.getDictionariesForUser)
       .all({ userId: req.session.user_id });
   }
-  console.log(dictionaries);
+  //console.log(dictionaries);
   res.render("landingPage", {
     title: "Express",
     dictionaries: dictionaries,

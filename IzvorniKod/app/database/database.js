@@ -25,10 +25,10 @@ if (process.env.TEST === 'true') {
         fs.unlinkSync('./database/testDBTEMP.sqlite3');
     }
         fs.copyFileSync('./database/testDB.sqlite3', './database/testDBTEMP.sqlite3');
-     db = new sqlite3('./database/testDBTEMP.sqlite3', { verbose: console.log });
+     db = new sqlite3('./database/testDBTEMP.sqlite3', {  });
 
 }else{
-     db = new sqlite3('./database/database.sqlite3', { verbose: console.log });
+     db = new sqlite3('./database/database.sqlite3', {  });
 }
 
 

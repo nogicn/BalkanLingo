@@ -43,7 +43,7 @@ async function loginUser(req, res) {
     pass = pass.password;
     if (password != pass) {
       const hash = await bcrypt.compare(password, pass)
-      console.log(hash);
+      //console.log(hash);
       
       if (!hash) {
         res.status(404);
@@ -224,7 +224,7 @@ async function createPass(req, res) {
     } else {
       //console.log(salt);
       const hash = await bcrypt.hash(password, saltRounds)
-      console.log(hash);
+      //console.log(hash);
       const result = db
         .prepare(user.updatePasswordByEmail)
         .run({ email: email, password: hash });

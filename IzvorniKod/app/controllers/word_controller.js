@@ -84,7 +84,7 @@ function learnSession(req, res) {
 }
 
 function learnSessionForeignNative(req, res) {
-  console.log("foreign native");
+  //console.log("foreign native");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -156,7 +156,7 @@ function learnSessionForeignNative(req, res) {
     let numberOfWords = db
       .prepare(userWordModel.getViableWordsForUserForDictionaryWhereItIsntActiveQuestion)
       .all({ userId: req.session.user_id, dictionaryId: req.params.id });
-    console.log(numberOfWords.length)
+    //console.log(numberOfWords.length)
     if (numberOfWords.length < 3) {
       res.render("forOFor", {
         status: "",
@@ -202,7 +202,7 @@ function learnSessionForeignNative(req, res) {
 }
 
 function learnSessionNativeForeign(req, res) {
-  console.log("native foreign");
+  //console.log("native foreign");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -299,7 +299,7 @@ function learnSessionNativeForeign(req, res) {
 }
 
 function learnSessionWriting(req, res) {
-  console.log("writing");
+  //console.log("writing");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -344,7 +344,7 @@ function learnSessionWriting(req, res) {
 }
 
 function learnSessionPronunciation(req, res) {
-  console.log("pronunciation");
+  //console.log("pronunciation");
   let active_question = db
     .prepare(activeQuestionModel.getActiveQuestion)
     .get({ userId: req.session.user_id });
@@ -398,7 +398,7 @@ function moveToNextWordCorrect(req, res) {
     .prepare(userWordModel.getDelayForWordForUser)
     .get({ userId: req.session.user_id, wordId: activeQuestion.word_id });
   // add a delay to the word
-  console.log(delay);
+  //console.log(delay);
   let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
     userId: req.session.user_id,
     wordId: activeQuestion.word_id,
@@ -470,7 +470,7 @@ function moveToNextQuestion(req, res) {
     .prepare(userWordModel.getDelayForWordForUser)
     .get({ userId: req.session.user_id, wordId: activeQuestion.word_id });
   // add a delay to the word
-  console.log(delay);
+  //console.log(delay);
   let userWord = db.prepare(userWordModel.setNewDelayForUser).run({
     userId: req.session.user_id,
     wordId: activeQuestion.word_id,
@@ -615,7 +615,7 @@ async function checkAnswerWriting(req, res) {
   var word = db
     .prepare(wordModel.getWordById)
     .get({ wordId: activeQuestion.word_id });
-  console.log(word)
+  //console.log(word)
   // convert both to lowercase and compare
   if (answer.toLowerCase() == word.foreignWord.toLowerCase()) {
     moveToNextWordCorrect(req, res, activeQuestion);
@@ -720,8 +720,8 @@ async function addWord(req, res) {
     let nativeDescription = req.body.nativeDescription;
     let dictionaryId = req.params.id;
     let pronunciationFileName = req.body.pronunciation;
-    if (pronunciationFileName == "") {
-      let pronunciationFileName =
+    if (pronunciationFileName == "" || pronunciationFileName == undefined || pronunciationFileName == null) {
+        pronunciationFileName =
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8) +
@@ -731,6 +731,21 @@ async function addWord(req, res) {
 
       await createPronunciationFunc(foreignWord, pronunciationFilePath);
     }
+    // check if any field is empty
+    if (
+      foreignWord == "" ||
+      foreignDescription == "" ||
+      nativeWord == "" ||
+      nativeDescription == "" 
+    ){
+      res.render("forOFor", {
+        status: 404,
+        errorText: "Greska kod stvaranja riječi",
+        link: "javascript:history.back()",
+      });
+
+    }
+
     
     let word = db.prepare(wordModel.createWord).run({
       foreignWord: foreignWord,
@@ -848,6 +863,10 @@ async function fillSentenceData(req, res) {
 async function fillWordData(req, res) {
   // get word from body
   let inword = req.body.nativeWord;
+  if (inword == "" || inword == undefined || inword == null) {
+    res.status(404).json({ text: "Error word empty" });
+    return;
+  }
   // get dictionary id from url
   let id = req.params.id;
   // get dictionary from database
@@ -938,9 +957,9 @@ async function fillWordData(req, res) {
   let pronunciation = req.body.pronunciation;
 
   if (
-    pronunciation == "null" ||
+    (pronunciation == "null" ||
     pronunciation == "" ||
-    pronunciation == undefined
+    pronunciation == undefined)
   ) {
     let pronunciationFileName =
       Math.random().toString(36).slice(-8) +
@@ -971,7 +990,7 @@ function deleteWord(req, res) {
   let activeQuestion = db
     .prepare(activeQuestionModel.deleteActiveQuestionWordId)
     .run({ wordId: id });
-    console.log(activeQuestion)
+    //console.log(activeQuestion)
   let userword = db.prepare(userWordModel.deleteUserWordbyId).run({ wordId: id });
   let word = db.prepare(wordModel.deleteWordById).run({ wordId: id });
   res.redirect("/dictionary/dictSearch/" + wordDictionaryId.dictionary_id);

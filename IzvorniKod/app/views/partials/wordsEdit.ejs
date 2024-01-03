@@ -6,7 +6,7 @@
     <div class="word-edit-container">
         <input type="hidden" name="id" value=<%=word.id %> required>
         <label for="home" class="word-edit-label">DOMAĆA RIJEČ</label>
-        <input class="word-edit" type="text" id="home" name="nativeWord" placeholder="Riječ" value=<%=word.nativeWord %>
+        <input class="word-edit" type="text" id="home" name="nativeWord" placeholder="Riječ" value="<%=word.nativeWord %>"
         required>
         <div class="img-container">
             <img src="/images/black-add.png" alt="" hx-post="/dictionary/fillWordData/<%= dictionary.id %>"
@@ -27,8 +27,8 @@
     </div>
     <div class="word-edit-container">
         <label for="home" class="word-edit-label ">STRANA RIJEČ</label>
-        <input class="word-edit" type="text" id="home" name="foreignWord" placeholder="Word" value=<%=word.foreignWord
-            %> required>
+        <input class="word-edit" type="text" id="home" name="foreignWord" placeholder="Word" value="<%=word.foreignWord
+            %>" required>
     </div>
     <div class="word-edit-container">
         <label for="home" class="word-edit-label word-edit-phrase">STRANA FRAZA</label>
@@ -46,7 +46,7 @@
         <audio controls style="display: inline-block;">
             <source src="/pronunciation/<%= word.pronunciation %>" type="audio/mpeg">
             Your browser does not support the audio element.
-            <input type="hidden" name="pronunciation" value=<%=word.pronunciation %> required>
+            <input type="hidden" name="pronunciation" value="<%=word.pronunciation %>" required>
 
         </audio>
         <div class="img-container" style="display: inline-block; vertical-align: super;">

@@ -41,7 +41,6 @@ const checkAuth = (req, res, next) => {
       next();
     }
   } catch (err) {
-    console.error(err);
     res.status(500).render("forOFor", {
       status: 500,
       errorText: "Internal Server Error: " + err.message,
