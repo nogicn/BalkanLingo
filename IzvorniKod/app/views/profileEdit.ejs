@@ -21,11 +21,11 @@
                 <form class="word-edit-top" action="/user/edit" method="POST">
                     <div class="word-edit-container">
                         <label for="home" class="word-edit-label ">IME</label>
-                        <input class="word-edit" type="text" id="home" name="name" value="<%= name %>">
+                        <input class="word-edit" type="text" id="home" name="name" value="<%= name %>" required>
                     </div>
                     <div class="word-edit-container">
                         <label for="home" class="word-edit-label ">PREZIME</label>
-                        <input class="word-edit" type="text" id="home" name="surname" value="<%= surname %>">
+                        <input class="word-edit" type="text" id="home" name="surname" value="<%= surname %>" required>
                     </div>
                     <div class="save-changes-container">
                         <button class="save-changes" type="submit">SPREMI PROMJENE</button>

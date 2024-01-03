@@ -218,7 +218,13 @@ function editLocale(req, res) {
 
 function deleteLocale(req, res) {
   const id = req.params.id;
-  const language = db.prepare(languageModel.deleteLanguageById).run({ id: id });
+  try {
+    const language = db.prepare(languageModel.deleteLanguageById).run({ id: id });
+  }
+  catch (error) {
+    res.render("forOFor", { status: 500, errorText: "Greška kod brisanja jezika", link: "javascript:history.back()" });
+    return;
+  }
   res.redirect("/dictionary/adminLocales");
 }
 
@@ -228,9 +234,14 @@ function saveLocale(req, res) {
   // check if id is undefined
   if (id === undefined || id === "" || id === null) {
     // create new language
-    const result = db
+    try {
+      const result = db
       .prepare(languageModel.createNewLanguage)
       .run({ name: name, shorthand: shorthand.toLowerCase(), flagIcon: flagIcon });
+    } catch (error) {
+      res.render("forOFor", { status: 500, errorText: "Greška kod stvaranja jezika", link: "javascript:history.back()" });
+      return;
+    }
   } else {
     // update language
     const result = db
