@@ -269,7 +269,7 @@ html, body {
         width: 70%;
     }
   }
-  @media(max-width:572px){
+  @media(max-width:592px){
     .main-content .listen-area .listen-head{
         width: 80%;
     }
@@ -278,5 +278,8 @@ html, body {
     }
     .main-content .listen-area .check{
         width: 90%;
+    }
+    .main-content .invisible-buttons p{
+      display: none;
     }
   }

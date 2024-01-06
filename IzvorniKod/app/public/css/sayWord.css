@@ -322,12 +322,16 @@ html, body {
         width: 40%;
     }
   }
-  @media(max-width:572px){
+  @media(max-width:592px){
     .main-content .say-area .say-head{
         width: 80%;
     }
     #formData .check{
       width: 50%;
+    }
+
+    .main-content .invisible-buttons p{
+      display: none;
     }
 
   }
