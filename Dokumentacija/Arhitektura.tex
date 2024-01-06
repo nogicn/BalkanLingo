@@ -231,6 +231,7 @@ flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
 			\eject
             Dijagram ruta na slici 4.3 prikazuje koje su sve rute dostupne i modele koje koriste iz baze podataka. U projektu postoje dva tipa ruta. Prvi tip ruta je zadužen samo za slanje statičnih stranica u HTML-u. Drugi tip izvodi napredne operacije na bazi podataka (npr. Dohvati sve riječi iz rječnika), zatim generira HTML koristeći te podatke te šalje korisniku u HTML formatu.
            % \subsection{Dijagram Ruta}
+           
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/slika2.png} 
 					\centering
@@ -251,8 +252,19 @@ flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
 			\eject
 			
 		\section{Dijagram stanja}
-			
-			
+        Dijagram stanja se koristi za opis dinamičnog ponašanja nekog dijela sustava tijekom rada aplikacije prikazujući prijelaze sustava iz jednog stanja u drugo.
+        Na slici 4.5 su prikazane opcije rada aplikacije za normalnog korisnika. Prikazano je dodavanje novih rječnika, brisanje postojećih rječnika i cijeli proces učenja.
+        Proces učenja je kompliciran pa ćemo ga ovdje malo detaljnije opisati.
+        \indent \\
+        Klikom na gumb "odaberi" pokreće se proces učenja. Korisnik najprije kreće učiti od prvog načina učenja (odabir točnog prijevoda HR-EN). 
+        Aplikacija prikazuje korisniku 4 riječi na stranom jeziku, samo jedna od njih je točan prijevod istaknute riječi na Hrvatskom.
+        Odabirom ili upisom točnog odgovora server zapamti odgovor točan i postavlja riječ kao odgovorenu i povećava odgodu pojavljivanja riječi. Ako je odgovor netočan, server pamti grešku tako da resetira odgodu pojavljivanja riječi. 
+        Kada korisnik odabere riječ server provjerava je li odgovor točan ili ne. Nakon svakog odgovora (točan ili netočan), u svim načinima učenja, korisniku se prikazuje mogućnost povratka na glavnu stranicu ili da nastavi učiti.
+        Ako korisnik odabere nastavak, server prelazi na sljedeći način učenja. Izgleda isto kao i prvi način učenja, sada je prijevod iz stranog jezika u Hrvatski (EN-HR).
+        U slučaju nastavka učenja, korisnik dolazi na treći način učenja. Korisnik mora poslušati audio zapis izgovora riječi i zapisati točan izgovor. Ovisno o tome je li riječ točno napisana se provodi ista procedura kao i za prva dva načina učenja
+        Zadnji način učenja zahtijeva od korisnika da snimi izgovor zadane riječi. Slanjem odgovora server ocijeni izgovor i ovisno o točnosti ponovno provede proceduru za riječi.
+        Pritiskom na gumb "Završi sesiju učenja", napredak se sprema u bazu podataka i korisnik se preusmjeri na svoj dashboard.
+        
         \begin{figure}[H]
             \includegraphics[width=1.1\textwidth]{dijagrami/Dijagram_stanja.png} 
             \centering
@@ -263,7 +275,9 @@ flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
 			\eject 
 		
 		\section{Dijagram aktivnosti}
-			
+        Dijagram aktivnosti se koristi za opis upravljačkog i podatkovnog toka podataka. Svaka aktivnost je ujedno i model ponašanja ostvaren izvađanjem određenih uvjeta. Na slici 4.6 je prikazan tijek akcija kojim se opisuju svi mogući administratorski postupci nad rječnicima.
+        Kako bi administrator mogao koristiti aplikaciju, mora se najprije prijaviti u aplikaciju. Aplikacija provjerava u bazi podataka postoji li korisnik taj korisnik te imali li administratorska prava.
+        Ako ima administratorska prava, dobiva opcije za upravljanje aplikacijom. Ako administrator obriše rječnik, on se briše sa svih lista korisnika. Ako odluči napraviti novi rječnik, prvo mora odlučiti koji će jezik biti. Kada je zadovoljan i potvrdi promjene, riječi se spremaju u bazu podataka i prikazuje mu se dashboard koji sada ima i novi rječnik. Administrator može i urediti informacije o rječniku. Nakon promjene informacija, one se ažuriraju u bazi podataka.
         \begin{figure}[H]
             \includegraphics[width=0.6\textwidth]{dijagrami/Dijagram Aktivnosti.png} 
             \centering
@@ -274,6 +288,9 @@ flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
 			\eject
 		\section{Dijagram komponenti}
 		
+        Dijagram komponenti prikazuje organizacija i međuovisnost svih komponenata u sustavu. Na slici 4.10 je prikazan dijagram komponenti naše aplikacije. 
+        Sustav ima 2 načina pristupa. Prvi način je standardni HTTP pristup gdje se cijela stranica učitava pri zahtjevu nekog URL-a. Preko ovog sučelja, korisnički pretraživač dohvaća sve datoteke potrebne za prikaz web stranice (CSS, JS i HTML datoteke). Drugi način je korištenjem AJAX poziva preko HTMX-a, gdje se ne vraća cijela stranica nego samo parcijalni dijelovi web stranice u HTML formatu. Na ove načine pristupa odgovara Express web server. Express pri pozivu nekog URL-a gleda sve routere te prosljeđuje na točan router i njegov kontroler. Sve komponente u našem sustavu su odvojene u zasebne .js datoteke. Dakle svi routeri su u folderu routes, kontroleri u folderu controllers i HTML šablone u views direktoriju. Naš sustav nema odvojeni front-end (React, Vue, Svelte) nego je Express glavni pokretač aplikacije.
+
         \begin{figure}[H]
             \includegraphics[width=1.0\textwidth]{dijagrami/DijagamKomponenti.jpg} 
             \centering
