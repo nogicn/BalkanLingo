@@ -171,10 +171,13 @@
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
-			
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=1\textwidth]{dijagrami/DijagamRazmjestaja.jpg}
+				\caption{Dijagram razmještaja}
+				\label{fig:dijagram_razmjestaja}
+			\end{figure}	
+
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
@@ -186,34 +189,34 @@
 				\centering
 				\includegraphics[width=0.8\textwidth]{slike/npm_install/0.png}
 				\caption{Slika stranice za skidanje NodeJs-a}
+				\label{fig:node_install_images}
 			\end{figure}
 			\item Pokrenite instalaciju.
 			\begin{figure}[h]
 				\centering
 				\includegraphics[width=0.8\textwidth]{slike/npm_install/1.png}
 				\caption{Prvi korak instalacije programa Node}
+				\label{fig:node_install_images}
 			\end{figure}
 			\eject
 			\item Odaberite direktorij za instalaciju
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/npm_install/2.png}
+				\includegraphics[width=0.6\textwidth]{slike/npm_install/2.png}
 				\caption{Odabir direktorija instalacije programa Node}
+				\label{fig:node_install_images}
 			\end{figure}
 			\item Kliknite Next
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/npm_install/3.png}
+				\includegraphics[width=0.6\textwidth]{slike/npm_install/3.png}
 				\caption{Prvi korak instalacije programa Node}
+				\label{fig:node_install_images}
 			\end{figure}
 			\item Provjerite je li nodejs uspješno instaliran:
-			\begin{verbatim}
-				node -v
-			\end{verbatim}
+			 \subitem node -v
 			\item Provjerite je li npm uspješno instaliran:
-			\begin{verbatim}
-				npm -v
-			\end{verbatim}
+			\subitem npm -v
 		\end{enumerate}
 		\subsection*{Ručno Instaliranje}
 		Za ručno pokretanje aplikacije potrebna je Node.js verzija 20 ili novija.
@@ -232,63 +235,72 @@
 			\end{verbatim}
 			Aplikacija se pokreće na portu 3000.
 		\end{enumerate}
-		
+		\newpage
 		\subsection*{Instaliranje Docker-a}
 		\begin{enumerate}
 			\item Preuzmite Docker instalaciju s \textbf{\href{https://docs.docker.com/get-docker/}{službene stranice}}.
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/0.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/0.png}
 				\caption{Skidanje Docker instalacije sa službene stranice}
 			\end{figure}
+			\newpage
 			\item Pokrenite instalaciju i pritisnite OK kako biste nastavili
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/2.png}
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/3.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/2.png}
+				
 				\caption{Instalacija Docker aplikacije}
 			\end{figure}
-			\item Nakon instalacije morate resetirati opreacijski sustav
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/3.png}
+				\caption{Instalacija Docker aplikacije}
+			\end{figure}
+			\item Nakon instalacije morate resetirati operacijski sustav
 			\begin{figure}[h]
 				\centering
 				\includegraphics[width=0.8\textwidth]{slike/docker_install/4.png}
 				\caption{Skidanje Docker instalacije sa službene stranice}
 			\end{figure}
+			\newpage
 			\item Nakon resetiranja sustava morate prihvatiti uvjete korištenja
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/5.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/5.png}
 				\caption{Instalacija Docker aplikacije}
 			\end{figure}
 			\item Kako bi koristili Docker na svom računalu morate instalirati WSL2 podsustav
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/6.png}
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/7.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/7.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/6.png}
 				\caption{Instalacija WSL2 podsustava}
 			\end{figure}
+			\newpage
 			\item Pokrenite instalaciju
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/8.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/8.png}
 				\caption{Instalacija WSL2 podsustava}
 			\end{figure}
 			\item Kliknite Next 
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/9.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/9.png}
 				\caption{Instalacija WSL2 podsustava}
 			\end{figure}
+			\newpage
 			\item Nakon instalacije WSL2 podsustava u Docker aplikaciji kliknite Restart
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/10.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/10.png}
 				\caption{Instalacija Docker aplikacije}
 			\end{figure}
 			\item Nakon resetiranja operacijskog sustava možete početi koristiti Docker
 			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.8\textwidth]{slike/docker_install/11.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/11.png}
 				\caption{Instalacija Docker aplikacije}
 			\end{figure}
 			\item Provjerite je li Docker uspješno instaliran:
