@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "testGuest": "jest guest_user.test.js",
     "testUser": "jest regular_user.test.js",
-    "testAdmin": "jest admin.test.js"
+    "testAdmin": "jest admin.test.js",
+    "testDB": "jest db.test.js"
   },
   "dependencies": {
     "axios": "^1.6.2",
