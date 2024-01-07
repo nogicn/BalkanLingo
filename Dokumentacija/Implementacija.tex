@@ -54,15 +54,61 @@
 			Ovaj alat koristimo kako bismo automatizirali proces testiranja naše web aplikacije.
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+
+			Napisani su testovi za ispitivanje funkcija dohvata iz baze podataka. Testovi se vrše nad testnom bazom podataka
+			koja se ne mijenja. Provjerava se ispravnost rezultata tako da gledamo je li vraćen ispravan broj stavki,
+			ili da je točna stavka vraćena.
+			U nastavku je prikazano par primjeraka.
+			\\
+
+			Ispitni slučaj \textbf{Correct email select test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da baza podataka može dohvatiti korisnika za danu adresu.
+				\item \textbf{Ulaz:} SELECT naredba sa email-om postojećeg korisnika.
+				\item \textbf{Očekivani rezultat:} Pronađen korisnik s tom adresom.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/db_correct_email_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje baze podataka.}
+					\label{fig:testovi_db}
+				\end{figure}
+			\end{itemize}
+			\newpage
+
+
+			Ispitni slučaj \textbf{Non existant email select test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da baza podataka može dohvatiti korisnika za danu adresu.
+				\item \textbf{Ulaz:} SELECT naredba sa email-om nepostojećeg korisnika.
+				\item \textbf{Očekivani rezultat:} Nije pronađen korisnik s tom adresom.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/db_no_email_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje baze podataka.}
+					\label{fig:testovi_db}
+				\end{figure}
+			\end{itemize}
 			
+			Ispitni slučaj \textbf{Get user by id test}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da baza podataka može dohvatiti korisnika sa danim id-om.
+				\item \textbf{Ulaz:} SELECT naredba sa id-om postojećeg korisnika.
+				\item \textbf{Očekivani rezultat:} Pronađen korisnik s tim id-om.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/db_user_id_test.png}
+					\caption{Opis slike koja ilustrira ispitivanje baze podataka.}
+					\label{fig:testovi_db}
+				\end{figure}
+			\end{itemize}
+			\newpage
 			
 			
 			\subsection{Ispitivanje sustava}
 			
 			U cilju osiguranja sigurnosti, pravilnog funkcioniranja i pristupačnosti specifičnih sadržaja, 
 			implementirali smo tri odvojena seta testova prilagođena različitim korisničkim ulogama: gostima, korisnicima i administratorima.
-			U nastavku je prikazano par primjeraka iz svakog seta.
+			U nastavku je prikazano par primjeraka iz svakog seta. 
 
 			\subsubsection{Testovi za goste}
 			Testovi za goste provjeravaju da gosti mogu pristupiti svim javnim stranicama aplikacije, dok im je pristup ostalim stranicama onemogućen.
@@ -92,11 +138,13 @@
 					\label{fig:testovi_gosti_slika}
 				\end{figure}
 			\end{itemize}
+			\newpage
 			
 			\subsubsection{Testovi za korisnike}
 			Testovi za korisnike provjeravaju da korisnici mogu pristupiti svim javnim stranicama aplikacije,
 			kao i stranicama koje su namijenjene samo korisnicima,
 			dok im je zabranjen pristup stranicama namijenjenim administratorima.
+			\\
 
 			Ispitni slučaj \textbf{Adding dictionary test}
 			\begin{itemize}
@@ -113,7 +161,7 @@
 
 			Ispitni slučaj \textbf{Editing word test}
 			\begin{itemize}
-				\item \textbf{Opis:} provjerava da gost ne smije promijeniti detalje riječi u riječniku.
+				\item \textbf{Opis:} provjerava da gost ne smije promijeniti detalje riječi u rječniku.
 				\item \textbf{Ulaz:} GET zahtjev za /dictionary/editWord/1
 				\item \textbf{Očekivani rezultat:} Statusni kod 403.
 				\begin{figure}[h]
@@ -125,11 +173,13 @@
 			\end{itemize}
 
 			\subsubsection{Testovi za administratore}
-			Testovi za administratore provjeravaju da administratori mogu pristupiti svim stranicama aplikacije.
+			Testovi za administratore provjeravaju da administratori mogu pristupiti svim
+			stranicama aplikacije.
+			\\
 
 			Ispitni slučaj \textbf{Editing word test}
 			\begin{itemize}
-				\item \textbf{Opis:} provjerava da administrator može promijeniti detalje riječi u riječniku.
+				\item \textbf{Opis:} provjerava da administrator može promijeniti detalje riječi u rječniku.
 				\item \textbf{Ulaz:} GET zahtjev za /dictionary/editWord/1
 				\item \textbf{Očekivani rezultat:} Statusni kod 200.
 				\begin{figure}[h]
@@ -152,7 +202,8 @@
 					\label{fig:testovi_admin_slika}
 				\end{figure}
 			\end{itemize}
-
+			\newpage
+			
 			Ispitni slučaj \textbf{Dictionary root path test}
 			\begin{itemize}
 				\item \textbf{Opis:} provjerava da se ne može pristupiti korjenskom direktoriju rječnika.
