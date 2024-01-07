@@ -1,9 +1,9 @@
 # Available Accounts
 - **Admin Account**
-  - Email: kilerisbos@gmail.com
+  - Email: admin@balkanlingo.online
   - Password: 123
 - **User Account**
-  - Email: nogicnino@gmail.com
+  - Email: user@balkanlingo.online
   - Password: 123
 
 # Publicly Accessible Website
