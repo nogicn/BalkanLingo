@@ -10,7 +10,7 @@ router.post('/login', user_controller.loginUser);
 router.post('/register', user_controller.createUser);
 
 // create logout route
-router.get('/logout', checkAuth, user_controller.logoutUser);
+router.get('/logout',  checkAuth, user_controller.logoutUser);
 
 // import users controller
 router.post('/edit', checkAuth, user_controller.editUser);
@@ -20,10 +20,10 @@ router.post('/reset', user_controller.resetPwd);
 
 router.post('/createPass', user_controller.createPass);
 
-router.get('/getUsers', checkAdmin, user_controller.searchUsers);
+router.get('/getUsers',checkAuth, checkAdmin, user_controller.searchUsers);
 
-router.post('/getUsers', checkAdmin, user_controller.listUsers);
+router.post('/getUsers',checkAuth, checkAdmin, user_controller.listUsers);
 
-router.post('/setAdmin/:id', checkAdmin, user_controller.setAdmin);
+router.post('/setAdmin/:id',checkAuth, checkAdmin, user_controller.setAdmin);
 
 module.exports = router;

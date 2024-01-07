@@ -1,17 +1,24 @@
 const user = require('../models/user_model');
 const language = require('../models/language_model');
+const path = require('path')
+require("dotenv").config(
+    {
+        path: path.resolve(__dirname, "../.env.test.admin")
+    }
+);
+const app = require("../app");
 const db = require('../database/database');
 
 describe("Correct email select test", () => {
-    test("It should find user Nino", () => {
-        var foundUser = db.prepare(user.getUserByEmail).get({ email: "***REMOVED***" });
-        expect(foundUser.email).toBe("***REMOVED***");
+    test("It should find user", () => {
+        var foundUser = db.prepare(user.getUserByEmail).get({ email: "user@balkanlingo.online" });
+        expect(foundUser.email).toBe("user@balkanlingo.online");
     });
 });
 
 describe("Non existant email select test", () => {
     test("It should not find any user", () => {
-        var foundUser = db.prepare(user.getUserByEmail).get({ email: "blabla@gmail.com"});
+        var foundUser = db.prepare(user.getUserByEmail).get({ email: "blabla@balkanlingo.online"});
         expect(foundUser).toBe(undefined);
     });
 });
@@ -24,9 +31,9 @@ describe("Get all users test", () => {
 });
 
 describe("Get user by id test", () => {
-    test("It should return user with id 2 (nino)", () => {
+    test("It should return user with id 2 (user)", () => {
         var foundUser = db.prepare(user.getUserById).get({ id: 2 });
-        expect(foundUser.email).toBe("***REMOVED***");
+        expect(foundUser.email).toBe("user@balkanlingo.online");
     });
 });
 

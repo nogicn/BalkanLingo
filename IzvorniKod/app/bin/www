@@ -3,9 +3,12 @@
 /**
  * Module dependencies.
  */
-
-var dotenv = require('dotenv');
-dotenv.config();
+const path = require('path')
+require("dotenv").config(
+  {
+      path: path.resolve(__dirname, "../.env")
+  }
+);
 
 var app = require('../app');
 var debug = require('debug')('backend:server');

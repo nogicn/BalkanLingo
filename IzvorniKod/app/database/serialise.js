@@ -28,11 +28,10 @@ function migration(){
     db.prepare(languageModel.createNewLanguage).run({name:"Engleski", shorthand:"en", flagIcon:"🇬🇧"}); // id = 1
     db.prepare(languageModel.createNewLanguage).run({name:"Njemacki", shorthand:"de", flagIcon:"🇩🇪"}); // id = 2
     db.prepare(languageModel.createNewLanguage).run({name:"Francuski", shorthand:"fr", flagIcon:"🇫🇷"}); // id = 3
-    db.prepare(languageModel.createNewLanguage).run({name:"Španjolski", shorthand:"sp", flagIcon:"🇪🇸"}); // id = 4
+    db.prepare(languageModel.createNewLanguage).run({name:"Španjolski", shorthand:"es", flagIcon:"🇪🇸"}); // id = 4
     db.prepare(languageModel.createNewLanguage).run({name:"Talijanski", shorthand:"it", flagIcon:"🇮🇹"}); // id = 5
     db.prepare(languageModel.createNewLanguage).run({name:"Ruski", shorthand:"ru", flagIcon:"🇷🇺"}); // id = 6
-    db.prepare(languageModel.createNewLanguage).run({name:"Kineski", shorthand:"ch", flagIcon:"🇨🇳"}); // id = 7
-    db.prepare(languageModel.createNewLanguage).run({name:"Japanski", shorthand:"jp", flagIcon:"🇯🇵"}); // id = 8
+    db.prepare(languageModel.createNewLanguage).run({name:"Japanski", shorthand:"jp", flagIcon:"🇯🇵"}); // id = 7
     
     // create dictionaries
     db.prepare(dictionaryModel.createNewDictionary).run({name:"Engleski-Hrana", language_id:"1", imageLink:"https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png"});

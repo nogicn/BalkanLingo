@@ -24,9 +24,9 @@ if (process.env.TEST === 'true') {
     if (fs.existsSync('./database/testDBTEMP.sqlite3')) {
         fs.unlinkSync('./database/testDBTEMP.sqlite3');
     }
-        fs.copyFileSync('./database/testDB.sqlite3', './database/testDBTEMP.sqlite3');
-     db = new sqlite3('./database/testDBTEMP.sqlite3', {  });
-
+    fs.copyFileSync('./database/testDB.sqlite3', './database/testDBTEMP.sqlite3');
+    db = new sqlite3('./database/testDBTEMP.sqlite3', {  });
+    
 }else{
      db = new sqlite3('./database/database.sqlite3', {  });
 }
