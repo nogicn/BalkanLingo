@@ -1,9 +1,9 @@
 # Available Accounts
 - **Admin Account**
-  - Email: ***REMOVED***
+  - Email: admin@balkanlingo.online
   - Password: 123
 - **User Account**
-  - Email: ***REMOVED***
+  - Email: user@balkanlingo.online
   - Password: 123
 
 # Publicly Accessible Website
