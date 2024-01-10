@@ -284,7 +284,7 @@ flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
         Ako ima administratorska prava, ima i opcije za upravljanje aplikacijom.
         \newline
         \\
-         Ako administrator obriše rječnik, isti se briše kod svih korisnika koji ga trenutno koriste ili su ga koristili. Ako administrator odluči napraviti novi rječnik, prvo se mora odlučiti za jezik. Kada potvrdi promjene, riječi se spremaju u bazu podataka i prikazuje mu se dashboard koji sada ima i novi rječnik. Administrator može i urediti informacije o rječniku. Nakon promjene informacija, one se ažuriraju u bazi podataka.
+         Ako administrator obriše rječnik, isti se briše kod svih korisnika koji ga trenutno koriste ili su ga koristili. Ako administrator odluči napraviti novi rječnik, prvo se mora odlučiti za jezik. Kada potvrdi promjene, riječi se spremaju u bazu podataka i prikazuje mu se  \textit{dashboard} koji sada ima i novi rječnik. Administrator može urediti informacije o rječniku. Nakon promjene informacija, one se ažuriraju u bazi podataka.
         \begin{figure}[H]
             \includegraphics[width=0.6\textwidth]{dijagrami/Dijagram Aktivnosti.png} 
             \centering
@@ -295,11 +295,17 @@ flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
 			\eject
 		\section{Dijagram komponenti}
 		
-        Dijagram komponenti prikazuje organizacija i međuovisnost svih komponenata u sustavu. Na slici 4.10 je prikazan dijagram komponenti naše aplikacije. 
-        Sustav ima 2 načina pristupa. Prvi način je standardni HTTP pristup gdje se cijela stranica učitava pri zahtjevu nekog URL-a. Preko ovog sučelja, korisnički pretraživač dohvaća sve datoteke potrebne za prikaz web stranice (CSS, JS i HTML datoteke). Drugi način je korištenjem AJAX poziva preko HTMX-a, gdje se ne vraća cijela stranica nego samo parcijalni dijelovi web stranice u HTML formatu. Na ove načine pristupa odgovara Express web server. Express pri pozivu nekog URL-a gleda sve routere te prosljeđuje na točan router i njegov kontroler. Sve komponente u našem sustavu su odvojene u zasebne .js datoteke. Dakle svi routeri su u folderu routes, kontroleri u folderu controllers i HTML šablone u views direktoriju. Naš sustav nema odvojeni front-end (React, Vue, Svelte) nego je Express glavni pokretač aplikacije.
+        Dijagram komponenti prikazuje organizaciju i međuovisnost komponenti u sustavu. Na slici 4.10 prikazan je dijagram komponenti naše aplikacije. 
+        Postoje dva načina pristupa našem sustavu. Prvi je standardni HTTP pristup u kojem se cijela stranica učitava pri zahtjevu nekog resursa (URL). Tada korisnički pretraživač dohvaća sve datoteke potrebne za prikaz jednog resursa (stranice), a to su datoteke vezane za CSS, JS i HTML.
+        \newline
+        \\
+        Drugi način pristupa koristi AJAX poziv i tehnologiju HTMX te se ne vraća cijela stranica, već parcijalni dijelovi stranice u HTML formatu. Express poslužitelj onaj je koji na ovakve upite odgovara. On pri pozivu  uzima u obzir routere te "prosljeđuje" posao na točan router i njegov kontroler. Sve komponente u našem sustavu odvojene su u zasebne JavaScript datoteke i datotečne mape.
+        \newline
+        \\
+        Dakle, svi routeri su u folderu \textit{routes}, kontroleri u folderu \textit{controllers}, a HTML šablone u \textit{views} direktoriju. Naš sustav nema eksplicitno odvojeni \textit{frontend} (React, Vue ili  Svelte primjeri su takvog pristupa), već je tehnologija Express glavni pokretač aplikacije.
 
         \begin{figure}[H]
-            \includegraphics[width=1.0\textwidth]{dijagrami/DijagamKomponenti.jpg} 
+            \includegraphics[width=1.1\textwidth]{dijagrami/DijagamKomponenti.jpg} 
             \centering
             \caption{Dijagram modela}
             \label{fig:class_diagram}
