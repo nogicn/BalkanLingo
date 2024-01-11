@@ -7,6 +7,7 @@ var http = require('http');
 const bodyParser = require('body-parser');
 var session = require('express-session');
 const checkAuth = require('./middleware/authorisation_middleware');
+var compression = require('compression')
 
 
 
@@ -27,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 app.use(session({secret: "omgthissecretkeyissosecure"}));
-
+app.use(compression( {level: 6} ));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);

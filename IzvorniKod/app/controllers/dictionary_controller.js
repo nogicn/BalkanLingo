@@ -150,12 +150,13 @@ function addDictionaryToUser(req, res) {
 
 function adminAddDict(req, res) {
   let languages = db.prepare(languageModel.getAllLanguages).all();
-  if (req.params.id === undefined) {
+  if (req.params.id === undefined || req.params.id === "" || req.params.id === null) {
     res.render("dictionaryAddAdmin", {
       title: "Add Dictionary",
       dictionary: { id: undefined, name: "", language_id: 1, image_link: "" },
       languages: languages,
     });
+    return;
   }
   try {
     const dictionary = db
