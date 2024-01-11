@@ -426,33 +426,34 @@
 		\end{enumerate}
 
 		\subsection*{Upravljanje bazom podataka}
-			Stvarna baza podataka već  jegenerirana i nalazi se u direktoriju \texttt{IzvorniKod/app/db}.
+			Stvarna baza podataka već  je generirana i nalazi se u direktoriju \texttt{IzvorniKod/app/db}.
 			Dakle, nije potrebno ručno kreirati bazu podataka.
-			U slučaju da želimo manipulirati bazom podataka, potrebno je manipulirati vrijednostima u .env datotekama.
-
-			Ovo su sve moguće opcije za .env datoteku:
-			MIGRATE=
+			U slučaju da želimo manipulirati njome, potrebno je manipulirati i vrijednostima u .env datotekama.
+			\newline
+			\\
+			Navedene datoteke prikazuju određene pretpostavke vezane za okruženje pokretanja ili testiranja aplikacije. Primjerice, sve moguće opcije za postavku .env datoteke
+			"MIGRATE=" navedene su ispod.
 			\begin{itemize}
-				\item \texttt{true} - briše trenutnu bazu podataka i stvara novu \textbf{praznu} bazu podataka
-				\item \texttt{reset} - briše trenutnu bazu podataka i učitava startnu bazu podataka sa startnim podacima
-				\item \texttt{test} - koristi se kod pokretanja testova 
+				\item \texttt{true} - briše trenutnu bazu podataka i stvara novu, \textbf{praznu} bazu podataka
+				\item \texttt{reset} - briše trenutnu bazu podataka i učitava početnu bazu podataka sa pretpostavljenim podacima
+				\item \texttt{test} - koristi se kod ispitivanja (pokretanja ispitnih slučajeva) 
 			\end{itemize}
 	
 		\subsection*{Vrijednosti .env datoteke}
-			Ovdje su navedene sve mogućnosti za .env datoteku, za brzi setup aplikacije pogledajte \texttt{.env.example} datoteku.
+			Ispod su navedene neke od opcija koje se mogu specificirati za .env datoteku, a namijenjene su za brzo pokretanje aplikacije. U našem repozitoriju ova šablona zapravo je \texttt{.env.example} datoteka.
 			\begin{itemize}
 				\item \texttt{ELEVEN\_VOICE\_KEY} - ključ za Eleven Voice API
 				\item \texttt{GMAIL\_KEY} - ključ za Gmail API
-				\item \texttt{MIGRATE} - vrijednost za upravljanje bazom podataka, reset: resetira bazu na baznu vrijednost (testDB.sqlite3), true: resetira bazu koristeći skriptu serialise.js
-				\item \texttt{TEST} - vrijednost za upravljanje testovima, \textbf{treba ostati false}
-				\item \texttt{TESTMAIL} - email za testiranje, \textbf{uvijek mora biti prazno}.
-				\item \texttt{PORT} - port na kojem će se pokrenuti aplikacija
+				\item \texttt{MIGRATE} - vrijednost za upravljanje bazom podataka, reset: resetira bazu na baznu vrijednost (testDB.sqlite3) i true: resetira bazu koristeći skriptu serialise.js
+				\item \texttt{TEST} - vrijednost za upravljanje testovima, \textbf{u pokretanju aplikacije false, a tijekom testiranja true}
+				\item \texttt{TESTMAIL} - adresa elektroničke pošte namijenjena za testiranje, \textbf{ovo polje ostaje prazno ukoliko se aplikacija ne testira}
+				\item \texttt{PORT} - vrata na kojima se pokreće aplikacija
 			\end{itemize}
 		
-		\subsection*{Bazni korisnici}
+		\subsection*{Pretpostavljeni korisnici}
 			\begin{itemize}
-				\item \texttt{administrator} - email: admin@balkanlingo.online , lozinka: \texttt{123} 
-				\item \texttt{korisnik} - email: user@balkanlingo.online , lozinka: \texttt{123}
+				\item \texttt{administrator} - adresa elektroničke pošte: admin@balkanlingo.online , lozinka: \texttt{123} 
+				\item \texttt{korisnik} - adresa elektroničke pošte: user@balkanlingo.online , lozinka: \texttt{123}
 			\end{itemize}
 			
 		\eject

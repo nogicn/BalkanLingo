@@ -1,18 +1,41 @@
 \chapter{Zaključak i budući rad}
 		
-		BalkanLingo je rezultat rada na zadatku koji smo dobili na predmetu Programiranje i programsko inženjerstvo.Cilj zadatka je bio napraviti rješenje koje omogućava korisnicima da uče strane jezike na zabavan i interaktivan način. Uz to, zadatak je postavljen tako da nas vodi kroz sve dijelove razvijanja softvera i upozna s problemima koji se mogu javiti.
+		Web aplikacija BalkanLingo rezultat je timskog rada u sklopu kolegija Programsko inženjerstvo. Dobili smo zadatak izraditi edukativnu platformu koja korisnicima pomaže u usvajanju stranih jezika. Kao i kod svakog projekta, tim je zadatak obogatio svojim idejama i prilagodio ga vlastitoj percepciji procesa učenja te smo se zbog toga oslanjali na igrifikaciju i interaktivnost.
+		\newline
 		\\
+		Zadatak nas je vodio kroz sve faze razvijanja programske potpore i upoznao nas s potencijalnim izazovima i preprekama koji se u navedenom procesu javljaju. Uz sam razvoj programske potpore, tim je morao naučiti skladno i produktivno raditi, zbog čega je veliki naglasak bio i na organizaciji posla.
+		\newline
 		\\
-		Projekt se odvijao u dvije faze. Prva faza je većinom bila posvećena upoznavanju s novim tehnologijama koje ćemo koristiti i izradi prototipa, a druga faza je bila posvećena izradi konačnog proizvoda.
-		U nastavku ćemo opisati što smo sve napravili u svakoj fazi i što smo naučili iz toga.
-	   	\\
+		Projekt se odvijao u dvije faze. Tijekom prve faze upoznavali smo se s novim tehnologijama koje smo koristili pri izradi prototipa, a tijekom druge faze izrađivali smo konačni proizvod. U nastavku je rezime onoga što smo napravili i naučili.
+		\newline
 		\\
-		\textbf{U prvoj fazi} smo se upoznavali s tehnologijama koje ćemo koristiti, izradi osnovnog prototipa i upoznavanja novih članova. Brzo smo shvatili da su svi članovi tima upoznati s radnim okruženjem Express i ejs jezikom te da će nam to dozvoliti  da brzo stvorimo prototip. Imali smo puno sreće oko podijele na frontend, backend, bazu podataka, dizajn i dokumentaciju jer smo imali točan omjer ljudi za svaki dio što nam je pomoglo da se lakše organiziramo tko će koji dio aplikacije raditi i da svi radimo podjednako. Odlučili smo da će sve interakcije sa serverom vraćati HTML kao odgovor. To je bila jako dobra odluka koja nam je dozvolila da brzo napredujemo i napravimo više za prototip nego je bilo traženo jer nismo uveli dupliciranje logike za predstavljanje rezultata (npr,React ili Vue). Jedini nedostatak ovog pristupa je da se web stranica svaki put osvježi kod promjena, ali taj problem je riješen za bitne dijelove aplikacije u drugoj fazi. Izbor baze podataka je bio dosta jednostavan. SQLITE je savršena baza za prototip jer nije potrebno se baviti postavljanjem neke baze podataka na svim našim računalima kao i sinkronizacije stanja baze. Za korištenje SQLITE-a smo originalno mislili koristiti npm paket sqlite3, ali zbog raznih problema i teškog debugiranja, odlučili smo koristiti paket better-sqlite3. Za dokumentiranje projekta smo koristili LaTeX i VisualParadigm. Svi članovi su radili svoje dijelove dokumentacije i međusobno ispravljali kada je bilo potrebno. Voditelj projekta je inzistirao da napravimo dobar kostur za prototip jer da će nam to omogućiti da rano nađemo probleme u tehnologijama te da ćemo kasnije moći jako brzo dodavati funkcionalnosti. 
+		\textbf{Prva faza} prvenstveno je bila namijenjena upoznavanju. Osim što smo istraživali nove tehnologije, neki su se članovi prvi put upoznali u sklopu projekta. Razgovorom i diskusijom uspjeli smo doći do popisa tehnologija koji odgovara svima. Svi članovi bili su upoznati s radnim okruženjem Express, ali i tehnologijom EJS. 
+		\newline
 		\\
-
-		
-		\textbf{U drugoj fazi} smo se većinom bavili implementacijom svih funkcionalnosti projekta. Nismo imali potrebu mijenjati ijednu tehnologiju. SQLITE je dovoljno performantan za naše potrebe i rad s njim je jednostavan i dovoljno brz bez sinkronizacijskih problema. Kada bi neki član tima dohvatio nove promjene u bazi, nova baza i njen izgled je bio isto dohvaćen. Dodali smo samo jednu novu tehnologiju koja se zove HTMX. To je biblioteka koja nam je omogućila da dodamo komplicirane interakcije klijenta i servera bez pisanja dodatnog JavaScript koda. Koristimo ju za ubacivanje novih vrijednosti kod automatskog stvaranja riječi, pretraživanja rječnika/riječi te kod prijelaska između načina učenja. U ovoj fazi smo radili intenzivnije nego u prvoj fazi jer je bilo više zahtjevnog programiranja. Brzina kojom smo dodavali stvari u projekt nas je iznenadila te smo jako sretni odabirom naših tehnologija i odlukom da napravimo kvalitetan kostur projekta u prvoj fazi. Kada je bazni dio projekta bio snažno definiran smo dodali i prve testove koje koristimo za provjeru jačine osiguranosti pojedinih ruta jer smo primijetili da često zaboravljamo vratiti provjere autentičnosti na bitne administratorske rute. Kasnije smo dodali i testove koji su gledali jesu li se potrebni objekti pojavili u bazama podataka i jesu li dobre vrijednosti dohvaćene. Dokumentacija u drugoj fazi ima manje stvari za napraviti ali je i dalje uzela dobar dio vremena rada jer je bilo potrebno raditi manje modifikacije u cijeloj dokumentaciji zbog raznih manjih izmjena.
+		Raspodjela uloga također nije bila komplicirana jer su članovi tima bili kompetentni upravo u onim poljima u kojima su htjeli raditi. Voditelj tima konkretizirao je uloge namijenjene ostalih šest članova i imali smo veliki početni sastanak u kojem smo svi zajedno razvili koncept aplikacije. Tada smo zajedno, razgovarajući o aplikaciji, pomogli članici tima koja se bavila korisničkim sučeljem da napravi grube skice. Na taj način svi smo dobili bolju ideju što točno radimo i tko bi što mogao implementirati.
+		\newline
 		\\
+		Odlučili smo da će sve interakcije sa poslužiteljem rezultirati u HTML odgovoru. Ova nas je odluka ubrzala te smo u sklopu prototipa predali i više od traženih funkcionalnosti. Jedan od razloga svakako je činjenica da nismo duplicirali logiku za predstavljanje rezultata (što bi se svakako dogodilo da smo koristili React ili Vue). Mana ovog pristupa jest osvježavanje stranice pri svakoj promjeni, ali to smo odlučili ručno riješiti poslije predaje prototipa.
+		\newline
 		\\
-	   \indent Naš projekt ima sve potrebne funkcionalnosti zadatka. Svi članovi tima su zadovoljni s rezultatom projekta i drago nam je da smo sudjelovali u ovakvom projektu. Naučili smo puno novih tehnologija i procesa s kojima se prije nismo susretali te smo usvojili puno znanja i vještina koje će nam dobro doći na našim budućim poslovima! 
+		Izbor baze podataka, zahvaljujući kompetentnosti članova tima, bio je vrlo jednostavan. SQLITE bio je savršen izbor za naš prototip jer nema potrebe niti za postavljanjem baze podataka na računalima svih članova tima niti za sinkronizacijom stanja baze. Iako smo se prvo orijentirali na paket sqlite3, kasnije smo otkrili better-sqlite3 koji je bio daleko jednostavniji i jasniji.
+		\newline
+		\\
+		 Za dokumentiranje projekta koristili smo alate LaTeX i VisualParadigm. Svi članovi ažurno su pisali svoje dijelove dokumentacije i međusobno smo se ispravljali kada je to bilo potrebno. Voditelj projekta inzistirao je na tome da napravimo dobar kostur za prototip jer će nam to omogućiti da rano uočimo implementacijske probleme. Zaista, dodavanje funkcionalnosti za konačni proizvod zbog toga je bilo jednostavnije i efikasnije.
+		 \newline
+		\\
+		\textbf{Druga faza} većinom je bila orijentirana na implementaciju svih funkcionalnosti. Nismo mijenjali prvotno odabrane tehnologije jer niti jedna nije predstavljala problem tijekom neformalnih, a kasnije i formalnih ispitivanja. SQLITE za naše je potrebe bio dovoljno efikasan i radio je bez sinkronizacijskih problema. 
+		\newline
+		\\
+		Uvrstili smo i jednu novu tehnologiju, HTMX. Radi se o biblioteci koja omogućava interakciju klijenta i servera bez implementacije dodatnog JavaScript koda. Ovu smo tehnologiju koristili kod automatskog podešavanja riječi, pretraživanja rječnika i u tranziciji između načina učenja. Iako smo u ovoj fazi intenzivno programirali, brzina napretka projekta bila je i više no zadovoljavajuća zbog dobrog odabira tehnologija.
+		\newline
+		\\
+		I prije formalne faze ispitivanja napravili smo prve testove kako bismo provjerili jesmo li dodali provjere autentičnosti na bitne administratorske rute. Kasnije smo dodali testove čija je svrha provjera sadržaja baze podataka nakon neke akcije koja je trebala stvoriti i/ili modificirati određeni dio same baze. 
+		\newline
+		\\
+		Iako dokumentiranje u drugoj fazi razvoja aplikacije nije zahtijevalo toliko raspisivanja i definiranja, pravovremeno smo morali ispravljati dijelove dokumentacije napisane u prvoj fazi jer smo u određenim aspektima mijenjali pristup problemu.
+		\newline
+		\\
+	   \indent 
+	   Naš projekt zadovoljava sve kriterije zadatka, odnosno implementirane su sve potrebne funkcionalnosti. Svi članovi tima zadovoljni su s rezultatom projekta i naučili su ponešto i izvan onoga što ih je najviše zanimalo (čime su se primarno bavili prije i tijekom projekta). Svakako smo kao krajnji rezultat, uz aplikaciju i njenu popratnu dokumentaciju, dobili iskustvo timskog rada.
 		 \eject 
