@@ -2,57 +2,458 @@
 		
 		
 		\section{Korištene tehnologije i alati}
-		
-			\textbf{\textit{dio 2. revizije}}
 			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
-			
-			
+		\subsection*{Komunikacija}
+			Tijekom razvoja projekta koristili smo dvije tehnologije kako bismo ubrzali međusobnu komunikaciju. Većina interne projektne komunikacije odvijala se u privatnom serveru u aplikaciji \textbf{\href{https://discord.com/}{Discord}} jer se unutar ove tehnologije mogu brzo postaviti tematski kanali za razgovor na temelju logičkih jedinica projekta (\textit{frontend, backend, dokumentacija}). Za ostatak komunikacije, praćenje zadataka i projektnih obavijesti te komunikaciju s asistenticom koristili smo \textbf{\href{https://www.microsoft.com/hr-hr/microsoft-teams/download-app}{MS Teams}}.
+
+		\subsection*{Dokumentacija i verziranje aplikacije}
+			Dokumentacija je napisana u sustavu \textbf{\href{https://www.latex-project.org/}{LaTeX}}. {LaTeX} je jezik koji omogućuje intuitivno i jednostavno pisanje dokumentacije kao i mogućnost brze iteracije i izmjene podataka. Za izradu grafova u projektu koristili smo \textbf{\href{https://www.visual-paradigm.com/}{Visual Paradigm}} i \textbf{\href{https://www.lucidchart.com/pages/}{Lucidchart}}. Verziranje aplikacije bitan je aspekt u procesu razvoja programske potpore jer omogućava nadgledanje specifičnih dijelova koda te promatranje kada je što nadograđeno ili uklonjeno u slučaju greške ili konflikta. Za verziranje koda koristili smo \textbf{\href{https://git-scm.com/}{Git}}, a za spremanje tih promjena koristili smo udaljeni repozitorij usluge \textbf{\href{https://github.com/}{GitHub}}.
+
+		\subsection*{Aplikacija}
+			Aplikacija je napisana u tehnologiji \textbf{\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript}{JavaScript}} uz razvojno okruženje \textbf{\href{https://nodejs.org/en}{Node.js}} i \textbf{\href{https://www.npmjs.com/package/better-sqlite3}{SQLITE3}} bazu podataka. Node.js je okruženje za izvršavanje JavaScript koda izvan preglednika i ispunjava ulogu poslužitelja. Naša aplikacija nema eksplicitno odvojenu klijentsku i poslužiteljsku stranu, a svu logiku izvršavamo na poslužiteljskoj strani gdje koristimo i \textbf{\href{https://expressjs.com/}{Express}}. Riječ je o radnom okviru koji olakšava manipulaciju HTTP zahtjevima. Za stvaranje HTML datoteka koje se  šalju korisniku koristimo \textbf{\href{https://ejs.co/}{EJS}}, tehnologiju temeljenu na stvaranju HTML šablona. Implementiranje SQLITE baze podataka odradili smo uz pomoć već postojeće biblioteke \textbf{\href{https://www.npmjs.com/package/better-sqlite3}{better-sqlite3}}. Ona nas je znatno ubrzala i olakšala nam pisanje upita. Za prijevod riječi i rečenica najprije koristimo \textbf{\href{https://www.npmjs.com/package/translate-google-api}{translate-google-api}} za prevođenje na engleski. Potom pozivamo \textbf{\href{https://dictionaryapi.dev/}{Besplatni Dictionary API}} koji nam vraća primjer rečenice na engleskom jeziku. Ako je traženi jezik različit od engleskog, ponovno koristimo google-translate-api za prijevod na drugi jezik. Na samom kraju generiramo audio izgovora riječi pomoću \textbf{\href{https://elevenlabs.io/}{Eleven Labs API-a}}.
+
+		\subsection*{Razvojno okruženje}
+			Tim se vrlo brzo složio u vezi korištenja razvojnog okruženja \textbf{\href{https://code.visualstudio.com/}{Visual Studio Code}}. Radi se o besplatnom, a moćnom alatu za pisanje, formatiranje i stilizaciju programskog koda. Dodatno smo koristili i VSC dodatak (engl. \textit{extension}) \textbf{\href{https://prettier.io/}{Prettier}} kako bismo održali kohezivnost i urednost u stilizaciji koda.
+
+		\subsection*{Korisni linkovi}
+			\begin{itemize}
+				\item Discord: \url{https://discord.com/}
+				\item Microsoft Teams: \url{https://www.microsoft.com/hr-hr/microsoft-teams/download-app}
+				\item LaTeX: \url{https://www.latex-project.org/}
+				\item Visual Paradigm: \url{https://www.visual-paradigm.com/}
+				\item Lucidchart: \url{https://www.lucidchart.com/pages/}
+				\item Git: \url{https://git-scm.com/}
+				\item GitHub: \url{https://github.com/}
+				\item JavaScript: \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript}
+				\item Node.js: \url{https://nodejs.org/en}
+				\item Express: \url{https://expressjs.com/}
+				\item EJS: \url{https://ejs.co/}
+				\item Visual Studio Code: \url{https://code.visualstudio.com/}
+				\item Prettier: \url{https://prettier.io/}
+				\item Better SQLite3: \url{https://www.npmjs.com/package/better-sqlite3}
+				\item Google Translate API: \url{https://www.npmjs.com/package/translate-google-api}
+				\item Dictionary API: \url{https://dictionaryapi.dev/}
+				\item Eleven Labs API: \url{https://elevenlabs.io/}
+			\end{itemize}
+
+				
 			\eject 
 		
 	
 		\section{Ispitivanje programskog rješenja}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
-	
+
+			Testiranje koda ključan je korak u razvoju web aplikacije iz nekoliko razloga:
+			\begin{itemize}
+				\item Omogućava identifikaciju i ispravljanje grešaka prije no što aplikacija dosegne korisnike.
+				\item Osiguravamo da je aplikacija pouzdana te da radi dosljedno i bez neočekivanih ponašanja.
+				\item Otkrivanjem i rješavanjem problema u ranim fazama razvoja smanjujemo troškove održavanja (i podrške) nakon implementacije.
+			\end{itemize}
+
+			Za automatsko testiranje naše aplikacije koristili smo \textit{supertest}, biblioteku za testiranje HTTP/HTTPS protokola unutar okruženja Node.js. Omogućena je simulacija HTTP zahtjeva, ali i provjera odgovora.
+			Ovaj alat koristimo kako bismo automatizirali proces testiranja naše web aplikacije.
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+
+			Napisani su testovi za ispitivanje funkcija dohvata iz baze podataka. Testovi se vrše nad testnom bazom podataka
+			koja se ne mijenja. Provjeravamo ispravnost rezultata promatrajući broj vraćenih stavki
+			ili pak je li vraćena neka specifična stavka.
+			U nastavku je prikazano par testova.
+			\\
+
+			Ispitni slučaj \textbf{"Correct email select test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da baza podataka može dohvatiti korisnika za danu adresu.
+				\item \textbf{Ulaz:} SELECT naredba s adresom elektroničke pošte postojećeg korisnika.
+				\item \textbf{Očekivani rezultat:} Pronađen korisnik s tom adresom.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/db_correct_email_test.png}
+					\caption{Traženje korisnika s određenom adresom elektroničke pošte.}
+					\label{fig:testovi_db}
+				\end{figure}
+			\end{itemize}
+			\newpage
+
+
+			Ispitni slučaj \textbf{"Non existent email select test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da baza podataka može dohvatiti korisnika za danu adresu.
+				\item \textbf{Ulaz:} SELECT naredba s adresom elektroničke pošte nepostojećeg korisnika.
+				\item \textbf{Očekivani rezultat:} Nije pronađen korisnik s tom adresom.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/db_no_email_test.png}
+					\caption{Traženje nepostojećeg korisnika s određenom adresom elektroničke pošte.}
+					\label{fig:testovi_db}
+				\end{figure}
+			\end{itemize}
 			
+			Ispitni slučaj \textbf{"Get user by id test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava da baza podataka može dohvatiti korisnika sa danim ID brojem.
+				\item \textbf{Ulaz:} SELECT naredba s ID brojem postojećeg korisnika.
+				\item \textbf{Očekivani rezultat:} Pronađen korisnik s tim ID brojem.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/db_user_id_test.png}
+					\caption{Traženje korisnika s određenim ID brojem.}
+					\label{fig:testovi_db}
+				\end{figure}
+			\end{itemize}
+			\newpage
 			
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+			Kako bismo osigurali sigurnost, pravilno funkcioniranje i pristupačnost specifičnih sadržaja, 
+			implementirali smo tri odvojena seta testova prilagođena različitim korisničkim ulogama: gostima, korisnicima i administratorima.
+			U nastavku je prikazano par primjeraka iz svakog seta. 
+
+			\subsubsection{Testovi za goste}
+			Testovi za goste provjeravaju mogu li gosti pristupiti svim javnim stranicama aplikacije dok im je pristup ostalim stranicama (za korisnike s više privilegija) onemogućen.
+			\\
+
+			Ispitni slučaj \textbf{"Root path test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava može li gost pristupiti početnoj stranici aplikacije.
+				\item \textbf{Ulaz:} GET zahtjev za početnu stranicu.
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/guest_root_test.png}
+					\caption{Ispitivanje dostupnosti početne stranice za goste.}
+					\label{fig:testovi_gosti_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{"Edit user test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava zabranu (gostu) pristupa stranici za uređivanje korisnika.
+				\item \textbf{Ulaz:} GET zahtjev za /user/edit
+				\item \textbf{Očekivani rezultat:} Statusni kod 403.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/guest_edit_profile_test.png}
+					\caption{Ispitivanje zabrane (za goste) uređivanja korisnika.}
+					\label{fig:testovi_gosti_slika}
+				\end{figure}
+			\end{itemize}
+			\newpage
+			
+			\subsubsection{Testovi za korisnike}
+			Testovi za korisnike provjeravaju mogu li korisnici pristupiti svim javnim stranicama aplikacije,
+			kao i stranicama koje su namijenjene samo korisnicima, dok im je zabranjen pristup stranicama koje su namijenjene administratorima.
+			\\
+
+			Ispitni slučaj \textbf{"Adding dictionary test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava može li koristnik dodati novi rječnik.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/addDictionary
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/user_add_dictionary_test.png}
+					\caption{Ispitivanje korisničkog pristupa funkciji dodavanja rječnika.}
+					\label{fig:testovi_korisnik_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{"Editing word test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava zabranu (gostu) mijenjanja detalja neke riječi u rječniku.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/editWord/1
+				\item \textbf{Očekivani rezultat:} Statusni kod 403.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/user_edit_word_test.png}
+					\caption{Ispitivanje zabrane (gostu) mijenjanja riječi u rječniku.}
+					\label{fig:testovi_korisnik_slika}
+				\end{figure}
+			\end{itemize}
+
+			\subsubsection{Testovi za administratore}
+			Testovi za administratore provjeravaju mogu li administratori  pristupiti svim stranicama aplikacije.
+			\\
+
+			Ispitni slučaj \textbf{"Editing word test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava može li administrator promijeniti detalje riječi u rječniku.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/editWord/1
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/admin_edit_word_test.png}
+					\caption{Ispitivanje administratorske privilegije ažuriranja riječi.}
+					\label{fig:testovi_admin_slika}
+				\end{figure}
+			\end{itemize}
+
+			Ispitni slučaj \textbf{"Admin adding dictionary test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava može li admin stvoriti novi rječnik.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary/addAdminDict
+				\item \textbf{Očekivani rezultat:} Statusni kod 200.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/admin_add_dictionary_test.png}
+					\caption{Ispitivanje administratorske privilegije stvaranja rječnika.}
+					\label{fig:testovi_admin_slika}
+				\end{figure}
+			\end{itemize}
+			\newpage
+			
+			Ispitni slučaj \textbf{"Dictionary root path test"}
+			\begin{itemize}
+				\item \textbf{Opis:} provjerava zabranu pristupa \textit{root} direktoriju rječnika.
+				\item \textbf{Ulaz:} GET zahtjev za /dictionary
+				\item \textbf{Očekivani rezultat:} Statusni kod 404.
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/testovi/admin_404_test.png}
+					\caption{Ispitivanje pristupa nedostupnom resursu.}
+					\label{fig:testovi_admin_slika}
+				\end{figure}
+			\end{itemize}
 			
 			\eject 
 		
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
-			
+		Dijagram razmještaja opisuje topologiju sustava. On prikazuje sve potrebne elemente za uspješnu komunikaciju i rad sustava te priča priču o tome kako korisnik dobiva krajnji pregled aplikacije koji je i zatražio. 
+		\newline
+		\\
+		Komunikacija kreće od korisničkog uređaja koji šalje HTTP zahtjev na poslužiteljsko računalo. Korisnik ne vidi niti treba poznavati pozadinske procese te iz njegove perspektive određeni klik ili URL prikazuju neki dio aplikacije. U pozadini, Node.js (Express) poslužitelj prati zahtjeve, komunicira s bazom podataka te dohvaća podatke koji će biti potrebni: listu rječnika, recimo. Nakon toga, poslužitelj te podatke ugrađuje u EJS prikaz i ta se datoteka šalje klijentu putem protokola HTTP, u obliku HTTP odgovora.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=1.1\textwidth]{dijagrami/DijagamRazmjestaja.jpg}
+				\caption{Dijagram razmještaja}
+				\label{fig:dijagram_razmjestaja}
+			\end{figure}	
+
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+		\subsection*{Instaliranje tehnologija Node.js i npm}
+		\begin{enumerate}
+			\item Preuzimamo Node.js instalaciju sa \textbf{\href{https://nodejs.org/en/download/}{službene stranice}}.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.8\textwidth]{slike/npm_install/0.png}
+				\caption{Službena stranica za preuzimanje alata Node.js.}
+				\label{fig:node_install_images}
+			\end{figure}
+			\item Pokrećemo instalaciju.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.8\textwidth]{slike/npm_install/1.png}
+				\caption{Prvi korak instalacije programa Node.js.}
+				\label{fig:node_install_images}
+			\end{figure}
+			\eject
+			\item Odabiremo direktorij za instalaciju.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/npm_install/2.png}
+				\caption{Odabir direktorija za instalaciju programa NodeJs.}
+				\label{fig:node_install_images}
+			\end{figure}
+			\item Kliknemo \textit{Next}.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/npm_install/3.png}
+				\caption{Prvi korak instalacije programa Node.js.}
+				\label{fig:node_install_images}
+			\end{figure}
+			\item Provjera uspješnosti instalacije alata Node.js.
+			 \subitem node -v
+			\item Provjera uspješnosti instalacije alata npm.
+			\subitem npm -v
+		\end{enumerate}
+		\subsection*{Ručno pokretanje aplikacije}
+		Za ručno pokretanje aplikacije potrebna je tehnologija Node.js (verzija 20 ili bilo koja novija verzija).
+		\begin{enumerate}
+			\item Pozicioniramo se u direktorij "app".
+			\begin{verbatim}
+				dir IzvorniKod/app 
+			\end{verbatim}
+			\item Instaliramo projektne module.
+			\begin{verbatim}
+				npm install
+			\end{verbatim}
+			\item Pokrećemo aplikaciju.
+			\begin{verbatim}
+				npm run start
+			\end{verbatim}
+			Aplikacija se podrazumijevano pokreće na vratima 3000.
+		\end{enumerate}
+		\newpage
+		\subsection*{Instaliranje alata Docker}
+		\begin{enumerate}
+			\item Preuzimamo Docker instalaciju sa \textbf{\href{https://docs.docker.com/get-docker/}{službene stranice}}.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/0.png}
+				\caption{Preuzimanje Docker instalacije sa službene stranice.}
+			\end{figure}
+			\newpage
+			\item Pokrećemo instalaciju i stišćemo OK kako bismo nastavili.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/2.png}
+				
+				\caption{Instalacija alata Docker.}
+			\end{figure}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/3.png}
+				\caption{Nastavak instalacije alata Docker.}
+			\end{figure}
+			\item Nakon instalacije resetiramo operacijski sustav.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.8\textwidth]{slike/docker_install/4.png}
+				\caption{Potvrda nakon instalacije alata Docker.}
+			\end{figure}
+			\newpage
+			\item Prihvaćamo uvjete korištenja.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/5.png}
+				\caption{Prihvaćanje uvjeta korištenja.}
+			\end{figure}
+			\item Instalacija WSL2 podsustava za korištenje alata Docker.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/7.png}
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/6.png}
+				\caption{Instalacija WSL2 podsustava.}
+			\end{figure}
+			\newpage
+			\item Pokrećemo instalaciju.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/8.png}
+				\caption{Nastavak instalacije WSL2 podsustava.}
+			\end{figure}
+			\item Nastavljamo kroz nju tipkom \textit{Next}.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/9.png}
+				\caption{Završavanje instalacije WSL2 podsustava.}
+			\end{figure}
+			\newpage
+			\item Nakon instalacije WSL2 podsustava u alatu Docker stisnemo \textit{Restart}.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/10.png}
+				\caption{Dovršetak instalacije Docker alata.}
+			\end{figure}
+			\item Nakon resetiranja operacijskog sustava možemo slobodno koristiti Docker.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/docker_install/11.png}
+				\caption{Uspješna instalacija alata Docker.}
+			\end{figure}
+			\item Provjera uspješnosti instalacije alata Docker.
+			\begin{verbatim}
+				docker -v
+			\end{verbatim}
+		\end{enumerate}
+
+		\subsection*{Postavljanje alata Docker}
+		Za pokretanje aplikacije pomoću alata Docker:
+		\begin{enumerate}
+			\item Pozicioniramo se u direktorij "IzvorniKod".
+			\begin{verbatim}
+				dir IzvorniKod
+			\end{verbatim}
+			\item Izgradimo Docker sliku pod nazivom "balkan-lingo".
+			\begin{verbatim}
+				docker build -t balkan-lingo .
+			\end{verbatim}
+			\item Pokrećemo Docker kontejner i preslikavamo vrata 3000 iz kontejnera na naša poslužiteljska vrata.
+			\begin{verbatim}
+				docker run -p 3000:3000 balkan-lingo
+			\end{verbatim}
+			Za pokretanje kontejnera u pozadini korisimo sljedeću naredbu.
+			\begin{verbatim}
+				docker run -d -p 3000:3000 balkan-lingo
+			\end{verbatim}
+		\end{enumerate}
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+		\subsection*{Terminiranje Docker kontejnera}
+		Za terminiranje Docker kontejnera potrebno je napraviti nekoliko koraka.
+		\begin{enumerate}
+			\item Provjeravamo sve pokrenute kontejnere.
+			\begin{verbatim}
+				docker ps -a
+			\end{verbatim}
+			\item Zaustavljamo kontejner koristeći njegov CONTAINER\_ID.
+			\begin{verbatim}
+				docker stop <CONTAINER_ID>
+			\end{verbatim}
+			Naravno, mijenjamo \texttt{<CONTAINER\_ID>} sa stvarnim ID-om kontejnera kojeg želimo zaustaviti.
+		\end{enumerate}
+
+		\subsection*{Brisanje Docker kontejnera}
+		Za brisanje Docker kontejnera potrebno je napraviti sljedećih nekoliko koraka.
+		\begin{enumerate}
+			\item Provjeravamo sve pokrenute kontejnere.
+			\begin{verbatim}
+				docker ps -a
+			\end{verbatim}
+			\item Obrišemo kontejner koristeći njegov CONTAINER\_ID.
+			\begin{verbatim}
+				docker rm <CONTAINER_ID>
+			\end{verbatim}
+			Naravno, mijenjamo \texttt{<CONTAINER\_ID>} sa stvarnim ID-om kontejnera kojeg želimo obrisati.
+		\end{enumerate}
+
+		\subsection*{Brisanje Docker slike}
+		Za brisanje Docker slike potrebno je izvršiti sljedećih nekoliko koraka.
+		\begin{enumerate}
+			\item Provjeravamo postojeće i aktivne Docker slike.
+			\begin{verbatim}
+				docker images
+			\end{verbatim}
+			\item Obrišemo sliku koristeći njen IMAGE\_ID.
+			\begin{verbatim}
+				docker rmi <IMAGE_ID>
+			\end{verbatim}
+			Naravno, mijenjamo \texttt{<IMAGE\_ID>} sa stvarnim ID-om slike koju želimo obrisati.
+		\end{enumerate}
+
+		\subsection*{Upravljanje bazom podataka}
+			Stvarna baza podataka već  je generirana i nalazi se u direktoriju \texttt{IzvorniKod/app/db}.
+			Dakle, nije potrebno ručno kreirati bazu podataka.
+			U slučaju da želimo manipulirati njome, potrebno je manipulirati i vrijednostima u .env datotekama.
+			\newline
+			\\
+			Navedene datoteke prikazuju određene pretpostavke vezane za okruženje pokretanja ili testiranja aplikacije. Primjerice, sve moguće opcije za postavku .env datoteke
+			"MIGRATE=" navedene su ispod.
+			\begin{itemize}
+				\item \texttt{true} - briše trenutnu bazu podataka i stvara novu, \textbf{praznu} bazu podataka
+				\item \texttt{reset} - briše trenutnu bazu podataka i učitava početnu bazu podataka sa pretpostavljenim podacima
+				\item \texttt{test} - koristi se kod ispitivanja (pokretanja ispitnih slučajeva) 
+			\end{itemize}
+	
+		\subsection*{Vrijednosti .env datoteke}
+			Ispod su navedene neke od opcija koje se mogu specificirati za .env datoteku, a namijenjene su za brzo pokretanje aplikacije. U našem repozitoriju ova šablona zapravo je \texttt{.env.example} datoteka.
+			\begin{itemize}
+				\item \texttt{ELEVEN\_VOICE\_KEY} - ključ za Eleven Voice API
+				\item \texttt{GMAIL\_KEY} - ključ za Gmail API
+				\item \texttt{MIGRATE} - vrijednost za upravljanje bazom podataka, reset: resetira bazu na baznu vrijednost (testDB.sqlite3) i true: resetira bazu koristeći skriptu serialise.js
+				\item \texttt{TEST} - vrijednost za upravljanje testovima, \textbf{u pokretanju aplikacije false, a tijekom testiranja true}
+				\item \texttt{TESTMAIL} - adresa elektroničke pošte namijenjena za testiranje, \textbf{ovo polje ostaje prazno ukoliko se aplikacija ne testira}
+				\item \texttt{PORT} - vrata na kojima se pokreće aplikacija
+			\end{itemize}
+		
+		\subsection*{Pretpostavljeni korisnici}
+			\begin{itemize}
+				\item \texttt{administrator} - adresa elektroničke pošte: admin@balkanlingo.online , lozinka: \texttt{123} 
+				\item \texttt{korisnik} - adresa elektroničke pošte: user@balkanlingo.online , lozinka: \texttt{123}
+			\end{itemize}
 			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
-			
-			
-			\eject 
+		\eject

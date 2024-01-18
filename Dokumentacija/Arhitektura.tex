@@ -62,6 +62,7 @@ Za upravljanje podacima koristimo bazu podataka koja koristi SQLite, lagan i ugr
     \item word
     \item active\_question
     \item user\_word
+    \item language
 \end{itemize}
 
 \subsection{Opis tablica}
@@ -87,7 +88,7 @@ is\_admin & INTEGER & Označava je li korisnik administrator (1/0). \\ \hline
 token & VARCHAR & Token koji se koristi za autentifikaciju korisnika. \\ \hline
 \end{longtblr}
 
-Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language).
+Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik ima jedinstveni identifikator (id), naziv rječnika (name) te informaciju o jeziku rječnika (language\_id).
 
 \begin{longtblr}[
     label=none,
@@ -100,9 +101,8 @@ Tablica \textbf{"dictionary"} pohranjuje podatke o rječnicima. Svaki rječnik i
 \hline \SetCell[c=3]{c}{\textbf{dictionary}} \\ \hline[3pt]
 \SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator rječnika. \\ \hline
 name & VARCHAR & Naziv rječnika. \\ \hline
-language & VARCHAR & Jezik rječnika. \\ \hline
+language\_id & VARCHAR & Referenca na jezik rječnika. \\ \hline
 image\_link & VARCHAR & Link na sliku koja predstavlja rječnik. \\ \hline
-flag\_icon\_link & VARCHAR & Link zastave jezika rječnika ili oznaka u UTF-8. \\ \hline
 \end{longtblr}
 
 Tablica \textbf{"dictionary\_user"} uspostavlja povezanost između korisnika i rječnika, bolje rečeno sadrži informaciju koji su korisnici pretplaćeni na koje rječnike. Svaki zapis u ovoj tablici ima jedinstveni identifikator (id), referencu na korisnika (user\_id) i referencu na rječnik na koji je korisnik pretplaćen (dictionary\_id).
@@ -180,6 +180,23 @@ delay & INTEGER & Vremenski odmak za iduće pojavljivanje riječi. \\ \hline
 active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \hline
 \end{longtblr}
 
+Tablica \textbf{"language"} sadrži podatke o jeziku koji se riječnikom uči. Svaki zapis u tablici ima jedinstveni identifikator (id), naziv jezika (name), skraćenicu jezika (shorthand), te ikonicu (flag\_icon).
+
+\begin{longtblr}[
+    label=none,
+    entry=none
+]{
+    width = \textwidth,
+    colspec={|X[6,l]|X[6, l]|X[20, l]|},
+    rowhead = 1,
+}
+\hline \SetCell[c=3]{c}{\textbf{language}} \\ \hline[3pt]
+\SetCell{LightGreen}id & INTEGER & Jedinstveni identifikator zapisa. \\ \hline
+name & VARCHAR & Ime jezika. \\ \hline
+shorthand & VARCHAR & Skraćenica jezika. \\ \hline
+flag\_icon & VARCHAR & Ikonica jezika. \\ \hline
+\end{longtblr}
+
 					
 			\subsection{Dijagram baze podataka}
 				\begin{figure}[H]
@@ -195,8 +212,7 @@ active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \h
 
 			
 			%\subsection{Dijagram kontrolera}
-            Dijagram razreda se koristi za prikaz razreda sustava, njihovih atributa, metoda i odnosa između njih.
-            Zbog preglednosti, dijagram je podijeljen na 3 dijela:
+            Dijagram razreda koristi se za prikaz razreda unutar sustava, njihovih atributa, metoda i međusobnih odnosa. Zbog preglednosti, dijagram je podijeljen na tri dijela.
             \begin{packed_item}
                 \item \textbf{Kontroleri}
                 \item \textbf{Rute}
@@ -204,7 +220,7 @@ active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \h
             \end{packed_item}
            
 
-            Slika 4.2 je dijagram kontrolera koji pokazuje dostupne funkcije i njihove atribute te povratne vrijednosti. Također prikazuje koji routeri koriste te funkcije.
+            Slika 4.2 je dijagram kontrolera koji prikazuje dostupne funkcije, njihove atribute i povratne vrijednosti. Također prikazuje koji drugi routeri koriste te funkcije.
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/slika1.png} 
 					\centering
@@ -212,51 +228,88 @@ active & INTEGER & Je li riječ trenutno aktivna za danog korisnika (1/0). \\ \h
 					\label{fig:class_diagram}
 				\end{figure}			
 			\eject
-            Dijagram ruta na slici 4.3 prikazuje koje su sve rute dostupne i modele koje koriste iz baze podataka. U projektu postoje dva tipa ruta. Prvi tip ruta je zadužen samo za slanje statičnih stranica u HTML-u. Drugi tip izvodi napredne operacije na bazi podataka (npr. Dohvati sve riječi iz rječnika), zatim generira HTML koristeći te podatke te šalje korisniku u HTML formatu.
+            Dijagram ruta na slici 4.3 prikazuje dostupne rute i modele iz baze podataka koje iste koriste. U projektu postoje dva tipa ruta: prvi tip ruta zadužen je samo za slanje statičnih stranica u jeziku HTML, dok drugi tip izvodi napredne operacije na bazi podataka (npr. "Dohvati sve riječi iz rječnika") te zatim generira HTML koristeći te podatke i napokon šalje korisniku isti.
            % \subsection{Dijagram Ruta}
+           
 				\begin{figure}[H]
-					\includegraphics[width=0.9\textwidth]{dijagrami/slika2.png} 
+					\includegraphics[width=1.1\textwidth]{dijagrami/slika2.png} 
 					\centering
 					\caption{Dijagram ruta}
 					\label{fig:class_diagram}
 				\end{figure}			
 			\eject
-            Slika 4.4 prikazuje sve modele koji se koriste u projektu. Kod MVC projekata, u ovom dijelu su često neke klase nad kojoma se rade neke operacije. Nakon što se ti podaci promijene u toj klasi se onda promjene šalju na bazu podataka.
-            Slična stvar postoji i u javascript-u (node.js) i nazivaju se ORM (Object Relational Mapping) alati. ORM alati omogućuju da se podaci iz baze podataka prikažu kao objekti u kodu te da se ti objekti mogu jednostavno mijenjati i spremati u bazu podataka \textit{bez potrebe pisanja SQL upita}.
-            Problem kod implementacije svih ORM-a je da značajno usporavaju rad aplikacije zbog mnogih slojeva apstrakcije. Svi članovi dobro znaju SQL upite i pisanje SQL-a bi bilo jednako brzo kao i korištenje ORM-a. Zbog toga smo se odlučili za pisanje čistih SQL upita bez nepotrebne apstrakcije.
+            Slika 4.4 prikazuje sve modele koji se koriste u projektu. Tipično za MVC projekte, u ovom dijelu su klase nad kojima se vrše operacije. Nakon što se ti podaci ažuriraju u samoj klasi, promjene se šalju i u bazu podataka.
+            Slična stvar postoji i u jeziku JavaScript (node.js), a to su ORM (Object Relational Mapping) alati. Oni omogućuju da se podaci iz baze podataka prikažu kao objekti u kodu te da se ti objekti mogu jednostavno mijenjati i spremati u bazu podataka \textit{bez potrebe pisanja SQL upita}.
+            Problem kod implementacije svih ORM tehnologija jest značajno usporavanje rada aplikacije zbog brojnih slojeva apstrakcije. Svi članovi tima dobro su upoznati s jezikom SQL pa smo se zbog toga odlučili na korištenje čistih SQL upita bez nepotrebne apstrakcije.
             %\subsection{Dijagram Modela}
 				\begin{figure}[H]
-					\includegraphics[width=0.9\textwidth]{dijagrami/slika3.jpg} 
+					\includegraphics[width=1.1\textwidth]{dijagrami/slika3.jpg} 
 					\centering
 					\caption{Dijagram modela}
 					\label{fig:class_diagram}
 				\end{figure}			
 			\eject
 			
-			\textbf{\textit{dio 2. revizije}}\\			
-			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
-		
 		\section{Dijagram stanja}
-			
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
+        Dijagram stanja koristi se za opis dinamičnog ponašanja nekog dijela sustava tijekom rada aplikacije prikazujući prijelaze sustava iz jednog stanja u drugo.
+        Na slici 4.5 prikazane su opcije rada aplikacije za "normalnog" korisnika (bez dodatnih privilegija). Prikazano je dodavanje novih rječnika, brisanje postojećih rječnika i cijeli proces učenja.
+        Proces učenja ćemo malo detaljnije opisati.\newline
+        \indent \\
+        Klikom na gumb "odaberi" pokreće se proces učenja. Korisnik najprije kreće učiti od prvog načina učenja. Aplikacija prikazuje korisniku četiri riječi na stranom jeziku, a samo jedna od njih točan je prijevod istaknute riječi na materinjem jeziku.
+        Odabirom ili upisom točnog odgovora server riječ označava kao odgovorenu i povećava odgodu pojavljivanja riječi zbog ispravnosti odgovora. \newline
+        \\
+        Ako je odgovor netočan, server registrira grešku tako da resetira odgodu pojavljivanja riječi na interval od jednog dana (ujedno i najmanji interval). 
+        Kada korisnik odabere riječ, server provjerava je li odgovor točan ili ne. Nakon svakog odgovora, neovisno o točnosti i u svim načinima učenja, korisniku se prikazuju dvije mogućnosti: povratak na glavnu stranicu i prelazak na sljedeće pitanje.
+        Ako korisnik zaželi nastaviti proces učenja, server prelazi na sljedeći način učenja. On izgleda isto kao i prvi način učenja, no vrši se u obrnutom smjeru što se jezika tiče. \newline
+\\
+        U slučaju nastavka učenja, korisnik dolazi i do trećeg načina učenja. Tada korisnik mora poslušati glasovni zapis izgovora riječi i utipkati gramatički točnu riječ. Ponovno mu se odgovaranjem (neovisno o točnosti) nudi izbornik koji vodi na početnu stranicu ili nastavlja učenje.
+\newline
+\\
+        Zadnji način učenja od korisnika očekuje snimanje (i prijenos) vlastitog izgovora riječi zadane na ekranu. Slanjem odgovora poziva se servis za vrednovanje izgovora pa isti javlja (ne)točnost riječi po predefiniranoj skali.
+        Pritiskom na gumb "Završi sesiju učenja" napredak se sprema u bazu podataka i korisnik se preusmjerava natrag na početnu stranicu (engl. \textit{dashboard}).
+        
+        \begin{figure}[H]
+            \includegraphics[width=1.1\textwidth]{dijagrami/Dijagram_stanja.png} 
+            \centering
+            \caption{Dijagram stanja}
+            \label{fig:class_diagram}
+        \end{figure}			
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
-			
+        Dijagram aktivnosti koristi se za opis upravljačkog i podatkovnog toka podataka. Svaka aktivnost ujedno je i model ponašanja i produkt određenih uvjeta. Na slici 4.6 prikazan je tok akcija kojim se opisuju svi mogući administratorski postupci nad rječnicima. \newline
+        \\
+        Kako bi administrator mogao koristiti aplikaciju, on se mora najprije prijaviti u nju. Aplikacija provjerava postoji li u bazi podataka korisnik s tim podacima za prijavu te ima li isti administratorska prava.
+        Ako ima administratorska prava, ima i opcije za upravljanje aplikacijom.
+        \newline
+        \\
+         Ako administrator obriše rječnik, isti se briše kod svih korisnika koji ga trenutno koriste ili su ga koristili. Ako administrator odluči napraviti novi rječnik, prvo se mora odlučiti za jezik. Kada potvrdi promjene, riječi se spremaju u bazu podataka i prikazuje mu se  \textit{dashboard} koji sada ima i novi rječnik. Administrator može urediti informacije o rječniku. Nakon promjene informacija, one se ažuriraju u bazi podataka.
+        \begin{figure}[H]
+            \includegraphics[width=0.6\textwidth]{dijagrami/Dijagram Aktivnosti.png} 
+            \centering
+            \caption{Dijagram aktivnosti}
+            \label{fig:class_diagram}
+        \end{figure}	
+
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+        Dijagram komponenti prikazuje organizaciju i međuovisnost komponenti u sustavu. Na slici 4.7 prikazan je dijagram komponenti naše aplikacije. 
+        Postoje dva načina pristupa našem sustavu. Prvi je standardni HTTP pristup u kojem se cijela stranica učitava pri zahtjevu nekog resursa (URL). Tada korisnički pretraživač dohvaća sve datoteke potrebne za prikaz jednog resursa (stranice), a to su datoteke vezane za CSS, JS i HTML.
+        \newline
+        \\
+        Drugi način pristupa koristi AJAX poziv i tehnologiju HTMX te se ne vraća cijela stranica, već parcijalni dijelovi stranice u HTML formatu. Express poslužitelj onaj je koji na ovakve upite odgovara. On pri pozivu  uzima u obzir routere te "prosljeđuje" posao na točan router i njegov kontroler. Sve komponente u našem sustavu odvojene su u zasebne JavaScript datoteke i datotečne mape.
+        \newline
+        \\
+        Dakle, svi routeri su u folderu \textit{routes}, kontroleri u folderu \textit{controllers}, a HTML šablone u \textit{views} direktoriju. Naš sustav nema eksplicitno odvojeni \textit{frontend} (React, Vue ili  Svelte primjeri su takvog pristupa), već je tehnologija Express glavni pokretač aplikacije.
+
+        \begin{figure}[H]
+            \includegraphics[width=1.1\textwidth]{dijagrami/DijagamKomponenti.jpg} 
+            \centering
+            \caption{Dijagram komponenti}
+            \label{fig:class_diagram}
+        \end{figure}	
+            
+            \eject
+			

@@ -23,6 +23,7 @@
 				\begin{packed_enum}
 					\item registrirati se u sustav
 					\item prijaviti se u sustav
+					\item tražiti novu jednokratnu lozinku za račun
 				\end{packed_enum}
 
 				
@@ -32,8 +33,8 @@
 				\begin{packed_enum}
 					\item pregledavati rječnike
 					\item dodavati rječnike u svoj korisnički račun
-					\item brisati rječnike u svoj korisnički račun
-					\item uređivati rječnike u svoj korisnički račun
+					\item brisati rječnike iz svog korisničkog računa
+					\item uređivati rječnike u svom korisničkom računu
 					\item učiti iz rječnika
 					\item uređivati svoj korisnički račun
 					
@@ -45,12 +46,12 @@
 					\item dodavati rječnike u sustav
 					\item brisati rječnike iz sustava
 					\item uređivati rječnike u sustavu
-					\item uređivati korisničke račune
+					\item dodavati jezike za uporabu pri pravljenju rječnika
+					\item brisati jezike za uporabu pri pravljenju rječnika
+					\item uređivati jezike za uporabu pri pravljenju rječnika
 					\item dodjeljivati administratorske privilegije
 					\item oduzimati administratorske privilegije
 				\end{packed_enum}
-
-				\pagebreak
 
 				\item \underbar{Baza podataka (sudionik):}
 				\begin{packed_enum}
@@ -59,17 +60,18 @@
 					\item pohranjuje podatke o riječima
 				\end{packed_enum}
 				
-				\item \underbar{Word API(sudionik):}
+				\item \underbar{Word API (sudionik):}
 				\begin{packed_enum}
-					\item dohvaća riječi
+					\item dohvaća riječ i povezanu frazu
+					\item dohvaća prijevod i povezanu frazu
 					\item dohvaća izgovor riječi
 				\end{packed_enum}
 				
-				\item \underbar{Servis za ocjenjivanje(sudionik):}
+				\item \underbar{Servis za ocjenjivanje izgovora (sudionik):}
 				\begin{packed_enum}
-					\item uzima riječ
-					\item uzima izgovor korisnika
-					\item uspoređuje upisanu riječ i izgovor s dohvaćenim podacima o riječi i računa ocjenu
+					\item dohvaća točan izgovor riječi
+					\item evidentira izgovor korisnika
+					\item vrednuje izgovor korisnika usporedbom točnog i evidentiranog izgovora
 				\end{packed_enum}
 				
 			\end{packed_enum}
@@ -115,7 +117,7 @@
 						\item \textbf{Preduvjet:} Postoji adekvatni korisnički račun u bazi podataka
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Odabrana opcija prijave na stranici za prijavu i registraciju
+							\item Odabir opcije za prijavu na stranici za prijavu i registraciju
 							\item Upis adrese elektroničke pošte
 							\item Unos lozinke
 							\item Pritisak na gumb za prijavu
@@ -123,10 +125,10 @@
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
 							\item[3.a] Lozinka ne odgovara adresi elektroničke pošte
-							\\1. Korisnik dobiva obavijest o neispravnosti lozinke
+							\\1. Korisnik dobiva obavijest o neispravnosti lozinke putem stranice 404 rezervirane za grešku
 							\\2. Korisnik popravlja unesene podatke i ponavlja prijavu ili odustaje
 							\item[2.a] Nepostojeća ili neispravno unesena adresa elektroničke pošte
-							\\1. Korisnik dobiva obavijest da adresa ne postoji u sustavu
+							\\1. Korisnik  je putem stranice 404 rezervirane za grešku obaviješten da adresa ne postoji u sustavu
 							\\2. Korisnik unosi ispravnu adresu elektroničke pošte i nastavlja s prijavom
 						\end{packed_item}
 					\end{packed_item}
@@ -148,20 +150,21 @@
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
 							\item[3.a] Već postoji račun s tom adresom elektroničke pošte
-							\\1. Korisnik dobiva obavijest da već postoji račun s tom adresom
+							\\1. Korisnik putem stranice 500 rezervirane za grešku dobiva obavijest  da već postoji račun s tom adresom
 							\\2. Korisnik unosi drugu adresu za registraciju ili se prijavljuje na već postojeći račun
 						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC3.b Postavljanje lozinke pri prvoj prijavi}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
+						\item \textbf{Glavni sudionik:} Neprijavljeni korisnik
 						\item \textbf{Cilj:} Postavljanje lozinke
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Korisnik je ispunio obrazac za registraciju
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Korisnik pristupa aplikaciji putem poveznice poslane nakon registracije
+							\item Korisnik pristupa stranici za prijavu putem poveznice poslane nakon registracije
+							\item Korisnik se prijavi na račun preko dobivene jednokratne lozinke
 							\item Korisnik unosi željenu, novu lozinku za svoj korisnički račun
 							\item Pritisak na gumb spremi
 						\end{packed_enum}
@@ -221,16 +224,15 @@
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
 							\item Administrator pritišće gumb za dodavanje rječnika (+)
-							\item Otvaranje obrasca za dodavanje rječnika gdje su podaci preuzeti iz API
-							\item Ručna provjera imena i jezika rječnika
-							\item Ručni unos naslovne fotografije i zastave
+							\item Otvaranje obrasca za dodavanje rječnika
+							\item Ručni unos naslovne fotografije, opisa rječnika i jezika učenja
 							\item Pritisak na gumb za dodavanje rječnika
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
-							\item[5.a] Dodavanje već postojećeg rječnika
+							\item[4.a] Dodavanje već postojećeg rječnika
 							\\1. Administrator dobiva obavijest da već postoji rječnik s tim imenom i jezikom u sustavu
-							\\2. Administrator specificira ime rječnika (pr. američki engleski) ili bira u sustavu trenutno nepostojeći jezik ili odustaje
+							\\2. Administrator specificira opis rječnika (pr. američki engleski) ili bira u sustavu trenutno nepostojeći jezik ili odustaje
 						\end{packed_item}
 					\end{packed_item}
 
@@ -244,6 +246,7 @@
 						\begin{packed_enum}
 							\item Administrator pritisne gumb za uređivanje na rječniku
 							\item Administrator pritisne gumb za brisanje rječnika
+							\item Administrator potvrđuje da je siguran da želi obrisati rječnik
 						\end{packed_enum}
 					\end{packed_item}
 
@@ -256,16 +259,19 @@
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
 							\item Pritisak na gumb za uređivanje na rječniku
-							\item Otvora se forma za pretraživanje riječi tog jezika
-							\item Nakon pronalaska tražene riječi stisni gumb za dodavanje (+) pored nje
+							\item Pritisak na gumb (+) ispod polja za pretraživanje riječi
+							\item Otvara se forma za dodavanje riječi u rječnik
+							\item Nakon upisa riječi stisni gumb (+) pored nje
+							\item Preko API dopunjavaju se ostale informacije o riječi
+							\item Pritisak na gumb za spremanje riječi
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
 							\item [1.a] Nema napravljenog rječnika
 							\\1. Administrator prvo napravi rječnik
 							\\2. Administrator dodaje riječ
-							\item [3.a] Riječ je već u rječniku
-							\\1. Administrator ju bira izbrisati iz rječnika ili ostaviti u njemu
+							\item [6.a] Riječ je već u rječniku
+							\\1. Administrator upisuje drugu riječ ili odustaje od dodavanja
 						\end{packed_item}
 					\end{packed_item}
 
@@ -279,12 +285,12 @@
 						\begin{packed_enum}
 							\item Pritisak na gumb za uređivanje na rječniku
 							\item Otvori se forma za pretraživanje riječi tog jezika
-							\item Nakon pronalaska tražene riječi stisni gumb da uklanjanje (-) pored nje
+							\item Nakon pronalaska tražene riječi pritišćemo gumb za uklanjanje (-) pored iste
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
 							\item [3.a] Riječ nije u rječniku
-							\\1. Administrator ju bira dodati ili ostaviti van rječnika
+							\\1. Administrator traži drugu riječ
 						\end{packed_item}
 					\end{packed_item}
 					
@@ -304,8 +310,7 @@
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
 							\item [3.a] Riječ nije dodana u rječnik
-							\\1. Gumb za uređivanje se ne prikazuje
-							\\2. Administrator prvo dodaje riječ kako bi istu mogao urediti
+							\\1. Administrator prvo dodaje riječ kako bi istu mogao urediti
 						\end{packed_item}
 					\end{packed_item}
 					
@@ -314,7 +319,7 @@
 						\item \textbf{Glavni sudionik:} Administrator
 						\item \textbf{Cilj:} Uređivanje tekstualnih komponenti riječi
 						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, biti na stranici za uređivanje
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, na stranici smo za uređivanje
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
 							\item Administrator uređuje informacije o riječi
@@ -328,66 +333,44 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6.c Dodavanje novih fraza za riječ}}
+					\noindent \underbar{\textbf{UC6.c Upisivanje fraze za riječ}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Administrator
-						\item \textbf{Cilj:} Dodati novu frazu za riječ
-						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Cilj:} Dodati frazu za riječ
+						\item \textbf{Sudionici:} Baza podataka, Word API
 						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, biti na stranici za uređivanje
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Administrator pritišće gumb za dodavanje fraze (+) pored polja za fraze
-							\item Administrator upisuje frazu u novonastalom polju
+							\item Administrator upisuje frazu u zadanom polju
+							\item Pritisak gumba (+) pored polja za fraze
+							\item Putem API servisa fraza se prevodi i upisuje u polje prevedene fraze
 							\item Pritisak na gumb za spremanje
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
-							\item [3.a] Polje za frazu ostalo je prazno
-							\\1. Administrator dobiva obavijest da je polje prazna
+							\item [4.a] Polje za frazu ostalo je prazno
+							\\1. Administrator dobiva obavijest da je polje prazno
 							\\2. Administrator upisuje tekst u prazno polje
 							\\3. Pritisak na gumb za spremanje
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6.d Uklanjanje fraza za riječ}}
-					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Administrator
-						\item \textbf{Cilj:} Ukloniti frazu za riječ
-						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, biti na stranici za uređivanje
-						\item \textbf{Opis osnovnog tijeka:}
-						\begin{packed_enum}
-							\item Administrator pritišće gumb za uklanjanje fraze (-) pored polja za fraze
-							\item Pritisak na gumb za spremanje
-						\end{packed_enum}
-						\item \textbf{Opis mogućih odstupanja:}
-						\begin{packed_item}
-							\item [1.a] Pad broja fraza ispod minimalne vrijednosti (1)
-							\\1. Administrator dobiva obavijest da je došao do minimalnog broja fraza te ovu ne može izbrisati
-							\item [2.a] Prazno polje za tekst
-							\\1. Administrator dobiva obavijest da je polje prazno
-							\\2. Administrator upisuje tekst u praznu kutiju
-						\end{packed_item}
-					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC6.e Dodavanje zvučnog zapisa za riječ}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Administrator
 						\item \textbf{Cilj:} Dodati zvučni zapis za riječ
-						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, biti na stranici uređivanje
+						\item \textbf{Sudionici:} Baza podataka, Word API
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama, na stranici smo za uređivanje
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Administrator pritisne gumb za učitavanje datoteke pored tekstualnog polja za zvučni zapis
-							\item Administrator pronalazi zvučni zapis koji želi učitati sa svog osobnog računala te ga prenosi
+							\item Administrator pritisne gumb (+) pored zvučnog zapisa
+							\item API pronalazi zvučni zapis za riječ i postavlja je
 							\item Pritisak na gumb za spremanje
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
-							\item [2.a] Nepodržani format zvučnog zapisa
-							\\1. Administrator dobiva obavijest da odabrani format nije podržan
-							\\2. Administrator bira drugi zvučni zapis
-							\item [3.a] Prazno polje za tekst
+							\item [1.a] Prazno polje za tekst
 							\\1. Administrator dobiva obavijest da je polje prazno
 							\\2. Administrator upisuje tekst u prazno polje
 						\end{packed_item}
@@ -402,15 +385,16 @@
 						\item \textbf{Preduvjet:} Administrator ima administratorske privilegije
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Administrator otvara postavke korisničkog profila (za njega dodatno proširene administratorskim postavkama)
+							\item Administrator otvara postavke korisničkog profila
+							\item Administrator otvara postavke za privilegije putem proširene administratorske navigacijske trake
 							\item Administrator upisuje elektroničku poštu željenog korisnika 
 							\item Pritisak na gumb za dodavanje administratorskih privilegija
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
-							\item [2.a] Korisnik ne postoji u sustavu
+							\item [3.a] Korisnik ne postoji u sustavu
 							\\1. Administrator ispravlja svoj unos
-							\item [3.a] Korisnik je već administrator
+							\item [4.a] Korisnik je već administrator
 						\end{packed_item}
 					\end{packed_item}
 
@@ -422,65 +406,39 @@
 						\item \textbf{Preduvjet:} Administrator ima administratorske privilegije
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Administrator otvara postavke korisničkog profila (za njega dodatno proširene administratorskim postavkama)
+							\item Administrator otvara postavke korisničkog profila
+							\item Administrator otvara postavke za privilegije preko proširene administratorske navigacijske trake
 							\item Administrator upisuje elektroničku poštu željenog korisnika 
 							\item Pritisak na gumb za uklanjanje administratorskih privilegija
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
-							\item [2.a] Korisnik ne postoji u sustavu
+							\item [3.a] Korisnik ne postoji u sustavu
 							\\1. Administrator ispravlja svoj unos
-							\item [3.a] Korisnik nije administrator
+							\item [4.a] Korisnik nije administrator
 						\end{packed_item}
 					\end{packed_item}
 
 
-					\noindent \underbar{\textbf{UC8 Administrator briše korisnički račun}}
+					\noindent \underbar{\textbf{UC9.a Korisnik zaboravlja lozinku}}
 					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Administrator
-						\item \textbf{Cilj:} Brisanje korisnika iz baze podataka
+						\item \textbf{Glavni sudionik:} Neprijavljeni korisnik
+						\item \textbf{Cilj:} Dobivanje nove jednokratne lozinke
 						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Administrator ima administratorske privilegije
+						\item \textbf{Preduvjet:} Postoji profil sa zadanom adresom elektroničke pošte
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Administrator otvara postavke korisničkog profila (za njega dodatno proširene administratorskim postavkama)
-							\item Administrator upisuje elektroničku poštu željenog korisnika 
-							\item Pritisak na gumb za uklanjanje korisnika
+							\item Korisnik posjećuje glavnu stranicu
+							\item Korisnik pritisne gumb za prijavu
+							\item Korisnik pritisne gumb "ne znaš lozinku?"
+							\item Korisnik unosi svoju adresu elektroničke pošte
+							\item Pritisak na gumb za spremanje podataka
+							\item Prati se tijek UC3.b
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\begin{packed_item}
-							\item [3.a] Korisnik ne postoji u bazi podataka
-							\\1. Administrator ispravlja unesene podatke
-						\end{packed_item}
-					\end{packed_item}
-
-
-					\noindent \underbar{\textbf{UC9.a Korisnik mijenja svoju adresu elektroničke pošte}}
-					\begin{packed_item}
-						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
-						\item \textbf{Cilj:} Izmjena adrese elektroničke pošte
-						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Korisnik je već prijavljen u sustav
-						\item \textbf{Opis osnovnog tijeka:}
-						\begin{packed_enum}
-							\item Korisnik posjećuje stranicu korisničkog profila
-							\item Korisnik unosi novu adresu elektroničke pošte
-							\item Korisnik unosi trenutnu lozinku
-							\item Korisnik potvrđuje trenutnu lozinku
-							\item Pritisak na gumb za spremanje novih podataka
-						\end{packed_enum}
-						\item \textbf{Opis mogućih odstupanja:}
-						\begin{packed_item}
-							\item [1.a] Korisnik nije prijavljen u sustav
-							\\1. Preusmjeravanje korisnika na stranicu za prijavu
-							\\2. Korisnik se prijavljuje u korisnički račun
-							\item [2.a] Korisnik je krivo unio svoju lozinku
-							\\1. Korisnik dobiva obavijest da je unesena lozinka pogrešna
-							\\2. Korisnik ispravlja unesenu lozinku
-							\item [3.a] Korisnik je unio neispravnu (nevažeću) adresu elektroničke pošte
-							\\1. Korisnik dobiva obavijest da je unio nevažeću adresu elektroničke pošte
-							\item [4.a] Korisnik je pogrešno potvrdio svoju lozinku
-							\\1. Korisnik dobiva obavijest da unesene lozinke nisu iste
+							\item [5.a] Adresa elektroničke pošte nije u sustavu
+							\\1. Korisnik unese ispravnu adresu ili stvara novi korisnički račun sa željenom elektroničkom poštom
 						\end{packed_item}
 					\end{packed_item}
 
@@ -493,22 +451,9 @@
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
 							\item Korisnik ulazi u postavke korisničkog profila
-							\item Korisnik odabire opciju promjene lozinke
-							\item Korisnik unosi trenutnu lozinku
-							\item Korisnik unosi novu lozinku
-							\item Korisnik potvrđuje novu lozinku
-							\item Pritisak na gumb za izmjenu
+							\item Korisnik odabire opciju "ne znaš lozinku?"
+							\item Prati se tijek UC9.a
 						\end{packed_enum}
-						\item \textbf{Opis mogućih odstupanja:}
-						\begin{packed_item}
-							\item [3.a] Korisnik pogrešno unosi svoju trenutnu lozinku
-							\\1. Korisnik dobiva obavijest da je lozinka neispravna
-							\\2. Korisnik upisuje ispravnu lozinku
-							\item [4.a] Unesena nova lozinka nije u skladu s pravilima za sigurnost lozinke
-							\\1. Korisnik dobiva obavijest o parametrima koji nisu zadovoljeni
-							\\2. Korisnik ispravlja lozinku u skladu s nezadovoljenim parametrima
-							\item [5.a] Korisnik krivo unosi potvrđuje lozinku
-						\end{packed_item}
 					\end{packed_item}
 					
 					
@@ -526,7 +471,7 @@
 						\begin{packed_item}
 							\item [1.a] Račun je obrisan tijekom sesije
 							\\1. Korisnik dobiva obavijest da je sesija istekla
-							\\2. Stranica se osvježava i korisnik automatski odjavljuje
+							\\2. Stranica se osvježava i korisnik se automatski odjavljuje
 						\end{packed_item}
 					\end{packed_item}
 
@@ -607,7 +552,7 @@
 					\end{packed_item}
 
 
-					\noindent \underbar{\textbf{UC13 Dolazak na postavke korisničkog računa}}
+					\noindent \underbar{\textbf{UC13.a Dolazak na postavke korisničkog računa}}
 					\begin{packed_item}
 						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
 						\item \textbf{Cilj:} Korisnik dolazi na stranicu za postavke korisničkog računa
@@ -615,11 +560,91 @@
 						\item \textbf{Preduvjet:} Korisnik je prijavljen u svoj korisnički račun
 						\item \textbf{Opis osnovnog tijeka:}
 						\begin{packed_enum}
-							\item Pritisak na ikonu profila u gornjem desnom kutu
+							\item Pritisak na ikonu profila na navigacijskoj traci
 						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC13.b Promjena imena i prezimena korisničkog računa}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Prijavljeni korisnik
+						\item \textbf{Cilj:} Korisnik mijenja ime i/ili prezime korisničkog računa
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Korisnik je prijavljen u svoj korisnički račun
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Pritisak na ikonu profila na navigacijskoj traci
+							\item U tekstualnom polju unese željeno ime i prezime profila
+							\item Pritisak na gumb spremi
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item [3.a] Tekstualno polje ostalo prazno
+							\\1. Korisnik dobiva obavijest da je polje ostalo prazno
+							\\2. Korisnik dopuni prazno polje
+						\end{packed_item}
+					\end{packed_item}
+					
+					
+					\noindent \underbar{\textbf{UC14.a Dodavanje jezika za rječnike}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Dodati jezik za korištenje pri pravljenju rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Administrator otvara postavke korisničkog profila
+							\item Administrator otvara postavke za jezike preko proširene administratorske navigacijske trake
+							\item Pritisak gumba (+)
+							\item Administrator upisuje ime, kraticu i ikonu jezika
+							\item Pritisak na gumb za dodavanje
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item [5.a] Već postoji jezik s istom kraticom
+							\\1. Upisujemo drugu kraticu za jezik ili odustajemo od dodavanja
+						\end{packed_item}
+					\end{packed_item}
+					
+					
+					\noindent \underbar{\textbf{UC14.b brisanje jezika za rječnike}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Izbrisati jezik za korištenje pri pravljenju rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Administrator otvara postavke korisničkog profila
+							\item Administrator otvara postavke za jezike preko proširene administratorske navigacijske trake
+							\item Administrator pretražuje jezik koji želi izbrisati
+							\item Pritisak na gumb (-)
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\begin{packed_item}
+							\item [4.a] Postoji rječnik koji koristi taj jezik
+							\\1. Administrator dobiva obavijest preko stranice za greške da postoji rječnik koji koristi taj jezik
+							\\2. Administrator odustaje od brisanja jezika ili prvo izbriše sve rječnike koje koriste taj jezik
+						\end{packed_item}
 					\end{packed_item}
 
 
+					\noindent \underbar{\textbf{UC14.c uređivanje jezika za rječnike}}
+					\begin{packed_item}
+						\item \textbf{Glavni sudionik:} Administrator
+						\item \textbf{Cilj:} Urediti jezik za korištenje pri pravljenju rječnika
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Prijava s administratorskim privilegijama
+						\item \textbf{Opis osnovnog tijeka:}
+						\begin{packed_enum}
+							\item Administrator otvara postavke korisničkog profila
+							\item Administrator otvara postavke za kreiranje jezika putem proširene administratorske navigacijske trake
+							\item Administrator pretražuje jezik koji želi urediti
+							\item Pritisak na gumb za uređivanje
+						\end{packed_enum}
+					\end{packed_item}
+					
+					
 				\subsubsection{Dijagrami obrazaca uporabe}
 				\begin{figure}[H]
 					\includegraphics[width=0.9\textwidth]{dijagrami/OsnovnaFunkcionalnost.png} 
@@ -709,10 +734,10 @@
 		\item Web aplikacija ne mora biti prilagođena asistivnim alatima.
 		\item Web aplikacija mora biti responzivna.
 		\item Pristup web aplikaciji vrši se protokolom HTTP.
-		\item Aplikacija mora biti implementirana kao višeslojni sustav
+		\item Aplikacija mora biti implementirana kao višeslojni sustav.
 		\item Autorizacija se provodi pomoću JWT i bcrypt algoritma.
 		\item Korisničko sučelje mora biti jednostavno i izgledati kohezivno.
-		\item Pristup bilo kojem dijelu aplikacije moguć je samo nakon \item prijave u sustav.
+		\item Pristup bilo kojem dijelu aplikacije moguć je samo nakon prijave u sustav.
 		\item Pristup podacima u bazi ne smije trajati dulje od tri sekunde.
 		\item Sustav pretpostavlja hrvatski jezik kao materinji jezik.
 	\end{packed_item} 

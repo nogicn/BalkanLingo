@@ -1,24 +1,13 @@
 # Available Accounts
 - **Admin Account**
-  - Email: admin@gmail.com
+  - Email: admin@balkanlingo.online
   - Password: 123
 - **User Account**
-  - Email: user@gmail.com
+  - Email: user@balkanlingo.online
   - Password: 123
 
-# Adding users
-- First go to "Registriraj se", after registration you will be redirected after 5 seconds.
-- After registering go to "Prijavi se" and click on "Ne znaš lozinku"
-- ** this is temporary** enter email and the password you want
-- You are redirected to "Prijavi se" and log in
-
-# Reset password
-- Go to "Prijavi se" and click on "Ne znaš lozinku"
-- ** this is temporary** enter email and the password you want
-- You are redirected to "Prijavi se" and log in
-
 # Publicly Accessible Website
-- The website is publicly accessible at: [138.201.184.55:3000](http://138.201.184.55:3000)
+- The website is publicly accessible at: [balkanlingo.online](https://balkanlingo.online)
 
 # Manual Setup
 To run the application manually, you'll need Node.js version 20 or higher.
