@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>404</title>
+        <link rel="stylesheet" href="/css/forOFor.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <% include partials/navbar.ejs %>
+    <div class="main-content">
+        <h1><%= status %></h1>
+        <img src="/images/orange-user.png" alt="">
+        <p><%= errorText %>.</p>
+        <a href="<%= link %>">Povratak</a>
+    </div>
+        <% include partials/footer.ejs %>
+</body>
+</html>

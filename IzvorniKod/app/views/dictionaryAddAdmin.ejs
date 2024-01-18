@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>BalkanLingo</title>
+        <link rel="stylesheet" href="/css/addDic.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
+        <hr>
+        <div class="main">
+            <div class="flex-container profile-container">
+                <h2 class="language-title">UREĐIVANJE RJEČNIKA</h2>
+                <br>
+
+                <!--defenirati u BP sve sto nam treba za rjecnik pa fixati u value poljima-->
+
+                <form class="word-edit-top" action="/dictionary/adminSaveDict" method="POST">
+                    <input type="hidden" name="id" value="<%= dictionary.id %>">
+                   <!-- <div class="word-edit-container">
+                        <label for="name" class="word-edit-label ">IME</label>
+                        <input class="word-edit" type="text" id="name" name="name" placeholder='"ENGLESKI"' 
+                        <% if(dictionary){ %>
+                            value="<%= dictionary.languageName %>"
+                        <% } %>
+                        >
+                    </div>-->
+                    <!--<div class="word-edit-container">
+                        <label for="shortName" class="word-edit-label ">KRATICA</label>
+                        <input class="word-edit" type="text" id="shortName" name="shorthand" placeholder='"EN"'
+                        <% if(dictionary){ %>
+                            value="<%= dictionary.shorthand %>"
+                        <% } %>
+                        >
+                    </div>-->
+                    <div class="word-edit-container">
+                        <label for="mainPage" class="word-edit-label ">NASLOVNICA</label>
+                        <input class="word-edit" type="text" id="mainPage" name="image_link" placeholder='"https://www..."'
+                        <% if(dictionary){ %>
+                            value="<%= dictionary.image_link %>"
+                        <% } %>
+                        >
+                    </div>
+                   <!-- <div class="word-edit-container">
+                        <label for="icon" class="word-edit-label ">IKONA</label>
+                        <input class="word-edit" type="text" id="name" name="flagIcon" placeholder='":FLAG_GB:"'
+                        <% if(dictionary){ %>
+                            value="<%= dictionary.flagIcon %>"
+                        <% } %>
+                        >
+                    </div>-->
+                    <div class="word-edit-container">
+                        <label for="description" class="word-edit-label">JEZIK</label>
+                        <select name="language_id" id="" class="select">
+                        <% for (let i = 0; i < languages.length; i++) { %>
+                            <option value="<%= languages[i].id %>" <% if (languages[i].id == dictionary.language_id) { %> selected <% } %>><%= languages[i].name %></option>
+                        <% } %>
+                    </select>
+                    </div>
+                    <div class="word-edit-container">
+                        <label for="description" class="word-edit-label">OPIS</label>
+                        <input class="word-edit" type="text" id="description" name="description" placeholder='"ENGLESKI RJEČNIK"'
+                        <% if(dictionary){ %>
+                            value="<%= dictionary.name %>"
+                        <% } %>
+                        >
+                    </div>
+                    <div class="save-changes-container">
+                        <button class="save-changes" type="submit">SPREMI PROMJENE</button>
+                        <img src="/images/blue-warning.png" alt="">
+                    </div>
+                    
+                </form>
+                <div class="save-changes-container">
+                    <button class="delete-dictionary" href="/dictionary/removeDictionary/<%= dictionary.id %>">OBRIŠI RJEČNIK</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <% include partials/footer.ejs %>
+        <script>
+            // Select the button using its class name
+            const deleteButton = document.querySelector('.delete-dictionary');
+
+
+            deleteButton.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            // Retrieve the href attribute of the button
+            const deleteUrl = deleteButton.getAttribute('href');
+
+            Swal.fire({
+            title: "Obriši?",
+            text: `Jeste li sigurni da želite obrisati rječnik?`,
+            showCancelButton: true,
+            heightAuto: false,
+            confirmButtonColor: '#2ec4b6',
+            cancelButtonText: 'Odustani',
+            confirmButtonText: 'Obriši',
+            }).then(function(result) {
+            if(result.isConfirmed) {
+                // Redirect to the URL on confirmation
+                window.location.href = deleteUrl;
+            }
+            });
+        });
+        </script>
+    </body>
+</html>

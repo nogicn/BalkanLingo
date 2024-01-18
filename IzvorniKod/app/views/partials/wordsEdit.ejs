@@ -1,0 +1,63 @@
+<div class="flex-container" id="wordContainer">
+    <div class="language-title">
+        <%= dictionary.name %>
+    </div>
+    <div class="language-title title-word">RIJEČ</div>
+    <div class="word-edit-container">
+        <input type="hidden" name="id" value=<%=word.id %> required>
+        <label for="home" class="word-edit-label">DOMAĆA RIJEČ</label>
+        <input class="word-edit" type="text" id="home" name="nativeWord" placeholder="Riječ" value="<%=word.nativeWord %>"
+        required>
+        <div class="img-container">
+            <img src="/images/black-add.png" alt="" hx-post="/dictionary/fillWordData/<%= dictionary.id %>"
+                hx-target="#wordContainer" hx-swap="outerHTML" hx-indicator="#loading" hx-include="#data">
+
+        </div>
+    </div>
+
+    <div class="word-edit-container">
+        <label for="home" class="word-edit-label word-edit-phrase">DOMAĆA FRAZA</label>
+        <input class="word-edit" type="text" id="home" name="nativeDescription" placeholder="Naučio sam ovu riječ"
+            value='<%= word.nativeDescription %>' required>
+        <div class="img-container">
+            <img src="/images/black-add.png" alt="" hx-post="/dictionary/fillSentenceData/<%= dictionary.id %>"
+                hx-target="#wordContainer" hx-swap="outerHTML" hx-indicator="#loading" hx-include="#data">
+
+        </div>
+    </div>
+    <div class="word-edit-container">
+        <label for="home" class="word-edit-label ">STRANA RIJEČ</label>
+        <input class="word-edit" type="text" id="home" name="foreignWord" placeholder="Word" value="<%=word.foreignWord
+            %>" required>
+    </div>
+    <div class="word-edit-container">
+        <label for="home" class="word-edit-label word-edit-phrase">STRANA FRAZA</label>
+        <input class="word-edit" type="text" id="home" name="foreignDescription" placeholder="I've learned a new word!"
+            value='<%= word.foreignDescription %>' required>
+        <div class="img-container">
+            <!-- <img src="/images/black-add.png" alt=""> 
+                        <img src="/images/black-remove.png" alt=""> -->
+        </div>
+    </div>
+    <!-- if pronunciation audio exists render it -->
+
+    <div class="word-edit-container">
+        <label for="" class="word-edit-label word-edit-phrase" style="display: block;">GENERIRAJ IZGOVOR</label>
+        <audio controls style="display: inline-block;">
+            <source src="/pronunciation/<%= word.pronunciation %>" type="audio/mpeg">
+            Your browser does not support the audio element.
+            <input type="hidden" name="pronunciation" value="<%=word.pronunciation %>" required>
+
+        </audio>
+        <div class="img-container" style="display: inline-block; vertical-align: super;">
+            <img src="/images/black-add.png" alt="" hx-post="/dictionary/createPronunciation/<%= dictionary.id %>"
+                hx-target="#wordContainer" hx-swap="outerHTML" hx-indicator="#loading" hx-include="#data">
+        </div>
+    </div>
+
+    <div class="save-changes-container">
+        <button class="save-changes">SPREMI PROMJENE</button>
+        <img src="/images/blue-warning.png" alt="">
+        <div id="loading" class="htmx-indicator" style="vertical-align: middle; margin-left: 10px;"></div>
+    </div>
+</div>

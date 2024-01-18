@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <title>Listening Lesson</title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <link rel="stylesheet" href="/css/sayWord.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <% include partials/navbar.ejs %>
+    <div class="main-content">
+        <div class="button-container">
+            <a href="/dashboard" style="opacity:0">
+                <img src="/images/orange-home.png" alt="">
+                <p>završi sesiju učenja</p>
+            </a>
+        </div>
+        <div class="say-area">
+            <div class="say-head">
+                <img src="/images/black-talk.png" alt="">
+                <p>PROČITAJ I IZGOVORI RIJEČ</p>
+                
+
+            </div>
+            <div id="formData">
+            <p class="big-bold"><%= word.foreignWord %></p>
+            <p class="phrase"><%= word.foreignDescription %></p>
+            <img  class="say" src="/images/orange-mic.png" alt="" id="recordButton">
+            <input hidden type="file" name="pronunciation" id="audioInput" accept="audio/*">
+            <audio  id="audioPlayer" controls></audio>
+            <div hx-post="/dictionary/checkListening/<%= word.id %>" hx-target="#answer" hx-include="#formData" hx-trigger="click" class="check">PROVJERA</div>
+            <div id="answer"></div>
+            </div>
+            <div class="invisible-buttons"> <!-- Ovo ima istu funkcionalnost kao i button-container, samo se ovo prikazuje kad je mal ekran -->
+                <% include partials/navigation.ejs %>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="/learnSession/<%= dictionaryId %>" style="opacity:0">
+                <img src="/images/orange-next.png" alt="">
+                <p>sljedeće pitanje</p>
+            </a>
+        </div>
+    </div>
+
+    </div>
+    <% include partials/footer.ejs %>
+    <script>
+        const recordButton = document.getElementById('recordButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioInput = document.getElementById('audioInput');
+        
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        
+        recordButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (!isRecording) {
+                // Start recording
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.ondataavailable = event => {
+                            if (event.data.size > 0) {
+                                audioChunks.push(event.data);
+                            }
+                        };
+                        mediaRecorder.onstop = () => {
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            audioPlayer.src = audioUrl;
+                            audioPlayer.style.display = 'block';
+
+                            // Create FormData and append the audio blob
+                            const formData = new FormData();
+                            formData.append('pronunciation', audioBlob, 'recording.wav');
+                            
+                        };
+                        mediaRecorder.start();
+                        isRecording = true;
+                        recordButton.textContent = 'Stop Recording';
+                    })
+                    .catch(error => {
+                        console.error('Error accessing the microphone:', error);
+                    });
+            } else {
+                // Stop recording
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    recordButton.textContent = 'Start Recording';
+                }
+            }
+        });
+    </script>
+    <script>
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            // Select all 'div' elements
+            var divs = document.querySelectorAll('div');
+        
+            // Loop through each 'div' and remove the 'hx-post' attribute
+            divs.forEach(function(div) {
+                 if (div.hasAttribute('hx-post')) {
+                div.removeAttribute('hx-post');
+                div.removeAttribute('hx-target');
+                div.removeAttribute('hx-trigger');
+                // add atrribute to div
+                div.setAttribute('hx-disable', '')
+                 }
+            });
+
+            // Select all 'a' elements 
+            var as = document.querySelectorAll('a');
+
+            // Loop through each 'a' and set their opacity to 1
+            as.forEach(function(a) {
+                a.style.opacity = 1;
+                
+            });
+
+            // select next question div
+            var nextQuestionDiv = document.querySelector('.next-question a');
+            // select return home div
+            var returnHomeDiv = document.querySelector('.return-home a');
+            // select invisible buttons div
+            nextQuestionDiv.style.display = 'flex';
+            returnHomeDiv.style.display = 'flex';
+        
+        });
+    </script>
+    <script>
+        document.body.addEventListener('htmx:beforeRequest', function(event) {
+       
+
+            // Add your condition to decide when to prevent the request
+            if (shouldPreventRequest(event.detail)) {
+                event.preventDefault();
+                console.log('HTMX Request Prevented');
+                // append div to answer with error message
+                var answerDiv = document.getElementById('answer');
+                answerDiv.innerHTML = '<div class="answer"> <p class="answer" style="color: red">PRVO SNIMITE RIJEČ</p> </div>';
+            }
+        });
+
+        function shouldPreventRequest(detail) {
+            if (!audioChunks || audioChunks.length == 0) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var user_controller = require('../controllers/users_controller');
 var checkAuth = require('../middleware/authorisation_middleware');
-
+var checkAdmin = require('../middleware/admin_authorisation_middleware');
 // create login route
 router.post('/login', user_controller.loginUser);
 
@@ -10,15 +10,20 @@ router.post('/login', user_controller.loginUser);
 router.post('/register', user_controller.createUser);
 
 // create logout route
-router.get('/logout', checkAuth, user_controller.logoutUser);
-
-// create get all users route
-router.get('/', checkAuth, user_controller.getAllUsers);
+router.get('/logout',  checkAuth, user_controller.logoutUser);
 
 // import users controller
 router.post('/edit', checkAuth, user_controller.editUser);
 
 // reset password
 router.post('/reset', user_controller.resetPwd);
+
+router.post('/createPass', user_controller.createPass);
+
+router.get('/getUsers',checkAuth, checkAdmin, user_controller.searchUsers);
+
+router.post('/getUsers',checkAuth, checkAdmin, user_controller.listUsers);
+
+router.post('/setAdmin/:id',checkAuth, checkAdmin, user_controller.setAdmin);
 
 module.exports = router;

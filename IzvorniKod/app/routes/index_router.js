@@ -6,10 +6,15 @@ var dictionaryController = require('../controllers/dictionary_controller');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-        res.render('home', { title: 'Home' });
+        if (req.session.token) {
+            res.redirect('/dashboard');
+        }
+        else {
+            res.render('home', { title: 'Home' });
+        }
 });
 
-router.get('/dashboard', checkAuth, wordController.dashboard);
+router.get('/dashboard', checkAuth, dictionaryController.dashboard);
 
 router.get('/register', function (req, res) {
     res.render('register', { title: 'Register' });
@@ -20,11 +25,21 @@ router.get('/login', function (req, res) {
 });
 
 router.get('/user/edit', checkAuth, function (req, res) {
-    res.render('profileEdit', { title: 'Edit User', name: req.session.name, surname: req.session.surname });
+    res.render('profileEdit', { title: 'Edit User', name: req.session.name, surname: req.session.surname, isAdmin: req.session.is_admin });
 });
 
-router.get('/learn', checkAuth, function (req, res) {
+router.get('/learn', function (req, res) {
     res.render('learnSession', { title: 'Learn' });
+});
+router.get('/listen', checkAuth, function (req, res) {
+  res.render('listenWord', { title: 'Listening Lesson' });
+});
+router.get('/say', checkAuth, function (req, res) {
+  res.render('sayWord', { title: 'Listening Lesson' });
+});
+
+router.get('/404', checkAuth, function (req, res) {
+  res.render('forOFor', { title: 'Error 404' });
 });
 
 router.get('/dict', checkAuth, function (req, res) {
@@ -50,9 +65,4 @@ router.get('/profileEdit', checkAuth, function (req, res) {
 router.get('/reset', function (req, res) {
   res.render('resetPass', { title: 'Reset Password' });
 });
-
-
-
-
-
 module.exports = router;

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <title>BalkanLingo</title>
+        <link rel="stylesheet" href="/css/addDic.css">
+        <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+        <link rel="stylesheet" href="/css/loader.css">
+    </head>
+    <body>
+        <!-- Navbar -->
+        <% include partials/navbar.ejs %>
+        <form action="/dictionary/addWord/<%= dictionary.id %>" method="POST" style=" all: unset;" >
+        <div class="main">
+            <% include partials/wordsEdit.ejs %>
+        </div>
+    </form>
+        <hr>
+        <!-- Footer -->
+        <% include partials/footer.ejs %>
+    </body>
+</html>

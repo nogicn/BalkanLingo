@@ -1,30 +1,52 @@
-const db = require('../database/database');
-const users = require('../models/user_model');
-
+const db = require("../database/database");
+const userModel = require("../models/user_model");
 const checkAuth = (req, res, next) => {
-    try {
-        const row = db.prepare(users.getUserByToken).get({token:req.session.token});
-        // if user is not logged in and current page is not home page
-        //console.log(row);
-        if (!row) {
-            //console.log("User not logged in");
-            //res.status(404).send("User not logged in");
-            res.redirect('/');
-        } else {
-            //console.log(row);
-            if (row.is_admin !== undefined ) 
-                if (row.is_admin === 1) {
-                req.session.is_admin = true;
-            }else {
-                req.session.is_admin = false;
-            }
-            next();
-        }
+  try {
+    let row = "";
+    if (process.env.TEST === "true") {
+      if (process.env.TESTMAIL === undefined) {
+        res.status(403).render("forOFor", {
+          status: 403,
+          errorText: "Korisnik nije ulogiran",
+          link: "/login",
+        });
+        return;
+      }
+      row = db
+      .prepare(userModel.getUserByEmail)
+      .get({ email: process.env.TESTMAIL });
+      
+    } else {
+      row = db
+      .prepare(userModel.getUserByToken)
+      .get({ token: req.session.token });
     }
-    catch (err) {
-            console.error(err);
-            res.status(500).send("Internal Server Error: " + err.message);
+    if (!row) {
+      //res.status(404).send("User not logged in");
+      res.status(403).render("forOFor", {
+        status: 403,
+        errorText: "Korisnik nije ulogiran",
+        link: "/login",
+      });
+    } else {
+      req.session.token = row.token;
+      if (row.is_admin !== undefined)
+      if (row.is_admin === 1) {
+        req.session.is_admin = true;
+      } else {
+        req.session.is_admin = false;
+      }
+      req.session.user_id = row.id;
+
+      next();
     }
-}
+  } catch (err) {
+    res.status(500).render("forOFor", {
+      status: 500,
+      errorText: "Internal Server Error: " + err.message,
+      link: "/login",
+    });
+  }
+};
 
 module.exports = checkAuth;

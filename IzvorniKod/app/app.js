@@ -6,8 +6,8 @@ var logger = require('morgan');
 var http = require('http');
 const bodyParser = require('body-parser');
 var session = require('express-session');
-var dotenv = require('dotenv');
-dotenv.config();
+const checkAuth = require('./middleware/authorisation_middleware');
+var compression = require('compression')
 
 
 
@@ -28,18 +28,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 app.use(session({secret: "omgthissecretkeyissosecure"}));
-
+app.use(compression( {level: 6} ));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
-app.use('/dictionary', dictionaryRouter);
+app.use('/dictionary', checkAuth, dictionaryRouter);
 
-migration.migration();
-migration.hashBuiltins();
+if (process.env.MIGRATE === 'true') {
+  migration.migration();
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.status(404).render("forOFor", {
+    status: 404,
+    errorText: "Stranica ne postoji",
+    link: "/",
+  });
+  return;
 });
 
 // error handler

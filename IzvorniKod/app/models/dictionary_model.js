@@ -1,27 +1,35 @@
 const createDictionaryTable = `
     CREATE TABLE dictionary (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name INTEGER NOT NULL,
-        language TEXT NOT NULL,
+        name TEXT NOT NULL,
+        language_id INTEGER NOT NULL,
         image_link TEXT NOT NULL,
-        flag_icon_link TEXT NOT NULL
+        FOREIGN KEY (language_id) REFERENCES language(id)
     );
 `;
 
 const createNewDictionary = `
-    INSERT INTO dictionary (name, language, image_link, flag_icon_link) VALUES (@name, @language, @imageLink, @flagIconLink);
+    INSERT INTO dictionary (name, language_id, image_link) VALUES (@name, @language_id, @imageLink);
 `;
 
 const getDictionariesForUser = `
-    SELECT dictionary.*
-    FROM dictionary, dictionary_user
-    WHERE dictionary.id = dictionary_user.dictionary_id
+    SELECT dictionary.*, language.flag_icon
+    FROM dictionary
+    LEFT JOIN language ON dictionary.language_id = language.id
+    LEFT JOIN dictionary_user ON dictionary.id = dictionary_user.dictionary_id
+    WHERE dictionary_user.dictionary_id = dictionary.id
     AND dictionary_user.user_id = @userId;
 `;
 
 const getAllDictionaries = `
     SELECT *
     FROM dictionary;
+`;
+
+const getAllDictionariesWithIcons = `
+    SELECT dictionary.*, language.name AS language_name, language.flag_icon
+    FROM dictionary 
+    LEFT JOIN language ON dictionary.language_id = language.id;
 `;
 
 const deleteDictionary = `
@@ -45,6 +53,12 @@ const getDictionaryById = `
     WHERE id = @id;
 `;
 
+const updateDictionary = `
+    UPDATE dictionary
+    SET name = @name, language_id = @language_id, image_link = @imageLink
+    WHERE id = @id;
+`;
+
 module.exports = {
     createDictionaryTable,
     createNewDictionary,
@@ -52,6 +66,8 @@ module.exports = {
     getAllDictionaries,
     deleteDictionary,
     getDictionariesNotAssignedToUser,
-    getDictionaryById
+    getDictionaryById,
+    getAllDictionariesWithIcons,
+    updateDictionary
 
 }

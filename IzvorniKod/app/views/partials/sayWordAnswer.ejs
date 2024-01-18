@@ -1,0 +1,12 @@
+<div class="answer-container">
+    <% if (answerPercentage > 75) { %>
+        <div class="correct"><%= answerPercentage %></div>
+        <p>ČESTITAMO, VAŠ JE<br>IZGOVOR ODLIČAN.</p>
+    <% } else if (answerPercentage > 50) { %>
+        <div class="partiallycorrect"><%= answerPercentage %></div>
+        <p style="color: #ff9f1c;">VAŠ IZGOVOR<br>JE DJELOMIČNO TOČAN.</p>
+    <% } else{ %>
+        <div class="incorrect"><%= answerPercentage %></div>
+        <p style="color: #f83200;">VAŠ IZGOVOR<br>JE NETOČAN.</p>
+    <% } %>
+</div>

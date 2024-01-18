@@ -27,10 +27,21 @@ const getActiveQuestion = `
     SELECT * FROM active_question WHERE user_id = @userId;
 `;
 
+const increaseActiveQuestionType = `
+    UPDATE active_question
+    SET type = CASE
+        WHEN type >= 1 AND type < 4 THEN type + 1
+        ELSE 1 
+        END
+    WHERE user_id = @userId;
+
+`;
+
 module.exports = {
     createActiveQuestionTable,
     getActiveQuestion,
     setActiveQuestion,
     deleteActiveQuestion,
-    deleteActiveQuestionWordId
+    deleteActiveQuestionWordId,
+    increaseActiveQuestionType
 }

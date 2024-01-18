@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@200&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oswald Regular', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar, .footer {
+    height: 7%; /* 5% for the navbar and 5% for the footer */
+    background-color: #ffffff; /* Adjust the background color as needed */
+    color: #fff; /* Adjust the text color as needed */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .navbar-left, .navbar-right, .footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar img, .footer img {
+    margin: 0 10px;
+  }
+
+  .check{
+    border: none;
+    padding: 15px 25px;
+    width: 100%;
+    border-radius: 50px;
+    transition: all 0.2s;
+    background-color: #2ec486;
+    color: #ffffff;
+    margin-bottom: 30px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .check:hover{
+    filter: brightness(0.9);
+  }
+
+  .footer-left {
+    font-size: 13px;
+    margin-left: 15px;
+    display: inline-block;
+    color: black;
+  }
+
+  .footer-right svg{
+    margin-bottom: 20px;
+    max-width: 300px;
+    max-height: 60px;
+  }
+
+  /* remove all styles from a tag */
+  a {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+  }
+  .return-home p{
+    color: #ff9f1c;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .return-home a{
+    text-decoration: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .next-question a{
+    text-decoration: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .return-home:hover{
+    filter: brightness(1.06);
+    transform: scale(1.05);
+  }
+
+
+  .next-question p{
+    color: #ff9f1c;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .next-question:hover{
+    filter: brightness(1.06);
+    transform: scale(1.05);
+  }
+
+  .invisible-buttons{
+    display: none;
+  }
+
+  .main-content{
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffebd0;
+  }
+
+  .button-container{
+    flex: 1;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .button-container a{
+    transition: all 0.2s;
+  }
+  .button-container a p{
+    color: #ff9f1c;
+    font-size: 2rem;
+  }
+  .button-container a img{
+    width: 25%;
+  }
+  .button-container a:hover{
+    filter: brightness(0.95);
+    transform: scale(1.02);
+  }
+
+  .say-area{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 2%;
+  }
+  .say-head{
+    width: 100%;
+    height: 40px;
+    border-radius: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+  }
+  .say-head img{
+    height: 20px;
+  }
+  .say-head p{
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #000;
+    font-weight: bold;
+  }
+  .say{
+    margin: 20px;
+    transition: all 0.2s;
+  }
+  .say:hover{ /* ovo cisto kako bi izgledalo, triba promini*/
+    filter:invert(0.6);
+  }
+  .invisible-buttons{
+    display: none;
+  }
+  .big-bold{
+    color: #c27a16;
+    font-weight: bold;
+    margin: 10px;
+  }
+  .phrase{
+    color: #c27a16;
+    margin-bottom: 20px;
+  }
+  .answer-container{
+    display:  flex;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+  }
+  .correct{
+    text-align: center;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: #2ec4b6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px;
+  }
+
+  .partiallycorrect{
+    text-align: center;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: #ff9f1c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px;
+  }
+
+  .incorrect{
+    text-align: center;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: #f83200;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px;
+  }
+
+
+  .answer-container p{
+
+    color: #2ec4b6;
+    font-weight: bold;
+  }
+  #formData{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100% ;
+  }
+  #formData audio{
+    width: 90%;
+  }
+  #formData .check{
+    text-align: center;
+    margin: 10px;
+    margin-top: 20px;
+    width: 60%;
+  }
+  #answer{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 42.4px;
+  }
+
+  @media(max-width:1350px){
+    .say-head{
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    .answer-container p{
+        text-wrap: nowrap;
+    }
+  }
+  @media(max-width:1010px){
+    #formData{
+      width: 80%;
+    }
+    #formData .check{
+      width: 30%;
+    }
+    .main-content .say-area .say-head{
+      width: 50%;
+    }
+    .main-content .button-container{
+        display: none;
+    }
+    .main-content .invisible-buttons{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 60%;
+    }
+    .main-content .invisible-buttons img{
+        width: 60px;
+        margin:  10px;
+        transition: all 0.2s;
+    }
+    .main-content .invisible-buttons a:hover{
+        filter: brightness(0.9);
+    }
+
+    .main-content .say-area .say-head{
+        width: 60%;
+    }
+    .main-content .say-area .answer-container{
+        width: 40%;
+    }
+  }
+  @media(max-width:592px){
+    .main-content .say-area .say-head{
+        width: 80%;
+    }
+    #formData .check{
+      width: 50%;
+    }
+
+    .main-content .invisible-buttons p{
+      display: none;
+    }
+
+  }

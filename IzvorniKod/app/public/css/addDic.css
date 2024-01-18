@@ -74,9 +74,9 @@ html, body {
   }
 
   .flex-container{
+    align-items: center;
     width: 50%;
     display: flex;
-    align-items: center;
     flex-direction: column;
     position: relative;
   }
@@ -89,6 +89,10 @@ html, body {
     transition: all 0.2s;
   }
 
+  .word-edit-top{
+    width: 80%;
+  }
+
   .home-image:hover{
     filter: brightness(1.05);
 
@@ -98,7 +102,21 @@ html, body {
     width: 300px;
     margin-top: 30px;
   }
+/* Style the select element */
+.select {
+  width: 90%; /* Adjust as needed */
+  padding: 8px; /* Adjust as needed */
+  border: 1px solid #ccc; /* Adjust as needed */
+  border-radius: 50px; /* Adjust as needed */
+  box-sizing: border-box;
+  background-color: #ffb145;
+  height: 50px;
+}
 
+/* Style selected option */
+.select option[selected] {
+  background-color: #e0e0e0; /* Adjust as needed */
+}
   .language-add{
     height: 50px;
     width: 100%;
@@ -145,6 +163,7 @@ html, body {
     font-size: 1.5rem;
     margin-top: 30px;
     font-weight: bolder;
+    text-align: center;
   }
 
   .title-word{
@@ -264,10 +283,9 @@ html, body {
     }
 
     .word-edit-label{
-      margin-right: 60%;
+      margin-right: 0%;
       font: inherit;
     }
-
     .word-edit:focus{
       background-color: #ffcb83;
     }
@@ -322,6 +340,24 @@ html, body {
 
     .save-changes-container{
       position: relative;
+    }
+
+    .delete-dictionary{
+      
+      background-color: #d41b1b;
+      color: #ffffff;
+      padding: 12px 40px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .delete-dictionary:hover{
+      filter: brightness(1.05);
+      text-shadow: white 1px 0 10px;
+      padding: 12px 50px;
     }
 
     /*namijenjeno za warning sliku ako dodamo*/
@@ -392,7 +428,7 @@ html, body {
       left: 90%;
     }
     .word-edit-label{
-      margin-right: 50%;
+      margin-right: 0%;
     }
   }
 
@@ -405,7 +441,7 @@ html, body {
       left: 85%;
     }
     .word-edit-label{
-      margin-right: 40%;
+      margin-right: 0%;
     }
 
     .word-edit::placeholder{
@@ -479,7 +515,7 @@ html, body {
     }
 
     .word-edit-label{
-      margin-right: 20%;
+      margin-right: 0%;
     }
 
     .word-edit::placeholder{

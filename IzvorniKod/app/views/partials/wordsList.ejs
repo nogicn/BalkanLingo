@@ -1,0 +1,11 @@
+<div id="words" style="all: unset; display: contents;">
+<% for (let i = 0; i < words.length; i++) { %>
+    <div class="word-add">
+        <div class="actual-word"><%= words[i].foreignWord %> </div>
+        <div class="word-buttons">
+            <a href= <%="/dictionary/editWord/"+ words[i].id %> ><img  class="edit-button" src="/images/blue-edit.png" alt=""></a>
+            <a href= <%="/dictionary/deleteWord/"+ words[i].id %>><img class="add-button" src="/images/black-remove.png" alt=""></a>
+        </div>
+    </div>
+<% } %>
+</div>
