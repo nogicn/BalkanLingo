@@ -38,8 +38,8 @@ function migration(){
     db.prepare(dictionaryModel.createNewDictionary).run({ name: "Njemacki-Hrana", language_id: "2", imageLink: "https://cdn.countryflags.com/thumbs/germany/flag-400.png" });
 
     // create user
-    db.prepare(userModel.createAdmin).run({name:"Admin", surname:"Admin", email:"***REMOVED***", password:"123"});
-    db.prepare(userModel.createUser).run({name:"User", surname:"User", email:"***REMOVED***", password:"123"});
+    db.prepare(userModel.createAdmin).run({name:"Admin", surname:"Admin", email:"admin@balkanlingo.online", password:"123"});
+    db.prepare(userModel.createUser).run({name:"User", surname:"User", email:"user@balkanlingo.online", password:"123"});
     db.prepare(dictinoaryUserModel.addDictionaryToUser).run({userId:2, dictionaryId:1});
     
     
