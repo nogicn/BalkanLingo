@@ -9,6 +9,10 @@
 # Publicly Accessible Website
 - The website is publicly accessible at: [balkanlingo.online](https://balkanlingo.online)
 
+# Before you run
+- Make sure to add your elevenlabs api key and change the gmail key in .env 
+- Also make sure to update the origin email adress to be your own email in app/middleware/mail_middleware.js under user
+
 # Manual Setup
 To run the application manually, you'll need Node.js version 20 or higher.
 
