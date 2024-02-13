@@ -10,6 +10,7 @@ BalkanLingo is an application for learning a foreign language based on the space
 - **Student Accounts**: Registration via email. Ability to change password and learn from selected dictionaries.
 
 # Available Accounts
+
 - **Admin Account**
   - Email: admin@balkanlingo.online
   - Password: 123
