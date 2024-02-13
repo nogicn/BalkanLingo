@@ -1,3 +1,25 @@
+# Description
+
+BalkanLingo is an application for learning a foreign language based on the spaced repetition principle. It facilitates learning new words by presenting a series of questions about words from a defined word base. The learner answers questions by selecting the correct translation from the provided alternatives. The application adjusts the learning pace based on the accuracy of the responses, moving words through containers with time intervals for repetition.
+
+# Features
+
+- **Word Administrator**: Addition, editing, and deletion of foreign language words. Ability to add definitions, phrases, translated translations, and audio pronunciation files.
+- **Dictionaries**: Organization of words into dictionaries. Creating new dictionaries and adding words to existing ones.
+- **Learning Modes**: Different learning methods, including translation testing, pronunciation, and word writing.
+- **Student Accounts**: Registration via email. Ability to change password and learn from selected dictionaries.
+
+# Implementation
+
+- **Word Administrator Interface**: Allows adding new words, editing existing ones, defining phrases and translated translations, and adding audio pronunciation files.
+- **Student Interface**: Registration, selection of dictionaries for learning, and choice of learning modes.
+- **Integration with External Dictionaries**: Use of application interfaces to accept words and their descriptions from external sources.
+
+# Additional Information
+
+- **Language**: Although an example of the English language was used for easier understanding, the application is adaptable for learning any language.
+- **Administrators**: Users with the highest privileges. They are created by the root administrator who can define other administrators with the same privileges.
+
 # Available Accounts
 - **Admin Account**
   - Email: admin@balkanlingo.online
