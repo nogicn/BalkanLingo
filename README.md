@@ -9,6 +9,14 @@ BalkanLingo is an application for learning a foreign language based on the space
 - **Learning Modes**: Different learning methods, including translation testing, pronunciation, and word writing.
 - **Student Accounts**: Registration via email. Ability to change password and learn from selected dictionaries.
 
+# Available Accounts
+- **Admin Account**
+  - Email: admin@balkanlingo.online
+  - Password: 123
+- **User Account**
+  - Email: user@balkanlingo.online
+  - Password: 123
+
 # Implementation
 
 - **Word Administrator Interface**: Allows adding new words, editing existing ones, defining phrases and translated translations, and adding audio pronunciation files.
@@ -19,14 +27,6 @@ BalkanLingo is an application for learning a foreign language based on the space
 
 - **Language**: Although an example of the English language was used for easier understanding, the application is adaptable for learning any language.
 - **Administrators**: Users with the highest privileges. They are created by the root administrator who can define other administrators with the same privileges.
-
-# Available Accounts
-- **Admin Account**
-  - Email: admin@balkanlingo.online
-  - Password: 123
-- **User Account**
-  - Email: user@balkanlingo.online
-  - Password: 123
 
 # Publicly Accessible Website
 - The website is publicly accessible at: [balkanlingo.online](https://balkanlingo.online)
