@@ -29,9 +29,6 @@ BalkanLingo is an application for learning a foreign language based on the space
 - **Language**: Although an example of the English language was used for easier understanding, the application is adaptable for learning any language.
 - **Administrators**: Users with the highest privileges. They are created by the root administrator who can define other administrators with the same privileges.
 
-# Publicly Accessible Website
-- The website is publicly accessible at: [balkanlingo.online](https://balkanlingo.online)
-
 # Before you run
 - Make sure to add your elevenlabs api key and change the gmail key in .env 
 - Also make sure to update the origin email adress to be your own email in app/middleware/mail_middleware.js under user
